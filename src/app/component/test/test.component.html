@@ -1,0 +1,98 @@
+<!-- <style>
+  ngb-carousel {
+    max-width: 700px;
+    margin: 50px auto;
+  }
+
+  ngb-carousel img {
+    width: 100%;
+    outline: none;
+  }
+
+  ngb-carousel {
+    width: inherit;
+    height: inherit;
+  }
+
+  .carousel-inner {
+    overflow: visible;
+  }
+
+  .carousel-item {
+    display: flex !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s;
+    z-index: -1;
+  }
+
+  .carousel-item.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+  }
+
+  .carousel-control-prev {
+    z-index: 20;
+  }
+
+  .carousel-control-next {
+    z-index: 20;
+  }
+
+  .carousel-indicators {
+    z-index: 20;
+  }
+
+</style>
+
+<ngb-carousel>
+  <ng-template ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img src="../../../assets/img/discountedProducts/addidas-shoes/blue.png" alt="Angular Carousel 1">
+    </div>
+    <div class="carousel-caption">
+      <h3>Title Goes Here</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <div class="picsum-img-wrapper">
+      <img src="../../../assets/img/discountedProducts/addidas-shoes/pink.png" alt="Angular Carousel 2">
+    </div>
+    <div class="carousel-caption">
+      <h3>Title Goes Here</h3>
+      <p>Consectetur tortor volutpat pretium.</p>
+    </div>
+  </ng-template>
+</ngb-carousel> -->
+
+<style>
+  .slick-slider {
+    width: 88%;
+    margin: auto;
+    background: rgb(14, 13, 13);
+  }
+
+  body .slick-prev,
+  body .slick-next {
+    height: 45px;
+    width: 40px;
+    background: grey !important;
+    z-index: 100;
+  }
+
+</style>
+
+<ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" (init)="slickInit($event)"
+  (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)" (beforeChange)="beforeChange($event)" style="width: 88%;
+  margin: auto;
+  background: rgb(14, 13, 13);">
+  <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+    <img src="{{ slide.img }}" alt="" width="100%">
+  </div>
+</ngx-slick-carousel>
+<button (click)="addSlide()">Add</button>
+<button (click)="removeSlide()">Remove</button>
+<button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
+<button (click)="slickModal.unslick()">unslick</button>

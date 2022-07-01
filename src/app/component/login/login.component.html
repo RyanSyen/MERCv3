@@ -1,0 +1,85 @@
+<app-header-empty></app-header-empty>
+<div class="login-view">
+    <!-- <div class="login-container"> -->
+    <!-- left panel -->
+    <div class="left-panel">
+      <h2>Welcome back to MERC!</h2>
+      <img src="../../../assets/login-shopping.jpg" alt="login-shopping">
+    </div>
+    <!-- right panel -->
+    <div class="right-panel">
+      <form>
+        <div class="container">
+          <header class="head-form">
+            <h2>Log In</h2>
+            <p>New to MERC? <a href="/register">Sign Up</a></p>
+          </header>
+          <hr class="hr-style">
+          <br>
+          <div class="field-set">
+            <!--   Email Address -->
+            <span class="input-item">
+              <i class="fa fa-user-circle fa-xl"></i>
+            </span>
+            <!--   Email Address Input-->
+            <input class="form-input" id="txt-input" name="email" type="text" placeholder="Email Address" required
+              [(ngModel)]="email" >
+            <ng-template *ngIf="requiredErr; else invalidErr">
+              <span class="err-msg">* Email is required!</span><br>
+            </ng-template>
+            <ng-template #invalidErr>
+              <span class="err-msg" [hidden]="invalid">* Invalid email address!</span>
+            </ng-template>
+            <br>
+  
+  
+            <!--   Password -->
+            <span class="input-item">
+              <i class="fa fa-key fa-xl"></i>
+            </span>
+            <!--   Password Input-->
+            <input class="form-input" type="password" placeholder="Password" id="pwd" name="password"
+              [type]=" showPassword ? 'text' : 'password'" [(ngModel)]="password" required>
+  
+            <!--      Hide password  -->
+            <span *ngIf="showing; else hidden" (click)="showHidePassword()">
+              <i class="fa fa-eye pw-eye" aria-hidden="true" type="button" id="eye"></i>
+            </span>
+            <ng-template #hidden>
+              <!--      Show password  -->
+              <span (click)="showHidePassword()">
+                <i class="fa-solid fa-eye-slash pw-eye" aria-hidden="true" type="button" id="eye"></i>
+              </span>
+            </ng-template>
+            <br>
+            <button class="log-in" (click)="login()"> Log In </button>
+          </div>
+          <div class="other-methods">
+            <!-- <p  >OR</p> -->
+            <hr class="other-methods-text" data-content="OR">
+          </div>
+  
+          <div class="row other-sign-in-methods">
+            <a (click)="signInWithGoogle()" style="text-decoration: none;cursor: pointer;">
+              <div class="card shadow text-center ">
+                <div class="card-body">
+                  <img src="https://img.icons8.com/color/48/undefined/google-logo.png" height="24px" width="24px"> 
+                  <p>Sign In with Google</p>
+                </div>
+              </div>
+            </a>
+          </div>
+  
+          <a href="/forgot-password" class="forgot-pw">Forgot Password ?</a>
+  
+  
+        </div>
+  
+        <!-- End Form -->
+      </form>
+    </div>
+    <!-- </div> -->
+  
+  </div>
+  
+  

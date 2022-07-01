@@ -1,0 +1,29 @@
+.search-box{
+    display: flex;
+    background-color: #fff;
+    padding: 7px;
+    border-radius: 120px;
+    margin-right: 10px;
+}
+
+.search-icon{
+    img{
+        width: 24px; 
+        height: 24px;
+    }
+}
+
+.input-class{
+    outline: 0;
+    border: none;
+    margin-left: 10px;
+    height: 100%;
+}
+
+.search-btn{
+    cursor: pointer;
+
+    &:hover{
+        transform: scale(1.05);
+    }
+}

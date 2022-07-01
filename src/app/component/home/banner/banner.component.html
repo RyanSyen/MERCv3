@@ -1,0 +1,101 @@
+<!-- only suitable for images only  -->
+<!-- <ng-image-slider [images]="imgCollection" #nav></ng-image-slider> -->
+
+<!-- Implementing Responsive Carousel in Angular 13 using ng-bootstrap  -->
+<!-- https://www.positronx.io/angular-responsive-carousel-examples/#:~:text=Copy-,Understanding%20NgbCarousel%20Methods,-NgbCarousel%20is%20a -->
+
+<!-- Manage Carousel Behavior with NgbCarousel Methods -->
+
+<!-- <ngb-carousel #ngcarousel>
+    <ng-template ngbSlide id="one">
+      <div class="picsum-img-wrapper">
+        <img src="../../../../assets/img/banner/1.jpg" alt="Slide 1">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide id="two">
+      <div class="picsum-img-wrapper">
+        <img src="../../../../assets/img/banner/2.jpg" alt="Slide 2">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide id="three">
+      <div class="picsum-img-wrapper">
+        <img src="../../../../assets/img/banner/3.jpg" alt="Slide 3">
+      </div>
+    </ng-template>
+  </ngb-carousel>
+  <div class="text-center">
+    <button (click)="navigateToSlide('four')">Go to Slide Four</button>
+    <button (click)="getToPrev()">Prev</button>
+    <button (click)="goToNext()">Next</button>
+    <button (click)="stopCarousel()">Pause</button>
+  </div> -->
+
+<style>
+  ngb-carousel {
+    max-width: 700px;
+    margin: 50px auto;
+  }
+
+  ngb-carousel img {
+    width: 100%;
+    outline: none;
+  }
+
+  ngb-carousel {
+    width: inherit;
+    height: inherit;
+  }
+
+  .carousel-inner {
+    overflow: visible;
+  }
+
+  .carousel-item {
+    display: flex !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s;
+    z-index: -1;
+  }
+
+  .carousel-item.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+  }
+
+  .carousel-control-prev {
+    z-index: 20;
+  }
+
+  .carousel-control-next {
+    z-index: 20;
+  }
+
+  .carousel-indicators {
+    z-index: 20;
+  }
+
+</style>
+
+<ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" [keyboard]="true" [pauseOnHover]="true"
+  [wrap]="true" [activeId]="'secondSlide'">
+  <ng-template ngbSlide id="firstSlide">
+    <div class="picsum-img-wrapper">
+      <img src="../../../../assets/img/banner/1.jpg" alt="Angular Carousel 1">
+    </div>
+    <div class="carousel-caption">
+      <h3>Title Goes Here</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide id="secondSlide">
+    <div class="picsum-img-wrapper">
+      <img src="../../../../assets/img/banner/2.jpg" alt="Angular Carousel 2">
+    </div>
+    <div class="carousel-caption">
+      <h3>Title Goes Here</h3>
+      <p>Consectetur tortor volutpat pretium.</p>
+    </div>
+  </ng-template>
+</ngb-carousel>

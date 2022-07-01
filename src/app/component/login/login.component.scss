@@ -1,0 +1,230 @@
+@import '../../../variables';
+
+// flex center defined styles
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// overflow hidden defined styles
+@mixin overflowHidden {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+// mobile version similar to media queries
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+.login-view {
+  @include flexCenter;
+  margin-top: 50px;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.left-panel {
+  h2 {
+    margin-left: 50px;
+
+    @include mobile {
+      text-align: center;
+    }
+  }
+
+  img {
+    width: 550px;
+    height: 450px;
+
+    @include mobile {
+      isplay: none;
+    }
+  }
+}
+
+.right-panel {
+  padding-right: 5rem;
+  margin-left: 80px;
+
+  @include mobile {
+    padding: 0;
+    margin-top: 15px;
+  }
+}
+
+form {
+  width: 400px;
+  min-height: 300px;
+  height: 550px;
+  border-radius: 10px;
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+  /* border-color: linear-gradient(315deg, #045de9 0%, #09c6f9 74%); */
+  border-image-source: linear-gradient(to left, $primary-color, #09c6f9);
+  margin: 2% auto;
+  box-shadow: 0 9px 50px hsla(219, 67%, 75%, 0.50);
+  padding: 2%;
+  @include overflowHidden;
+}
+
+.container {
+  margin: 10px;
+}
+
+.head-form {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+
+  p {
+    color: rgb(147, 147, 147);
+    font-size: smaller;
+  }
+
+  a {
+    text-decoration: none;
+    color: blue;
+  }
+}
+
+.hr-style {
+  margin-top: 15px;
+  background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+  border: 0;
+  height: 1.5px;
+}
+
+.fa-user-circle {
+  font-size: 50px;
+}
+
+.form-input {
+  margin: 15px 10px;
+  padding: 10px;
+  width: 80%;
+  box-sizing: border-box;
+  border: 1.5px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+}
+
+input:focus,
+input:active {
+  border-color: transparent;
+  border: 2.5px solid #045de9;
+  animation: slideup 0.5s ease-in 1;
+}
+
+@keyframes slideup {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.8;
+  }
+}
+
+.log-in {
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-left: 20%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(90, 121, 220, 0.3);
+  transition: 0.4s;
+  color: white;
+  background-color: #005DE8;
+
+  &:hover {
+    box-shadow: 0 0 20px rgba(90, 121, 220, 0.6);
+  }
+}
+
+.field-set {
+  margin: 10px 0 10px 0;
+}
+
+.other-methods {
+  max-width: 90%;
+  /* margin: 40px auto; */
+  margin-left: 10px;
+  text-align: center;
+
+  #{&}-text {
+    font-size: 20px;
+    position: relative;
+    border: 0;
+    height: 1.5em;
+
+    &:before {
+      content: '';
+      /* background: linear-gradient(315deg, #045de9 0%, #09c6f9 74%); */
+      background: linear-gradient(to right, transparent, #045de9, transparent);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+    }
+
+    &:after {
+      content: attr(data-content);
+      position: relative;
+      display: inline-block;
+      color: black;
+      padding: 0 .5em;
+      line-height: 1.5em;
+      background-color: #fff;
+      font-size: smaller;
+    }
+  }
+}
+
+.card{
+  border: 1px solid #696969;
+  border-radius: 50px;
+  margin-top: 10px;
+
+  &:hover{
+
+  }
+}
+
+.card-body {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+
+  p{
+    margin: 3px 0 0 5px;
+  }
+}
+
+.other-sign-in-methods {
+  @include flexCenter;
+  margin-top: 20px;
+}
+
+.err-msg {
+  color: red;
+  font-size: small;
+  margin-left: 40px;
+}
+
+.forgot-pw {
+  float: right;
+  margin-top: 50px;
+  font-size: smaller;
+}

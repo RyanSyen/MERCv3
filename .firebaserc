@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "fyp-my108-351404"
+  },
+  "targets": {
+    "fyp-my108-351404": {
+      "hosting": {
+        "MERCv3": [
+          "fyp-my108-351404"
+        ]
+      }
+    }
+  }
+}

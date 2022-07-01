@@ -1,0 +1,141 @@
+<app-header-empty></app-header-empty>
+<div class="login-view">
+    <!-- <div class="login-container"> -->
+    <!-- left panel -->
+    <div class="left-panel">
+      <h2>Welcome to MERC!</h2>
+      <img src="../../../assets/login-shopping.jpg" alt="login-shopping">
+    </div>
+    <!-- right panel -->
+    <div class="right-panel">
+      <form>
+        <div class="container">
+          <header class="head-form">
+            <h2>Sign Up</h2>
+            <p>Have an account?&nbsp;
+              <a href="/login" style="float: right;">Sign In</a>
+            </p>
+          </header>
+          <hr class="hr-style">
+          <br>
+          <div class="field-set">
+            <!--   Email Address -->
+            <span class="input-item">
+              <i class="fa fa-user-circle fa-xl"></i>
+            </span>
+            <!--   Email Address Input-->
+            <input class="form-input" id="txt-input" name="email" type="text" placeholder="Email Address"
+              [(ngModel)]="email" required>
+            <br>
+  
+            <!--   Password -->
+            <span class="input-item">
+              <i class="fa fa-key fa-xl"></i>
+            </span>
+            <!--   Password Input-->
+            <input #passwordInput class="form-input" placeholder="Password" id="pwd" name="password"
+              [type]=" showPassword ? 'text' : 'password'" [(ngModel)]="password" required>
+  
+            <!--      Hide password  -->
+            <span *ngIf="showing; else hidden" (click)="showHidePassword()">
+              <i class="fa fa-eye pw-eye" aria-hidden="true" type="button" id="eye"></i>
+            </span>
+            <ng-template #hidden>
+              <!--      Show password  -->
+              <span (click)="showHidePassword()">
+                <i class="fa-solid fa-eye-slash pw-eye" aria-hidden="true" type="button" id="eye"></i>
+              </span>
+            </ng-template>
+            <br>
+  
+            <!-- password strength bar -->
+            <!-- <div class="password-meter">
+              <div class="password-meter__bar">
+                <div class="password-meter__bar__inner js--password-bar">
+                </div>
+              </div>
+              <p class="password-meter__label">Password Strength: <span class="js--password-text"></span></p>
+            </div> -->
+          </div>
+  
+          <button class="log-in" (click)="register()"> Register </button>
+  
+          <!-- when user types on the password input box, then show password-strength-checker -->
+          <!-- <password-strength-meter [passwordd]="passwordInput.value"
+          (strengthChange)="onStrengthChange($event)">
+        </password-strength-meter> -->
+  
+  
+             
+          <!--   End Conrainer  -->
+        </div>
+  
+        <!-- End Form -->
+      </form>
+    </div>
+    <!-- </div> -->
+  
+  </div>
+  
+  <!-- <script>
+    (() => {
+      /**  
+       * Parse a password string into a numeric value.  
+       *  
+       * @param {string} password  
+       * @return {number}  
+       */
+      let evaluatePassword = (password) => {
+        let score = 0;
+        score = password.length;
+        score = (password.match(/[!]/gmi)) ? score + (password.match(/[!]/gmi).length * 3) : score;
+        score = (password.match(/[A-Z]/gm)) ? score + 3 : score;
+        score = (password.match(/[0-9]/gmi)) ? score + 3 : score;
+        return score;
+      };
+      /**  
+       * Convert a numeric score into an object of 'DOM update' data.  
+       *  
+       * @param {number} score  
+       * @return {Object}  
+       */
+      let scoreToData = (score) => {
+        if (score >= 30) {
+          return {
+            width: '100%',
+            color: '#26de81',
+            label: 'Strong',
+          };
+        } else if (score >= 20) {
+          return {
+            width: '66%',
+            color: '#fd9644',
+            label: 'Medium',
+          };
+        } else {
+          return {
+            width: '33%',
+            color: '#fc5c65',
+            label: 'Weak',
+          };
+        }
+      };
+      window.addEventListener('DOMContentLoaded', () => {
+        // Get element refs.  
+        let p = document.querySelector('.js--password');
+        let b = document.querySelector('.js--password-bar');
+        let t = document.querySelector('.js--password-text');
+        // Listen for updates to password field.  
+        p.addEventListener('input', () => {
+          // Convert current value to data.  
+          let data = scoreToData(evaluatePassword(p.value));
+          // Update DOM.  
+          b.style.width = data.width;
+          b.style.background = data.color;
+          t.innerText = data.label;
+        });
+      });
+    })();
+  
+  </script> -->
+  
