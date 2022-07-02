@@ -2,6 +2,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Firebase services + enviorment module
 import { AngularFireModule } from '@angular/fire/compat';
@@ -16,13 +18,19 @@ import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
-// Auth service
+// routing
 import { AppRoutingModule } from './app-routing.module';
+
+
+// services
 import { AuthService } from './shared/auth.service';
+import { ProductService } from './service/productservice';
+import { PhotoService } from './service/photoservice';
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
 import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
+
 
 // other packages
 import lottie from "lottie-web";
@@ -30,6 +38,9 @@ import { defineLordIconElement } from "lord-icon-element";
 // import { NgImageSliderModule } from 'ng-image-slider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import {CarouselModule} from 'primeng/carousel';
+import {ButtonModule} from 'primeng/button';
+import {ToastModule} from 'primeng/toast';
 
 // components
 import { LoginComponent } from './component/login/login.component';
@@ -48,6 +59,11 @@ import { CategoriesMainComponent } from './component/categories/categories-main/
 import { SearchComponent } from './component/header/search/search.component';
 import { TestComponent } from './component/test/test.component';
 import { HeadComponent } from './component/home/head/head.component';
+import { MainProductDetailsComponent } from './component/product-details/main-product-details/main-product-details.component';
+import { SimilarProductsComponent } from './component/product-details/similar-products/similar-products.component';
+import { ProductDetailsAccordionComponent } from './component/product-details/product-details-accordion/product-details-accordion.component';
+import { ProductDetailsGalleryComponent } from './component/product-details/product-details-gallery/product-details-gallery.component';
+import { FooterComponent } from './component/footer/footer.component';
 
 
 
@@ -69,10 +85,16 @@ import { HeadComponent } from './component/home/head/head.component';
     HomeMainComponent,
     SearchComponent,
     TestComponent,
-    HeadComponent
+    HeadComponent,
+    MainProductDetailsComponent,
+    SimilarProductsComponent,
+    ProductDetailsAccordionComponent,
+    ProductDetailsGalleryComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AngularFireModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     AngularFireAuthModule,
@@ -85,11 +107,14 @@ import { HeadComponent } from './component/home/head/head.component';
     provideFirestore(() => getFirestore()),
     AppRoutingModule,
     FormsModule,
-    // NgImageSliderModule,
+    HttpClientModule,
     NgbModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    CarouselModule,
+    ButtonModule,
+    ToastModule,
   ],
-  providers: [AuthService, AuthGuard, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [AuthService, AuthGuard, ProductService, PhotoService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

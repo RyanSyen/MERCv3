@@ -1,7 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 @import './resets';
 @import './variables';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/saga-blue/theme.css';
+@import '~primeng/resources/primeng.min.css';
 
 *{
     scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-track
+{
+	border: 5px solid white;
+	// border color does not support transparent on scrollbar
+	// border-color: transparent;
+	background-color: #b2bec3;
+}
+
+::-webkit-scrollbar
+{
+	width: 15px;
+	background-color: #dfe6e9;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb
+{
+	background-color: #666;
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #333; 
 }

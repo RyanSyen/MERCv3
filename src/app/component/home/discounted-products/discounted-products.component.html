@@ -1,1 +1,103 @@
-<p>discounted-products works!</p>
+<div class="header">
+  <h1>Products on</h1>
+  <p>SALE</p>
+</div>
+<div class="product-container">
+  <div class="product-card" *ngFor="let p of discountedProducts; let i = index;">
+    <div class="logo-cart">
+      <img src="../../../../assets/img/{{p.logo}}" alt="logo">
+      <i class='bx bx-shopping-bag'></i>
+    </div>
+    <div class="product-right-panel">
+      <!-- right panel includes add to cart, go to product page, buy now? -->
+      <div class="add-to-cart">
+        <lord-icon 
+        src="https://cdn.lordicon.com/aoggitwj.json" 
+        trigger="loop-on-hover" 
+        colors="primary:#005de8"
+        style="width:40px;height:40px;cursor:pointer;"
+        (click)="addToCart(p.id)">
+        </lord-icon>
+      </div>
+      <div></div>
+      <div></div>
+    </div>
+    <div [ngSwitch]="p.id">
+      <div *ngSwitchCase="1000" class="main-images" id="{{p.id}}" (click)="navigateToProductDetails(p.id, p.type)">
+        <img id="blue" [ngClass]="product1mainImg" src="../../../../assets/img/{{p.image1}}"
+          alt="mainImg">
+        <img id="pink" [ngClass]="product1subImg0" src="../../../../assets/img/{{p.image2}}"
+          alt="subImg0">
+        <img id="yellow" [ngClass]="product1subImg1" src="../../../../assets/img/{{p.image3}}"
+          alt="subImg1">
+      </div>
+      <div *ngSwitchCase="1001" class="main-images" id="{{p.id}}" (click)="navigateToProductDetails(p.id, p.type)">
+        <img id="blue" [ngClass]="product2mainImg" src="../../../../assets/img/{{p.image1}}"
+          alt="mainImg">
+        <img id="pink" [ngClass]="product2subImg0" src="../../../../assets/img/{{p.image2}}"
+          alt="subImg0">
+        <img id="yellow" [ngClass]="product2subImg1" src="../../../../assets/img/{{p.image3}}"
+          alt="subImg1">
+      </div>
+      <div *ngSwitchCase="1002" class="main-images last" id="{{p.id}}" (click)="navigateToProductDetails(p.id, p.type)">
+        <img id="blue" [ngClass]="product3mainImg" src="../../../../assets/img/{{p.image1}}"
+          alt="mainImg">
+        <img id="pink" [ngClass]="product3subImg0" src="../../../../assets/img/{{p.image2}}"
+          alt="subImg0">
+        <img id="yellow" [ngClass]="product3subImg1" src="../../../../assets/img/{{p.image3}}"
+          alt="subImg1">
+      </div>
+    </div>
+    <div class="shoe-details">
+      <p class="shoe_name">{{p.name}}</p>
+      <p>{{p.description}}</p>
+      <div class="rating-sold">
+        <div class="stars" [ngSwitch]="p.rating">
+          <p *ngSwitchCase="1">⭐</p>
+          <p *ngSwitchCase="2">⭐⭐</p>
+          <p *ngSwitchCase="3">⭐⭐⭐</p>
+          <p *ngSwitchCase="4">⭐⭐⭐⭐</p>
+          <p *ngSwitchCase="5">⭐⭐⭐⭐⭐</p>
+        </div>
+        <p>({{p.sold}} sold)</p>
+      </div>
+    </div>
+    <div class="color-price">
+      <div class="color-option" [ngSwitch]="p.id">
+        <div *ngSwitchCase="1000">
+          <span class="color">Colour:</span>
+          <div class="circles">
+            <span [ngClass]="product1MainColor" id="mainColor" (click)="changeColor(p.color0, p.id)"></span>
+            <span [ngClass]="product1SubColor0" id="subColor0" (click)="changeColor(p.color1, p.id)"></span>
+            <span [ngClass]="product1SubColor1" id="subColor1" (click)="changeColor(p.color2, p.id)"></span>
+          </div>
+        </div>
+        <div *ngSwitchCase="1001">
+          <span class="color">Colour:</span>
+          <div class="circles">
+            <span [ngClass]="product2MainColor" id="mainColor" (click)="changeColor(p.color0, p.id)"></span>
+            <span [ngClass]="product2SubColor0" id="subColor0" (click)="changeColor(p.color1, p.id)"></span>
+            <span [ngClass]="product2SubColor1" id="subColor1" (click)="changeColor(p.color2, p.id)"></span>
+          </div>
+        </div>
+        <div *ngSwitchCase="1002">
+          <span class="color">Colour:</span>
+          <div class="circles">
+            <span [ngClass]="product3MainColor" id="mainColor" (click)="changeColor(p.color0, p.id)"></span>
+            <span [ngClass]="product3SubColor0" id="subColor0" (click)="changeColor(p.color1, p.id)"></span>
+            <span [ngClass]="product3SubColor1" id="subColor1" (click)="changeColor(p.color2, p.id)"></span>
+          </div>
+        </div>
+
+      </div>
+      <div class="price">
+        <span class="price_num">RM {{p.discountedPrice}}</span>
+        <span class="price_letter">RM {{p.oldPrice}}</span>
+      </div>
+    </div>
+    <!-- <div class="button">
+          <div class="button-layer"></div>
+          <button>Add To Cart</button>
+        </div> -->
+  </div>
+</div>

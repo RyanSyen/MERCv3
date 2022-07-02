@@ -1,0 +1,75 @@
+<!-- reference from addidas website -> https://www.adidas.com.my/en/zx-2k-boost-shoes/FY0605.html -->
+
+<!-- !!! The disadvantage of using ngb accordion is that we are unable to customize the accordion  -->
+
+<div class="container">
+  <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <!-- <ngb-panel title="Simple"> -->
+    <ngb-panel>
+      <ng-template ngbPanelTitle>
+        <p class="title">Highlights</p>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="highlights-container">
+          <div class="highlight-section">
+            <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/3.png" alt="img3">
+            <h4>WRAPPED BOOST MIDSOLE</h4>
+            <p>The responsive midsole with a striking gradient delivers the cushioned comfort of wrapped Boost.</p>
+          </div>
+          <div class="highlight-section">
+            <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/2.png" alt="img2">
+            <h4>LIGHTWEIGHT MESH UPPER</h4>
+            <p>A smooth mesh upper with TPU overlays wraps the foot in adaptive support and breathable comfort.</p>
+            <br>
+          </div>
+          <div class="highlight-section">
+            <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/1.png" alt="img1">
+            <h4>NEXT-LEVEL COMFORT</h4>
+            <p>Innovated for the ultimate squish, new wrapped Boost makes every step a sensation.</p>
+            <br>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel>
+      <ng-template ngbPanelTitle>
+        <p class="title">Description</p>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="description-container">
+          <div class="description">
+            <h4>FUTURE-READY TRAINERS WITH WRAPPED BOOST CUSHIONING IN A VIVID GRADIENT.</h4>
+            <p>Slip in to experience what can't be explained. ZX never felt so good. Innovated for the ultimate squish
+              with new wrapped Boost. Swaddled in a TPU heel cage, it makes stepping a sensation. Feeling starts before
+              you even take the first squishy step.</p>
+          </div>
+          <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/4.png" alt="img4">
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel>
+      <ng-template ngbPanelTitle>
+        <p class="title">Details</p>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="details-container">
+          <div class="left-section">
+            <ul>
+                <li>Lace closure</li>
+                <li>Mesh upper with TPU overlays</li>
+                <li>Responsive, supportive sneakers</li>
+                <li>Distinctive Boost midsole</li>
+            </ul>
+          </div>
+          <div class="right-section">
+            <ul>
+                <li>Rubber outsole</li>
+                <li>Color: Cloud White / Cloud White / Shock Pink</li>
+                <li>Product ID: {{productId}}</li>
+            </ul>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

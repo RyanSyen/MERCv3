@@ -1,0 +1,38 @@
+@import '../../../mixins';
+@import '../../../variables';
+
+.footer {
+  background-color: $primary-color;
+  color: #f6f6f6;
+}
+
+.links {
+
+  h5 {
+    text-decoration: underline;
+  }
+
+  li {
+    margin: 10px 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.qr {
+  img {
+    width: 150px;
+  }
+}
+
+.store {
+  img {
+    width: 200px;
+  }
+
+  img:nth-child(2) {
+    margin-top: -100px;
+  }
+}

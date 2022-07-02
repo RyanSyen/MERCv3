@@ -10,6 +10,8 @@ import { FaqComponent } from './component/faq/faq.component';
 import { HomeMainComponent } from './component/home/home-main/home-main.component';
 import { CategoriesMainComponent } from './component/categories/categories-main/categories-main.component';
 import { TestComponent } from './component/test/test.component';
+import { MainProductDetailsComponent } from './component/product-details/main-product-details/main-product-details.component';
+
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -33,6 +35,7 @@ const routes: Routes = [
   { path: 'home', component: HomeMainComponent },
   { path: 'categories', component: CategoriesMainComponent },
   { path: 'test', component: TestComponent },
+  { path: 'product_details/:id/:type', component: MainProductDetailsComponent },
 
 
 ];

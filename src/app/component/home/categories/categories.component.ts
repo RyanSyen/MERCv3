@@ -12,4 +12,8 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  goToMore(){
+    alert('works')
+  }
+
 }

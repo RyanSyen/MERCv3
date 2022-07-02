@@ -25,4 +25,8 @@ export class HeaderNormalComponent {
 
     this.router.navigate(['/register']);
   }
+
+  goToHome(){
+    this.router.navigate(['/home']);
+  }
 }

@@ -1,0 +1,123 @@
+<app-header-normal></app-header-normal>
+
+<!-- ngb modal for shoe size chart -->
+<ng-template #content let-modal style="background-color: #5cb3fd;">
+  <div class="modal-header">
+    <h4 class="modal-title">Shoe Size Chart</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <!-- <p>One fine body&hellip;</p> -->
+    <img class="size-chart-img" src="../../../../assets/img/productDetails/sizeChart.png" alt="size-chart">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+
+<div class="container product-details-container">
+  <div class="row-container">
+    <div class="imgContainer">
+      <img class="activeImg" [ngClass]="mainImg" alt="activeImg" src="../../../../assets/img/{{product.image1}}" />
+      <img class="activeImg" [ngClass]="subImg0" alt="activeImg" src="../../../../assets/img/{{product.image2}}" />
+      <img class="activeImg" [ngClass]="subImg1" alt="activeImg" src="../../../../assets/img/{{product.image3}}" />
+      <br />
+      <div class="subImages">
+        <div class="subImages-container">
+          <img class="subImages-img" [ngClass]="mainImg" alt="firstImg" src="../../../../assets/img/{{product.image1}}" (click)="changeColor(product.color0)"/>
+        </div>
+        <div class="subImages-container">
+          <img class="subImages-img" [ngClass]="subImg0" alt="secondImg" src="../../../../assets/img/{{product.image2}}" (click)="changeColor(product.color1)"/>
+        </div>
+        <div class="subImages-container">
+          <img class="subImages-img" [ngClass]="subImg1" alt="thirdImg" src="../../../../assets/img/{{product.image3}}" (click)="changeColor(product.color2)"/>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="title">
+        <h2>{{product.name}}</h2>
+        <img *ngIf="product.type == 'discounted'" src="../../../../assets/img/productDetails/discount.png"
+          alt="discount-logo">
+      </div>
+
+      <br />
+      <p class="description">{{product.description}}</p>
+      <br>
+      <div class="price-guarantee">
+        <div class="price">
+          <h2> RM {{product.discountedPrice}}</h2>
+          <p> RM {{product.oldPrice}}</p>
+
+        </div>
+        <div class="authentic-guarantee">
+          <div class="guarantee">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24"
+              height="24" class="NM0h58">
+              <defs>
+                <style>
+                  .cls-1 {
+                    fill: #005DE8;
+                  }
+
+                  .cls-2 {
+                    fill: #fff;
+                  }
+
+                </style>
+              </defs>
+              <path class="cls-1 orignal-guarantee-icon__path--fill"
+                d="M28.65,16.92V4.73S19,4.46,15.94,0C12.45,4.41,3.23,4.73,3.23,4.73V16.92S3,27.22,15.94,32C28.9,27.22,28.65,16.92,28.65,16.92Z">
+              </path>
+              <path class="cls-2"
+                d="M25.56,13.67,15.26,24a.68.68,0,0,1-1,0L8.33,18a.68.68,0,0,1,0-1l1.55-1.55a.68.68,0,0,1,1,0l3.44,3.43a.68.68,0,0,0,1,0L23,11.15a.68.68,0,0,1,1,0l1.55,1.54A.69.69,0,0,1,25.56,13.67Z">
+              </path>
+              <path class="cls-2"
+                d="M25.56,13.67,15.26,24a.68.68,0,0,1-1,0L8.33,18a.68.68,0,0,1,0-1l1.55-1.55a.68.68,0,0,1,1,0l3.44,3.43a.68.68,0,0,0,1,0L23,11.15a.68.68,0,0,1,1,0l1.55,1.54A.69.69,0,0,1,25.56,13.67Z">
+              </path>
+            </svg>
+            <p>100% Authentic Guarantee</p>
+          </div>
+          <div class="guarantee-last">Guarantee Authentic or Money Back</div>
+        </div>
+
+      </div>
+      <br />
+      <div class="size-container">
+        <h5 class="sizes">Sizes: </h5>
+        <span>UK 7</span>
+        <span>UK 7.5</span>
+        <span>UK 8</span>
+        <span>UK 8.5</span>
+        <span>UK 9</span>
+        <span>UK 9.5</span>
+      </div>
+      <a (click)="openBackDropCustomClass(content)" class="size-chart-link">Size chart</a>
+      <br />
+      <br />
+      <div class="color-container">
+        <h5 class="colors">Colors:</h5>
+        <div class="circles">
+            <span [ngClass]="MainColor" id="mainColor" (click)="changeColor(product.color0)"></span>
+            <span [ngClass]="SubColor0" id="subColor0" (click)="changeColor(product.color1)"></span>
+            <span [ngClass]="SubColor1" id="subColor1" (click)="changeColor(product.color2)"></span>
+          </div>
+      </div>
+      <br />
+      <button type="button" class="add-to-cart-btn button"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
+      <button type="button" class="btn btn-primary button">Buy Now</button>
+    </div>
+  </div>
+</div>
+
+<div class="gallery-container container">
+  <h1>Gallery</h1>
+</div>
+
+<!-- using primeng gallery component  -->
+<app-product-details-gallery></app-product-details-gallery>
+
+<app-product-details-accordion></app-product-details-accordion>
+
+<app-footer></app-footer>
