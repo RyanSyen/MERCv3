@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SimilarProductsComponent implements OnInit {
 
-  currentRate = 4.5;
+
 
   constructor() { }
 

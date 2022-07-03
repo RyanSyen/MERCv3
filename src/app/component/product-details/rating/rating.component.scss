@@ -1,0 +1,146 @@
+@import '../../../../mixins';
+@import '../../../../variables';
+
+
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  color: #d3d3d3;
+}
+
+.full {
+  color: #FFD700;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #FFD700;
+}
+
+.top {
+  display: flex;
+  padding: 20px;
+  margin: 5px;
+  border: 1px solid rgba(0, 93, 232, 0.125);
+  background-color: rgba(0, 93, 232, 0.05);
+}
+
+.stars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: $primary-color;
+  margin-right: 20px;
+
+  p {
+    margin: 0;
+  }
+
+  #{&}-value {
+    font-size: 2rem;
+  }
+}
+
+.options {
+
+  button {
+    cursor: pointer;
+    user-select: none;
+    // height: 2rem;
+    line-height: 2rem;
+    min-width: 6.25rem;
+    text-align: center;
+    padding: 0.2rem 0.625rem;
+    color: rgba(0, 0, 0, .8);
+    background-color: #fff;
+    border: 1px solid rgba(0, 93, 232, 0.5);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    color: rgba(0, 0, 0, .87);
+    text-transform: capitalize;
+    border-radius: 2px;
+    margin-bottom: 0.3125rem;
+    margin-top: 0.3125rem;
+
+    &:hover {
+      background-color: rgb(0, 93, 232);
+      color: #f6f6f6;
+    }
+  }
+
+  .active {
+    background-color: rgb(0, 93, 232);
+    color: #f6f6f6;
+  }
+}
+
+.comments-container {
+  padding: 20px;
+  margin: 5px;
+}
+
+.comment {
+  display: flex;
+
+
+  #{&}-details {
+    margin-left: 20px;
+    position: relative;
+
+    .comment-details-top {
+      display: flex;
+    }
+  }
+}
+
+.profile-pic {
+
+  img {
+    width: 50px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    padding: 5px;
+  }
+}
+
+.username {
+  margin: 0;
+}
+
+.vl {
+  border-left: 2px solid rgba(0, 93, 232, 0.5);
+  height: 45px;
+  margin: 0 8px;
+}
+
+.date-and-time {
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+  color: #696969;
+}
+
+.media {
+  img {
+    width: 80px;
+    border: 1px solid #ccc;
+  }
+}
+
+.report {
+  margin: 10px 0;
+
+  #{&}-btn {
+    float: right;
+    cursor: pointer;
+  }
+}

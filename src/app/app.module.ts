@@ -64,6 +64,7 @@ import { SimilarProductsComponent } from './component/product-details/similar-pr
 import { ProductDetailsAccordionComponent } from './component/product-details/product-details-accordion/product-details-accordion.component';
 import { ProductDetailsGalleryComponent } from './component/product-details/product-details-gallery/product-details-gallery.component';
 import { FooterComponent } from './component/footer/footer.component';
+import { RatingComponent } from './component/product-details/rating/rating.component';
 
 
 
@@ -90,7 +91,8 @@ import { FooterComponent } from './component/footer/footer.component';
     SimilarProductsComponent,
     ProductDetailsAccordionComponent,
     ProductDetailsGalleryComponent,
-    FooterComponent
+    FooterComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,70 @@
+<div class="container">
+  <h4>Product Rating</h4>
+  <div class="top">
+    <div class="stars">
+      <p><span class="stars-value">5</span> out of 5</p>
+
+      <ng-template #t let-fill="fill">
+        <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+        </span>
+      </ng-template>
+
+      <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+
+    </div>
+    <div class="options">
+      <button class="active">All</button>
+      <button>5 ⭐ (5)</button>
+      <button>4 ⭐ (0)</button>
+      <button>3 ⭐ (0)</button>
+      <button>2 ⭐ (0)</button>
+      <button>1 ⭐ (0)</button>
+      <button>With Comments (2)</button>
+      <button>With Media (2)</button>
+    </div>
+  </div>
+  <div class="comments-container">
+    <div class="comment">
+      <div class="profile-pic"><img src="../../../../assets/diamond.png" alt=""></div>
+      <div class="comment-details">
+        <div class="comment-details-top">
+          <div>
+            <p class="username">username</p>
+            <div class="user-rating">
+              <div [ngSwitch]="rating">
+                <p *ngSwitchCase="1">⭐</p>
+                <p *ngSwitchCase="2">⭐⭐</p>
+                <p *ngSwitchCase="3">⭐⭐⭐</p>
+                <p *ngSwitchCase="4">⭐⭐⭐⭐</p>
+                <p *ngSwitchCase="5">⭐⭐⭐⭐⭐</p>
+              </div>
+            </div>
+          </div>
+          <div class="vl"></div>
+          <div class="date-and-time">
+            <span>$date and time</span>
+            <span>Variation: $variation</span>
+          </div>
+        </div>
+
+
+        <p>Lorem</p>
+        <div class="media">
+          <img style="width:80px;" src="../../../../assets/img/discountedProducts/addidas-shoes/blue.png" alt="media">
+        </div>
+        <!-- <div class="report">
+          <lord-icon class="report-btn" src="https://cdn.lordicon.com/rslnizbt.json" trigger="loop-on-hover"
+            style="width:32px;height:32px">
+          </lord-icon>
+        </div> -->
+      </div>
+    </div>
+    <div class="report">
+        <lord-icon class="report-btn" src="https://cdn.lordicon.com/rslnizbt.json" trigger="loop-on-hover"
+          style="width:32px;height:32px">
+        </lord-icon>
+      </div>
+  </div>
+  <hr>
+</div>
