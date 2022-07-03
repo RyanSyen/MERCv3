@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import { PhotoService } from '../../../service/photoservice';
 import { Galleria } from 'primeng/galleria';
 import { Image } from '../../../domain/image';
@@ -11,7 +11,14 @@ import { Image } from '../../../domain/image';
 })
 export class ProductDetailsGalleryComponent implements OnInit {
 
-  images!: Image[];
+  firstProductImages!: Image[];
+  secondProductImages!: Image[];
+  thirdProductImages!: Image[];
+
+
+  @Input() activeImage!: number;
+
+  @Output() imgChanged: EventEmitter<number> = new EventEmitter();
 
   responsiveOptions;
 
@@ -36,9 +43,43 @@ export class ProductDetailsGalleryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.imageService.getImages().then(images => {
-      this.images = images;
-      console.log(this.images)
+
+    // if (this.activeImage == 1) {
+    //   // get first product images
+    //   this.imageService.getFirstProductImages().then(images => {
+    //     this.images = images;
+    //     console.log(this.activeImage);
+    //     alert(1)
+    //   });
+    // } else if(this.activeImage == 2){
+    //   // get second product images
+    //   this.imageService.getSecondProductImages().then(images => {
+    //     this.images = images;
+    //     console.log(this.activeImage)
+    //     alert(2)
+    //   });
+    // } else if(this.activeImage == 3){
+    //   // get third product images
+    //   this.imageService.getThirdProductImages().then(images => {
+    //     this.images = images;
+    //     console.log(this.activeImage)
+    //     alert(3)
+    //   });
+    // }
+
+    // get first product images
+    this.imageService.getFirstProductImages().then(images => {
+      this.firstProductImages = images;
+    });
+
+    // get second product images
+    this.imageService.getSecondProductImages().then(images => {
+      this.secondProductImages = images;
+    });
+
+    // get third product images
+    this.imageService.getThirdProductImages().then(images => {
+      this.thirdProductImages = images;
     });
   }
 }

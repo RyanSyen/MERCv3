@@ -24,6 +24,7 @@ export class MainProductDetailsComponent implements OnInit {
   SubColor0: any;
   SubColor1: any;
 
+  activeImg: number = 1;
 
   constructor(private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal) { }
 
@@ -58,7 +59,9 @@ export class MainProductDetailsComponent implements OnInit {
       this.SubColor1 = ['circle', this.product.color2];
       console.log(this.product);
       console.log(this.product.name);
+      console.log(this.product.image1);
     });
+
   }
 
   // open modal with custom back drop class
@@ -85,6 +88,8 @@ export class MainProductDetailsComponent implements OnInit {
       this.mainImg = 'active';
       this.subImg0 = '';
       this.subImg1 = '';
+      this.activeImg = 1;
+      console.log(this.activeImg);
     } else if (color == this.product.color1) {
       this.MainColor = ['circle', this.product.color0];
       this.SubColor0 = ['circle', this.product.color1, 'active'];
@@ -92,6 +97,8 @@ export class MainProductDetailsComponent implements OnInit {
       this.mainImg = '';
       this.subImg0 = 'active';
       this.subImg1 = '';
+      this.activeImg = 2;
+      console.log(this.activeImg);
     } else if (color == this.product.color2) {
       this.MainColor = ['circle', this.product.color0];
       this.SubColor0 = ['circle', this.product.color1];
@@ -99,6 +106,8 @@ export class MainProductDetailsComponent implements OnInit {
       this.mainImg = '';
       this.subImg0 = '';
       this.subImg1 = 'active';
+      this.activeImg = 3;
+      console.log(this.activeImg);
     }
   }
 

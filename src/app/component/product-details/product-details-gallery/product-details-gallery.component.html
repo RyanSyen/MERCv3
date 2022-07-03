@@ -38,16 +38,41 @@
     </p-galleria>
   </div>
 </div> -->
-
-<p-carousel [value]="images" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true"
-  [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
-  <ng-template let-product pTemplate="item" >
-    <div class="product-item">
-      <div class="product-item-content">
-        <div class="slide-img">
-          <img  src={{product.previewImageSrc}} alt="img">
+<div [ngSwitch]="activeImage">
+  <p-carousel *ngSwitchCase="1" [value]="firstProductImages" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
+    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+    <ng-template let-product pTemplate="item">
+      <div class="product-item">
+        <div class="product-item-content">
+          <div class="slide-img">
+            <img src={{product.previewImageSrc}} alt="img">
+          </div>
         </div>
       </div>
-    </div>
-  </ng-template>
-</p-carousel>
+    </ng-template>
+  </p-carousel>
+  <p-carousel *ngSwitchCase="2" [value]="secondProductImages" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
+    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+    <ng-template let-product pTemplate="item">
+      <div class="product-item">
+        <div class="product-item-content">
+          <div class="slide-img">
+            <img src={{product.previewImageSrc}} alt="img">
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+  <p-carousel *ngSwitchCase="3" [value]="thirdProductImages" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
+    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+    <ng-template let-product pTemplate="item">
+      <div class="product-item">
+        <div class="product-item-content">
+          <div class="slide-img">
+            <img src={{product.previewImageSrc}} alt="img">
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

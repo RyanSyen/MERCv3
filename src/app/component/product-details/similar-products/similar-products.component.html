@@ -1,1 +1,57 @@
-<p>similar-products works!</p>
+<div>
+  <h4>Product Rating</h4>
+  <div>
+    <div>
+      <p><span>5</span> out of 5</p>
+
+      <ng-template #t let-fill="fill">
+        <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+        </span>
+      </ng-template>
+
+      <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+
+    </div>
+    <div>
+      <button>All</button>
+      <button>5 ⭐ (5)</button>
+      <button>4 ⭐ (0)</button>
+      <button>3 ⭐ (0)</button>
+      <button>2 ⭐ (0)</button>
+      <button>1 ⭐ (0)</button>
+      <button>With Comments (2)</button>
+      <button>With Media (2)</button>
+    </div>
+  </div>
+  <div>
+    <div>
+      <div><img src="../../../../assets/diamond.png" alt=""></div>
+      <div>
+        <p>username</p>
+        <div class="user-rating">
+          <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+            </span>
+          </ng-template>
+
+          <ngb-rating [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+        </div>
+        <div>
+          <span>$date and time</span>
+          <span>Variation: $variation</span>
+        </div>
+        <p>Commets</p>
+        <div>
+          <img style="width:80px;" src="../../../../assets/img/discountedProducts/addidas-shoes/blue.png" alt="media">
+        </div>
+        <div>
+          <lord-icon src="https://cdn.lordicon.com/rslnizbt.json" trigger="loop-on-hover"
+            style="width:32px;height:32px">
+          </lord-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

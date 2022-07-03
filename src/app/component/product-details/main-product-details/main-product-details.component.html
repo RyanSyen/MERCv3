@@ -116,8 +116,10 @@
 </div>
 
 <!-- using primeng gallery component  -->
-<app-product-details-gallery></app-product-details-gallery>
+<app-product-details-gallery [activeImage]="activeImg" (imgChanged)="activeImg=$event"></app-product-details-gallery>
 
 <app-product-details-accordion></app-product-details-accordion>
+
+<app-similar-products></app-similar-products>
 
 <app-footer></app-footer>
