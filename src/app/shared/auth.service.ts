@@ -1,7 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import {AngularFirestore, AngularFirestoreDocument,} from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreDocument, } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { User } from '../shared/user';
 import { user } from '@angular/fire/auth';
@@ -33,8 +33,8 @@ export class AuthService {
     });
   }
 
-   // Sign in with email/password
-   login(email: string, password: string) {
+  // Sign in with email/password
+  login(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -149,18 +149,21 @@ export class AuthService {
   //   })
   // }
 
-   // Returns true when user is looged in and email is verified
-   get isLoggedIn(): boolean {
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user')!);
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
-   // Sign in with Google
-   googleSignIn() {
+  // Sign in with Google
+  googleSignIn() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
       if (res) {
-        alert('Welcome back' + user.name)
-        this.router.navigate(['./home']);
+        alert('Welcome back' + user.name); //wont run, need to put at the home page
+        setTimeout(() => {
+          this.router.navigate(['./home']);
+        }, 2000);
+
       }
     });
   }

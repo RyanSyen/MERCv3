@@ -158,7 +158,6 @@ input:active {
 
 .other-methods {
   max-width: 90%;
-  /* margin: 40px auto; */
   margin-left: 10px;
   text-align: center;
 
@@ -167,16 +166,19 @@ input:active {
     position: relative;
     border: 0;
     height: 1.5em;
+    background: transparent;
+    color: black;
+    opacity: 1;
 
     &:before {
       content: '';
-      /* background: linear-gradient(315deg, #045de9 0%, #09c6f9 74%); */
-      background: linear-gradient(to right, transparent, #045de9, transparent);
+      background: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+      // background: linear-gradient(to right, transparent, #045de9, transparent);
       position: absolute;
       left: 0;
       top: 50%;
       width: 100%;
-      height: 1px;
+      height: 1.5px;
     }
 
     &:after {
@@ -192,29 +194,30 @@ input:active {
   }
 }
 
-.card{
+.card {
   border: 1px solid #696969;
   border-radius: 50px;
   margin-top: 10px;
 
-  &:hover{
-
-  }
+  &:hover {}
 }
 
 .card-body {
   padding: 10px;
   cursor: pointer;
   display: flex;
+  justify-content: center;
+  align-items: center;
 
-  p{
-    margin: 3px 0 0 5px;
+
+  p {
+    margin: 0 0 0 3px;
   }
 }
 
 .other-sign-in-methods {
-  @include flexCenter;
-  margin-top: 20px;
+  max-width: 250px;
+  margin: 0 auto;
 }
 
 .err-msg {
