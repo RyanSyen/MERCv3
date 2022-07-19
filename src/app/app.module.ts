@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -15,8 +15,9 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore  } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+
 
 // routing
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './shared/auth.service';
 import { ProductService } from './service/productservice';
 import { PhotoService } from './service/photoservice';
+import { CommentService } from './service/commentservice';
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -35,12 +37,27 @@ import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
 // other packages
 import lottie from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
-// import { NgImageSliderModule } from 'ng-image-slider';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+const materialModules = [
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
+];
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import {CarouselModule} from 'primeng/carousel';
 import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TableModule } from 'primeng/table';
+import { MessageService } from 'primeng/api';
+import {DialogModule} from 'primeng/dialog';
+// import {DynamicDialogModule} from 'primeng/dynamicdialog';
+// import { AngularMaterialModule } from './angular-material.module';
+
 
 // components
 import { LoginComponent } from './component/login/login.component';
@@ -65,6 +82,7 @@ import { ProductDetailsAccordionComponent } from './component/product-details/pr
 import { ProductDetailsGalleryComponent } from './component/product-details/product-details-gallery/product-details-gallery.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { RatingComponent } from './component/product-details/rating/rating.component';
+import { CartComponent } from './component/cart/cart.component';
 
 
 
@@ -92,7 +110,8 @@ import { RatingComponent } from './component/product-details/rating/rating.compo
     ProductDetailsAccordionComponent,
     ProductDetailsGalleryComponent,
     FooterComponent,
-    RatingComponent
+    RatingComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -115,10 +134,17 @@ import { RatingComponent } from './component/product-details/rating/rating.compo
     CarouselModule,
     ButtonModule,
     ToastModule,
+    NgxSpinnerModule,
+    OverlayPanelModule,
+    TableModule,
+    DialogModule,
+    // DynamicDialogModule,
+    // AngularMaterialModule,
   ],
-  providers: [AuthService, AuthGuard, ProductService, PhotoService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase  }],
+
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase  }],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
   constructor() {

@@ -1,0 +1,126 @@
+.table-responsive {
+  margin: 15px 20px 0 20px;
+
+  table {
+    width: 100%;
+    // border: 1px solid #3184f9 ;
+    padding: 10px 10px 0 10px;
+    border-spacing: 30px;
+    text-align: center;
+
+    tr {
+      border-bottom: 2px solid #3184f9;
+    }
+  }
+}
+
+
+.table-header {
+  padding-bottom: 15px;
+
+  tr {}
+}
+
+.cart-img {
+  width: 100px;
+}
+
+.product-header {
+  text-align: left;
+}
+
+.item-product {
+  text-align: left;
+}
+
+.product-row {
+  vertical-align: middle;
+
+  &:hover {
+    background-color: #d8f9ff;
+    cursor: pointer;
+  }
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #ccc;
+  font-size: smaller;
+}
+
+.total-price {
+  color: #005DE8;
+}
+
+.del {
+  color: red;
+}
+
+.voucherModalBtn {
+  color: #005DE8;
+  font-size: small;
+  cursor: pointer;
+}
+
+.voucher-container {
+  display: flex;
+  margin: 15px 0;
+
+  h6 {
+    font-weight: 700;
+    margin-right: 15px;
+  }
+
+
+}
+
+.discount-container {
+  display: flex;
+  justify-content: space-between;
+
+  h6 {
+    font-weight: 700;
+  }
+
+  p {
+    font-weight: 500;
+    color: red;
+  }
+}
+
+
+.left-bottom-panel {
+  float: left;
+  display: flex;
+
+  p {
+    margin: 0 10px;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+}
+
+.checkbox-border {
+  border: 1px solid #005DE8;
+  height: 16px;
+  width: 16px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.tick {
+  font-size: xx-small;
+  margin: 0;
+  visibility: hidden;
+  cursor: default;
+}
+
+.active {
+  visibility: visible !important;
+  background-color: #005DE8;
+  color: white;
+  height: 100%;
+}

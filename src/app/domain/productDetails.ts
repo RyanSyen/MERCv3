@@ -1,0 +1,111 @@
+export interface ProductDetails {
+
+    highlight1img: string;
+    highlight1header: string;
+    highlight1description: string,
+    highlight2img: string;
+    highlight2header: string;
+    highlight2description: string,
+    highlight3img: string;
+    highlight3header: string;
+    highlight3description: string,
+
+    descriptionHeader: string,
+    descriptionText: string,
+    descriptionImg: string,
+    details1: string,
+    details2: string,
+    details3: string,
+    details4: string,
+    details5: string,
+    details6: string,
+    details7: string,
+
+    generalSpecificationsHeader: string;
+    generalSpecificationsBluetoothVersionHeader: string;
+    generalSpecificationsBluetoothVersion: number;
+    generalSpecificationsDriverSizeHeader: string;
+    generalSpecificationsDriverSize: number;
+
+
+    audioSpecificationsHeader: string;
+    audioSpecificationsDriverSensitivityHeader: string;
+    audioSpecificationsDriverSensitivity: string;
+    audioSpecificationsDynamicFrequencyRangeHeader: string;
+    audioSpecificationsDynamicFrequencyRange: string;
+    audioSpecificationsImpedanceHeader: string;
+    audioSpecificationsImpedance: number;
+
+    dimensionsHeader: string;
+    dimensionsWeightHeader: string;
+    dimensionsWeight: number;
+    dimensionsWeight1Header: string;
+    dimensionsWeight1: number;
+
+    cncspecHeader: string;
+    bluetoothProfileHeader: string;
+    bluetoothProfile: string;
+    bluetoothFrequencyHeader: string;
+    bluetoothFrequency: string;
+    bluetoothTransmittedModulationHeader: string;
+    bluetoothTransmittedModulation: string;
+    bluetoothTransmitterWowerHeader: string;
+    bluetoothTransmitterWower: string;
+    batterHeader: string;
+    batteryChargingTimeHeader: string;
+    batteryChargingTime: number;
+    maxMusicPlayOffHeader: string;
+    maxMusicPlayOff: number;
+    maxMusicPlayOnHeader: string;
+    maxMusicPlayOn: number;
+    featuresHeader: string;
+    features1Header: string;
+    features1: string;
+    features2Header: string;
+    features2: string;
+    features3Header: string;
+    features3: string;
+    features4Header: string;
+    features4: string;
+    features5Header: string;
+    features5: string;
+    features6Header: string;
+    features6: string;
+    features7Header: string;
+    features7: string;
+    features8Header: string;
+    features8: string;
+    features9Header: string;
+    features9: string;
+    features10Header: string;
+    features10: string;
+    features11Header: string;
+    features11: string;
+    features12Header: string;
+    features12: string;
+    features13Header: string;
+    features13: string;
+    features14Header: string;
+    features14: string;
+    features15Header: string;
+    features15: string;
+    boxHeader: string;
+    boxImg: string;
+    boxHeaderDetails1: string;
+    boxHeaderDetails2: string;
+    boxHeaderDetails3: string;
+    boxHeaderDetails4: string;
+    boxHeaderDetails5: string;
+    boxHeaderDetails6: string;
+    boxHeaderDetails7: string;
+
+    docndownloadsHeader: string;
+    docndownloadsDoc1Header: string;
+    docndownloadsDoc1Link: string;
+    docndownloadsDoc2Header: string;
+    docndownloadsDoc2Link: string;
+    docndownloadsDoc3Header: string;
+    docndownloadsDoc3Link: string;
+    docndownloadsDoc4Header: string;
+    docndownloadsDoc4Link: string;
+}

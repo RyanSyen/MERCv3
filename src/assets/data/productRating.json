@@ -1,0 +1,53 @@
+{
+    "data":[
+        {
+            "username": "Khaby Lamer",
+            "profilePic": "../../../../assets/img/comments/khaby.png",
+            "rating": 5,
+            "dateTime": "7/8/2022 13:45",
+            "variation": "blue",
+            "comment": "Very comfortable! 👍"
+        },{
+            "username": "Abang Roger",
+            "profilePic": "../../../../assets/img/comments/uncleRoger.png",
+            "rating": 5,
+            "dateTime": "7/8/2022 11:00",
+            "variation": "yellow",
+            "comment": "Fuiyoh very nice like my msg! 👍"
+        }
+    ],
+    "data1":[
+        {
+            "username": "Nameweeb",
+            "profilePic": "../../../../assets/img/comments/namewee.png",
+            "rating": 5,
+            "dateTime": "8/8/2022 12:45",
+            "variation": "black",
+            "comment": "Good product! "
+        },{
+            "username": "Richado",
+            "profilePic": "../../../../assets/img/comments/richardo.png",
+            "rating": 5,
+            "dateTime": "7/8/2022 1:45",
+            "variation": "blue",
+            "comment": "Oh yeah uh huh. It has good bass bro!"
+        }
+    ],
+    "data2":[
+        {
+            "username": "Elan Musk",
+            "profilePic": "../../../../assets/img/comments/musk.png",
+            "rating": 4,
+            "dateTime": "7/8/2022 5:45",
+            "variation": "Burgundy",
+            "comment": "Meets my every need"
+        },{
+            "username": "Lai Zii Jia",
+            "profilePic": "../../../../assets/img/comments/ziijia.png",
+            "rating": 5,
+            "dateTime": "7/8/2022 13:45",
+            "variation": "White",
+            "comment": "Suii nice and sleek design"
+        }
+    ]
+}

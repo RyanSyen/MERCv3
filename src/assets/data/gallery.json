@@ -184,5 +184,217 @@
             "alt": "Description for Image 10",
             "title": "Title 10"
         }
+    ],
+    "data3":[
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/1.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/1.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/2.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/2.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/3.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/3.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/4.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/4.png",
+            "alt": "Description for Image 4",
+            "title": "Title 4"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/5.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/5.png",
+            "alt": "Description for Image 5",
+            "title": "Title 5"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/6.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/6.png",
+            "alt": "Description for Image 6",
+            "title": "Title 6"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/7.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/7.png",
+            "alt": "Description for Image 7",
+            "title": "Title 7"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/8.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/8.png",
+            "alt": "Description for Image 8",
+            "title": "Title 8"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/9.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/9.png",
+            "alt": "Description for Image 9",
+            "title": "Title 9"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/10.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/addidas-shoes/gallery/yellow/10.png",
+            "alt": "Description for Image 10",
+            "title": "Title 10"
+        }
+    ],
+    "data4":[
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/1.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/1.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/2.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/2.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/3.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/3.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/4.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/4.png",
+            "alt": "Description for Image 4",
+            "title": "Title 4"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/5.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/5.png",
+            "alt": "Description for Image 5",
+            "title": "Title 5"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/6.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/6.png",
+            "alt": "Description for Image 6",
+            "title": "Title 6"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/7.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/7.png",
+            "alt": "Description for Image 7",
+            "title": "Title 7"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/8.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/black/8.png",
+            "alt": "Description for Image 8",
+            "title": "Title 8"
+        }
+    ],
+    "data5":[
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/1.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/1.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/2.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/2.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/3.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/3.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/4.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/4.png",
+            "alt": "Description for Image 4",
+            "title": "Title 4"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/5.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/5.png",
+            "alt": "Description for Image 5",
+            "title": "Title 5"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/6.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/6.png",
+            "alt": "Description for Image 6",
+            "title": "Title 6"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/7.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/7.png",
+            "alt": "Description for Image 7",
+            "title": "Title 7"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/8.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/blue/8.png",
+            "alt": "Description for Image 8",
+            "title": "Title 8"
+        }
+    ],
+    "data6":[
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/1.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/1.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/2.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/2.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/3.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/3.png",
+            "alt": "",
+            "title": ""
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/4.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/4.png",
+            "alt": "Description for Image 4",
+            "title": "Title 4"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/5.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/5.png",
+            "alt": "Description for Image 5",
+            "title": "Title 5"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/6.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/6.png",
+            "alt": "Description for Image 6",
+            "title": "Title 6"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/7.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/7.png",
+            "alt": "Description for Image 7",
+            "title": "Title 7"
+        },
+        {
+            "previewImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/8.png",
+            "thumbnailImageSrc": "../../../../assets/img/discountedProducts/jbl-headphones/gallery/white/8.png",
+            "alt": "Description for Image 8",
+            "title": "Title 8"
+        }
     ]
 }

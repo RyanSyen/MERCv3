@@ -6,7 +6,7 @@
 			"name": "ADDIDAS GAZE ZX",
 			"description": "Built on the innovative spirit of the ZX design code, they have a full-length Boost midsole wrapped in translucent tooling. Suede overlays and reflective details accent the mesh upper for style that shines.",
 			"image0": "discountedProducts/addidas-shoes/blue.png",
-			"image1": "discountedProducts/addidas-shoes/transparent-bg/blue.png",
+			"image1": "discountedProducts/addidas-shoes/transparent-bg/blue1.png",
 			"image2": "discountedProducts/addidas-shoes/transparent-bg/pink.png",
 			"image3": "discountedProducts/addidas-shoes/transparent-bg/yellow.png",
 			"oldPrice": 580,
@@ -20,7 +20,13 @@
 			"color0": "blue",
 			"color1": "pink",
 			"color2": "yellow",
-			"type": "discounted"
+			"type": "discounted",
+			"gallery": true,
+			"highlights": true,
+			"productDescriptionSpecs": true,
+			"documentsDownloads": false,
+			"box": false,
+			"details": true
 		},{
 			"id": "1001",
 			"logo": "discountedProducts/jbl-headphones/logo.png",
@@ -41,7 +47,13 @@
 			"color0": "black",
 			"color1": "blue",
 			"color2": "white",
-			"type": "discounted"
+			"type": "discounted",
+			"gallery": false,
+			"highlights": true,
+			"productDescriptionSpecs": true,
+			"documentsDownloads": true,
+			"box": false,
+			"details": false
 		},{
 			"id": "1002",
 			"logo": "discountedProducts/samsung-s22/samsung.png",
@@ -68,7 +80,13 @@
 			"color0": "burgundy",
 			"color1": "green",
 			"color2": "white",
-			"type": "discounted"
+			"type": "discounted",
+			"gallery": false,
+			"highlights": true,
+			"productDescriptionSpecs": true,
+			"documentsDownloads": false,
+			"box": true,
+			"details": false
 		}
     ]
 }

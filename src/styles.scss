@@ -4,6 +4,7 @@
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/themes/saga-blue/theme.css';
 @import '~primeng/resources/primeng.min.css';
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 *{
     scroll-behavior: smooth;
@@ -33,4 +34,16 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #333; 
+}
+
+.cursor{
+	position: fixed;
+	z-index: 1000;
+	transform: translate(-12px, -12px);
+	width: 40px;
+	height: 40px;
+	border-radius: 100%;
+	border: 3px solid #e4e1e2;
+	user-select: none;
+	transition: 0.6s transform ease-in-out;
 }

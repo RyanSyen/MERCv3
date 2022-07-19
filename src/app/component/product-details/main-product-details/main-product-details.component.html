@@ -15,40 +15,87 @@
   </div>
 </ng-template>
 
+<!-- loading component  -->
+<div id="loader">
+  <style>
+    .application-loading-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-<div class="container product-details-container">
+    .application-loading-box {
+      width: 300px;
+      margin: 5px;
+      text-align: center;
+    }
+
+  </style>
+  <div class="application-loading-container">
+    <div class="application-loading-box">
+      <h2>Loading...</h2>
+    </div>
+  </div>
+</div>
+
+<div id="loader" style="display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100vh;" *ngIf="loaderr">
+  <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+
+<!-- <div>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+</div> -->
+
+
+
+<div class="container product-details-container" *ngIf="!loaderr">
   <div class="row-container">
     <div class="imgContainer">
-      <img class="activeImg" [ngClass]="mainImg" alt="activeImg" src="../../../../assets/img/{{product.image1}}" />
-      <img class="activeImg" [ngClass]="subImg0" alt="activeImg" src="../../../../assets/img/{{product.image2}}" />
-      <img class="activeImg" [ngClass]="subImg1" alt="activeImg" src="../../../../assets/img/{{product.image3}}" />
+      <img class="activeImg" [ngClass]="mainImg" alt="activeImg" src="../../../../assets/img/{{productImg1}}" />
+      <img class="activeImg" [ngClass]="subImg0" alt="activeImg" src="../../../../assets/img/{{productImg2}}" />
+      <img class="activeImg" [ngClass]="subImg1" alt="activeImg" src="../../../../assets/img/{{productImg3}}" />
       <br />
       <div class="subImages">
         <div class="subImages-container">
-          <img class="subImages-img" [ngClass]="mainImg" alt="firstImg" src="../../../../assets/img/{{product.image1}}" (click)="changeColor(product.color0)"/>
+          <img class="subImages-img" [ngClass]="mainImg" alt="firstImg" src="../../../../assets/img/{{productImg1}}"
+            (click)="changeColor(product.color0)" />
         </div>
         <div class="subImages-container">
-          <img class="subImages-img" [ngClass]="subImg0" alt="secondImg" src="../../../../assets/img/{{product.image2}}" (click)="changeColor(product.color1)"/>
+          <img class="subImages-img" [ngClass]="subImg0" alt="secondImg" src="../../../../assets/img/{{productImg2}}"
+            (click)="changeColor(product.color1)" />
         </div>
         <div class="subImages-container">
-          <img class="subImages-img" [ngClass]="subImg1" alt="thirdImg" src="../../../../assets/img/{{product.image3}}" (click)="changeColor(product.color2)"/>
+          <img class="subImages-img" [ngClass]="subImg1" alt="thirdImg" src="../../../../assets/img/{{productImg3}}"
+            (click)="changeColor(product.color2)" />
         </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="title">
-        <h2>{{product.name}}</h2>
-        <img *ngIf="product.type == 'discounted'" src="../../../../assets/img/productDetails/discount.png"
+        <h2>{{productName}}</h2>
+        <img *ngIf="productType == 'discounted'" src="../../../../assets/img/productDetails/discount.png"
           alt="discount-logo">
+          <p>({{sold}} sold)</p>
       </div>
 
       <br />
-      <p class="description">{{product.description}}</p>
+      <p class="description">{{productDescription}}</p>
       <br>
       <div class="price-guarantee">
         <div class="price">
-          <h2> RM {{product.discountedPrice}}</h2>
-          <p> RM {{product.oldPrice}}</p>
+          <h2> RM {{discountedPrice}}</h2>
+          <p> RM {{oldPrice}}</p>
 
         </div>
         <div class="authentic-guarantee">
@@ -84,43 +131,59 @@
 
       </div>
       <br />
-      <div class="size-container">
-        <h5 class="sizes">Sizes: </h5>
-        <span>UK 7</span>
-        <span>UK 7.5</span>
-        <span>UK 8</span>
-        <span>UK 8.5</span>
-        <span>UK 9</span>
-        <span>UK 9.5</span>
+
+      <div [ngSwitch]="productId">
+        <div *ngSwitchCase="'1000'" class="container-size-container">
+          <div class="size-container">
+            <h5 class="sizes">Sizes: </h5>
+            <span>UK 7</span>
+            <span>UK 7.5</span>
+            <span>UK 8</span>
+            <span>UK 8.5</span>
+            <span>UK 9</span>
+            <span>UK 9.5</span>
+          </div>
+          <a (click)="openBackDropCustomClass(content)" class="size-chart-link">Size chart</a>
+        </div>
+        <!-- configure based on id, diff products diff options  -->
+        <!-- <div *ngSwitchCase="'1001'">
+        </div> -->
+
+        <div *ngSwitchCase="'1002'" class="container-size-container">
+          <div class="size-container">
+            <h5 class="sizes">Sizes: </h5>
+            <span (click)="changeSpecs()">128 GB | 8 GB</span>
+            <span>256 GB | 12 GB</span>
+            <span>512 GB | 12 GB</span>
+          </div>
+        </div>
+
       </div>
-      <a (click)="openBackDropCustomClass(content)" class="size-chart-link">Size chart</a>
-      <br />
-      <br />
+
       <div class="color-container">
         <h5 class="colors">Colors:</h5>
         <div class="circles">
-            <span [ngClass]="MainColor" id="mainColor" (click)="changeColor(product.color0)"></span>
-            <span [ngClass]="SubColor0" id="subColor0" (click)="changeColor(product.color1)"></span>
-            <span [ngClass]="SubColor1" id="subColor1" (click)="changeColor(product.color2)"></span>
-          </div>
+          <span [ngClass]="MainColor" id="mainColor" (click)="changeColor(color0)"></span>
+          <span [ngClass]="SubColor0" id="subColor0" (click)="changeColor(color1)"></span>
+          <span [ngClass]="SubColor1" id="subColor1" (click)="changeColor(color2)"></span>
+        </div>
       </div>
       <br />
-      <button type="button" class="add-to-cart-btn button"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
-      <button type="button" class="btn btn-primary button">Buy Now</button>
+      <button type="button" class="add-to-cart-btn button"><i class="fa-solid fa-cart-shopping"></i> Add To
+        Cart</button>
+      <button type="button" class="btn btn-primary-color button">Buy Now</button>
     </div>
   </div>
 </div>
 
-<div class="gallery-container container">
-  <h1>Gallery</h1>
-</div>
+
 
 <!-- using primeng gallery component  -->
 <app-product-details-gallery [activeImage]="activeImg" (imgChanged)="activeImg=$event"></app-product-details-gallery>
 
 <app-product-details-accordion></app-product-details-accordion>
 
-<app-rating></app-rating>
+<app-rating [productId]="productId"></app-rating>
 
 <app-similar-products></app-similar-products>
 

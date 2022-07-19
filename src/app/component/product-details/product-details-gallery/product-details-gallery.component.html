@@ -38,41 +38,48 @@
     </p-galleria>
   </div>
 </div> -->
-<div [ngSwitch]="activeImage">
-  <p-carousel *ngSwitchCase="1" [value]="firstProductImages" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
-    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
-    <ng-template let-product pTemplate="item">
-      <div class="product-item">
-        <div class="product-item-content">
-          <div class="slide-img">
-            <img src={{product.previewImageSrc}} alt="img">
+<section [ngSwitch]="productId" >
+  <div *ngSwitchCase="1002"></div>
+  
+  <div *ngSwitchDefault [ngSwitch]="activeImage">
+    <div class="gallery-container container">
+      <h1>Gallery</h1>
+    </div>
+    <p-carousel *ngSwitchCase="1" [value]="firstProductImages" styleClass="custom-carousel" [numVisible]="3"
+      [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+      <ng-template let-product pTemplate="item">
+        <div class="product-item">
+          <div class="product-item-content">
+            <div class="slide-img">
+              <img src={{product.previewImageSrc}} alt="img">
+            </div>
           </div>
         </div>
-      </div>
-    </ng-template>
-  </p-carousel>
-  <p-carousel *ngSwitchCase="2" [value]="secondProductImages" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
-    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
-    <ng-template let-product pTemplate="item">
-      <div class="product-item">
-        <div class="product-item-content">
-          <div class="slide-img">
-            <img src={{product.previewImageSrc}} alt="img">
+      </ng-template>
+    </p-carousel>
+    <p-carousel *ngSwitchCase="2" [value]="secondProductImages" styleClass="custom-carousel" [numVisible]="3"
+      [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+      <ng-template let-product pTemplate="item">
+        <div class="product-item">
+          <div class="product-item-content">
+            <div class="slide-img">
+              <img src={{product.previewImageSrc}} alt="img">
+            </div>
           </div>
         </div>
-      </div>
-    </ng-template>
-  </p-carousel>
-  <p-carousel *ngSwitchCase="3" [value]="thirdProductImages" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
-    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
-    <ng-template let-product pTemplate="item">
-      <div class="product-item">
-        <div class="product-item-content">
-          <div class="slide-img">
-            <img src={{product.previewImageSrc}} alt="img">
+      </ng-template>
+    </p-carousel>
+    <p-carousel *ngSwitchCase="3" [value]="thirdProductImages" styleClass="custom-carousel" [numVisible]="3"
+      [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+      <ng-template let-product pTemplate="item">
+        <div class="product-item">
+          <div class="product-item-content">
+            <div class="slide-img">
+              <img src={{product.previewImageSrc}} alt="img">
+            </div>
           </div>
         </div>
-      </div>
-    </ng-template>
-  </p-carousel>
-</div>
+      </ng-template>
+    </p-carousel>
+  </div>
+</section>

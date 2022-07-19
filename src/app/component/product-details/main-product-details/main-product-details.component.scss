@@ -1,7 +1,6 @@
 @import '../../../../mixins';
 @import '../../../../variables';
 
-
 .product-details-container {
   margin-top: 20px;
 }
@@ -66,6 +65,10 @@
     height: 32px;
     margin-left: 10px;
   }
+
+  p {
+    margin: 5px 0 0 5px;
+  }
 }
 
 .description {
@@ -111,6 +114,10 @@
 }
 
 // sizes
+.container-size-container {
+  margin-bottom: 20px;
+}
+
 .size-container {
   display: flex;
 
@@ -171,7 +178,7 @@
   }
 }
 
-// color options for product 1 
+// color options for product 1000 
 .circle.blue {
   background: #0071C7;
 }
@@ -199,6 +206,47 @@
     0 0 0 4px #F5DA00;
 }
 
+// color options for product 1001
+.circle.black {
+  background: $soft-black;
+}
+
+.circle.black.active {
+  box-shadow: 0 0 0 2px #fff,
+    0 0 0 4px $soft-black;
+}
+
+.circle.white {
+  // background: #ccc;
+  border: 1px solid #ccc;
+}
+
+.circle.white.active {
+  box-shadow: 0 0 0 2px #fff,
+    0 0 0 4px #ccc;
+    // border: 1px solid #ccc;
+
+}
+
+// color options for product 1002
+.circle.burgundy {
+  background: $burgundy;
+}
+
+.circle.burgundy.active {
+  box-shadow: 0 0 0 2px #fff,
+    0 0 0 4px $burgundy;
+}
+
+.circle.green {
+  background: $dark-green;
+}
+
+.circle.green.active {
+  box-shadow: 0 0 0 2px #fff,
+    0 0 0 4px $dark-green;
+}
+
 .add-to-cart-btn {
   border-color: #0d6efd;
   color: #0d6efd;
@@ -223,17 +271,4 @@
   font-weight: 600;
 }
 
-.gallery-container{
-  margin: 40px auto;
 
-  h1{
-    text-transform: uppercase;
-    margin: 0 auto;
-    background-image: linear-gradient(315deg, #2a2a72 20%, #009ffd 94%);
-    background-clip: text;
-    -moz-background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    text-align: center;
-  }
-}

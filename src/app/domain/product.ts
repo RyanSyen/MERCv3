@@ -1,5 +1,6 @@
-export interface Product{
-    id: number;
+export interface Product {
+    
+    id: string;
     logo: string;
     name: string;
     description: string;
@@ -25,7 +26,7 @@ export interface Product{
 
 
     // used in tech with additional features like higher storage
-    price0: number; 
+    price0: number;
     price1: number;
     price2: number;
     variant0: string;
@@ -39,6 +40,13 @@ export interface Product{
     color1: string;
     color2: string;
 
-    
+    store: string;
+    gallery: boolean;
+
+    highlights: boolean;
+    productDescriptionSpecs: boolean;
+    documentsDownloads: boolean;
+    box: boolean;
+    details: boolean;
 
 }

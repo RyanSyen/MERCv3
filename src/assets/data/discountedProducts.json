@@ -20,7 +20,8 @@
 			"color0": "blue",
 			"color1": "pink",
 			"color2": "yellow",
-			"type": "discounted"
+			"type": "discounted",
+			"store": "Addidas"
 		},{
 			"id": "1001",
 			"logo": "discountedProducts/jbl-headphones/logo.png",
@@ -41,7 +42,8 @@
 			"color0": "black",
 			"color1": "blue",
 			"color2": "white",
-			"type": "discounted"
+			"type": "discounted",
+			"store": "JBL"
 		},{
 			"id": "1002",
 			"logo": "discountedProducts/samsung-s22/samsung.png",
@@ -68,7 +70,8 @@
 			"color0": "burgundy",
 			"color1": "green",
 			"color2": "white",
-			"type": "discounted"
+			"type": "discounted",
+			"store": "Samsung"
 		}
     ]
 }

@@ -1,0 +1,34 @@
+{
+    "data":[
+        {
+            "id": "1000",
+            "placeholderImg": "../../../assets/img/discountedProducts/addidas-shoes/transparent-bg/blue.png",
+            "title": "ADDIDAS GAZE ZX",
+            "variations": "blue",
+            "oldPrice": 580,
+			"discountedPrice": 399,
+            "quantity": 1,
+            "totalPrice": 399
+        },
+        {
+            "id": "1001",
+            "placeholderImg": "../../../assets/img/discountedProducts/jbl-headphones/transparent-bg/jbl-black.png",
+            "title": "JBL TUNE 750BTNC",
+            "variations": "black",
+            "oldPrice": 400,
+			"discountedPrice": 359,
+            "quantity": 1,
+            "totalPrice": 359
+        },
+        {
+            "id": "1002",
+            "placeholderImg": "../../../assets/img/discountedProducts/samsung-s22/green.png",
+            "title": "Galaxy S22 Ultra",
+            "variations": "Green, 128GB | 8GB",
+            "oldPrice": 5099,
+			"discountedPrice": 4890,
+            "quantity": 1,
+            "totalPrice": 4890
+        }
+    ]
+}

@@ -11,7 +11,7 @@ import { HomeMainComponent } from './component/home/home-main/home-main.componen
 import { CategoriesMainComponent } from './component/categories/categories-main/categories-main.component';
 import { TestComponent } from './component/test/test.component';
 import { MainProductDetailsComponent } from './component/product-details/main-product-details/main-product-details.component';
-
+import { CartComponent } from './component/cart/cart.component';
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -19,7 +19,7 @@ import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
 
 // Include route guard in routes array
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesMainComponent },
   { path: 'test', component: TestComponent },
   { path: 'product_details/:id/:type', component: MainProductDetailsComponent },
-
+  { path: 'cart', component: CartComponent },
 
 ];
 

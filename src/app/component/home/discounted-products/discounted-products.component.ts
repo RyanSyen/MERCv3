@@ -39,7 +39,7 @@ export class DiscountedProductsComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getDiscountedProducts().then(products => {
       this.discountedProducts = products;
-      console.log(this.discountedProducts);
+      // console.log(this.discountedProducts);
     });
   }
 
@@ -76,9 +76,9 @@ export class DiscountedProductsComponent implements OnInit {
   product3SubColor1 = ['circle', 'white'];
 
   // method to change color and image
-  changeColor(color: string, id: number) {
+  changeColor(color: string, id: string) {
     // change the active image based on product id
-    if (id == 1000) {
+    if (id == "1000") {
       this.productColor0 = this.discountedProducts.find(x => x.id === id)!.color0;
       this.productColor1 = this.discountedProducts.find(x => x.id === id)!.color1;
       this.productColor2 = this.discountedProducts.find(x => x.id === id)!.color2;
@@ -106,7 +106,7 @@ export class DiscountedProductsComponent implements OnInit {
         this.product1subImg0 = '';
         this.product1subImg1 = 'active';
       }
-    } else if (id == 1001) {
+    } else if (id == "1001") {
       this.productColor0 = this.discountedProducts.find(x => x.id === id)!.color0;
       this.productColor1 = this.discountedProducts.find(x => x.id === id)!.color1;
       this.productColor2 = this.discountedProducts.find(x => x.id === id)!.color2;
@@ -132,7 +132,7 @@ export class DiscountedProductsComponent implements OnInit {
         this.product2subImg0 = '';
         this.product2subImg1 = 'active';
       }
-    } else if (id == 1002) {
+    } else if (id == "1002") {
       this.productColor0 = this.discountedProducts.find(x => x.id === id)!.color0;
       this.productColor1 = this.discountedProducts.find(x => x.id === id)!.color1;
       this.productColor2 = this.discountedProducts.find(x => x.id === id)!.color2;
@@ -161,7 +161,7 @@ export class DiscountedProductsComponent implements OnInit {
     }
   }
 
-  navigateToProductDetails(id : number, type : any){
+  navigateToProductDetails(id : string, type : any){
     // Method 1 -> provide both path and the route parameter (as second element)
     this.router.navigate(['/product_details/',id, type]);
 
@@ -169,7 +169,7 @@ export class DiscountedProductsComponent implements OnInit {
     // this.router.navigate(['/product_details]', {queryParams: {id: id, type: type}}]);
   }
 
-  addToCart(id:number){
+  addToCart(id:string){
     this.router.navigate(['/cart/',id]);
   }
 

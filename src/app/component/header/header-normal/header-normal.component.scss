@@ -67,3 +67,49 @@ nav {
     padding: 0.5rem 0;
   }
 }
+
+.cart-img {
+  width: 100px;
+}
+
+.cart-dets-container {
+  display: flex;
+  margin: 15px;
+}
+
+.cart-dets {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 15px;
+
+
+}
+
+.shoppingCart {
+  margin-bottom: 10px;
+
+  a {
+    text-decoration: none;
+    color: #1f1f1f;
+
+    &:hover {
+      color: #005DE8;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+.discountedPrice {
+  color: #005DE8;
+  font-size: larger;
+  font-weight: 600;
+}

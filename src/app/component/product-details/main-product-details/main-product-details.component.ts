@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { ProductService } from '../../../service/productservice';
 import { Product } from '../../../domain/product';
+import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Renderer2 } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
+
 
 @Component({
   selector: 'app-main-product-details',
@@ -17,21 +21,87 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class MainProductDetailsComponent implements OnInit {
   product: any;
+
+  productLogo: string;
+  productDescription: string;
+  productName: string;
+  productImg1: string;
+  productImg2: string;
+  productImg3: string;
+  oldPrice: number;
+  discountedPrice: number;
+  category: string;
+  stock0: number;
+  stock1: number;
+  stock2: number;
+  rating: number;
+  sold: number;
+  color0: string;
+  color1: string;
+  color2: string;
+  gallery: boolean;
+
+  // variables to get product id and type from param
   productId: any;
   productType: any;
 
+  // define color 
   MainColor: any;
   SubColor0: any;
   SubColor1: any;
 
+  loaderr = true;
   activeImg: number = 1;
 
-  constructor(private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal) { }
+  constructor(private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal, private firebasecrudservice: FirebaseCRUDService, private renderer: Renderer2, private spinner: NgxSpinnerService) {
+
+
+    this.productLogo = '';
+    this.productDescription = '';
+    this.productName = '';
+    this.productImg1 = '';
+    this.productImg2 = '';
+    this.productImg3 = '';
+    this.oldPrice = 0;
+    this.discountedPrice = 0;
+    this.category = '';
+    this.stock0 = 0;
+    this.stock1 = 0;
+    this.stock2 = 0;
+    this.rating = 0;
+    this.sold = 0;
+    this.color0 = '';
+    this.color1 = '';
+    this.color2 = '';
+    this.gallery = true;
+
+    window.onbeforeunload = function() {window.scrollTo(0,0);}
+  }
+
+
 
   ngOnInit(): void {
+    // Called after the constructor and called  after the first ngOnChanges()
+
+    
+
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0)
+    });
+
+    setTimeout(() => {
+      this.loaderr = false;
+      let loader = this.renderer.selectRootElement('#loader');
+      this.renderer.setStyle(loader, 'display', 'none');
+    }, 2500);
+
     // Method 1
     this._Activatedroute.paramMap.subscribe(params => {
       this.productId = params.get('id');
+      // console.log(typeof this.productId);
       this.productType = params.get('type');
     })
 
@@ -50,17 +120,54 @@ export class MainProductDetailsComponent implements OnInit {
     //   this.productType = params.get('type');
     // })
 
-    // get products data based on id passed
-    this.productService.getAllProducts().then(products => {
-      this.product = products.find(x => x.id === this.productId);
-        // define colors for product1
-      this.MainColor = ['circle', this.product.color0, 'active'];
-      this.SubColor0 = ['circle', this.product.color1];
-      this.SubColor1 = ['circle', this.product.color2];
-      console.log(this.product);
-      console.log(this.product.name);
-      console.log(this.product.image1);
+    // get products data based on id passed (old method -> get data from json file)
+    // this.productService.getAllProducts().then(products => {
+    //   this.product = products.find(x => x.id === +this.productId); // convert string to int using parseInt or parseFloat or the unary + operator
+
+    //   // define colors for product1
+    //   this.MainColor = ['circle', this.product.color0, 'active'];
+    //   this.SubColor0 = ['circle', this.product.color1];
+    //   this.SubColor1 = ['circle', this.product.color2];
+    //   console.log(this.product);
+    //   console.log(this.product.name);
+    //   console.log(this.product.image1);
+    // });
+
+    // get products data based on id passed from firebase 
+    this.firebasecrudservice.getProductByIDFromAllProducts(this.productId).subscribe(res => {
+      this.product = res;
+      this.productLogo = res.logo;
+      this.productName = res.name;
+      this.productDescription = res.description;
+      this.productImg1 = res.image1;
+      this.productImg2 = res.image2;
+      this.productImg3 = res.image3;
+      this.color0 = res.color0;
+      this.color1 = res.color1;
+      this.color2 = res.color2;
+      this.oldPrice = res.oldPrice;
+      this.discountedPrice = res.discountedPrice;
+      this.category = res.category;
+      this.sold = res.sold;
+      this.gallery = res.gallery;
+
+      // define color 
+      this.MainColor = ['circle', res.color0, 'active'];
+      this.SubColor0 = ['circle', res.color1];
+      this.SubColor1 = ['circle', res.color2];
     });
+
+
+    
+
+
+  }
+
+
+  ngAfterViewInit() {
+    let loader = this.renderer.selectRootElement('#loader');
+    this.renderer.setStyle(loader, 'display', 'none');
+
 
   }
 
@@ -74,41 +181,47 @@ export class MainProductDetailsComponent implements OnInit {
   mainImg = 'active';
   subImg0 = '';
   subImg1 = '';
-  
+
+
+
 
 
   // method to change color and image
   changeColor(color: string) {
-    if (color == this.product.color0) {
+    if (color == this.color0) {
       // change active color
-      this.MainColor = ['circle', this.product.color0, 'active'];
-      this.SubColor0 = ['circle', this.product.color1];
-      this.SubColor1 = ['circle', this.product.color2];
+      this.MainColor = ['circle', this.color0, 'active'];
+      this.SubColor0 = ['circle', this.color1];
+      this.SubColor1 = ['circle', this.color2];
       // change active image
       this.mainImg = 'active';
       this.subImg0 = '';
       this.subImg1 = '';
       this.activeImg = 1;
-      console.log(this.activeImg);
-    } else if (color == this.product.color1) {
-      this.MainColor = ['circle', this.product.color0];
-      this.SubColor0 = ['circle', this.product.color1, 'active'];
-      this.SubColor1 = ['circle', this.product.color2];
+    } else if (color == this.color1) {
+      this.MainColor = ['circle', this.color0];
+      this.SubColor0 = ['circle', this.color1, 'active'];
+      this.SubColor1 = ['circle', this.color2];
       this.mainImg = '';
       this.subImg0 = 'active';
       this.subImg1 = '';
       this.activeImg = 2;
-      console.log(this.activeImg);
-    } else if (color == this.product.color2) {
-      this.MainColor = ['circle', this.product.color0];
-      this.SubColor0 = ['circle', this.product.color1];
-      this.SubColor1 = ['circle', this.product.color2, 'active'];
+    } else if (color == this.color2) {
+      console.log(this.color2);
+      this.MainColor = ['circle', this.color0];
+      this.SubColor0 = ['circle', this.color1];
+      this.SubColor1 = ['circle', this.color2, 'active'];
       this.mainImg = '';
       this.subImg0 = '';
       this.subImg1 = 'active';
       this.activeImg = 3;
-      console.log(this.activeImg);
+    } else {
+      alert('no products found')
     }
+  }
+
+  changeSpecs(){
+    alert('test')
   }
 
 }

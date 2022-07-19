@@ -4,72 +4,273 @@
 
 <div class="container">
   <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-    <!-- <ngb-panel title="Simple"> -->
-    <ngb-panel>
+
+    <!-- highlights  -->
+    <ngb-panel *ngIf="highlights">
       <ng-template ngbPanelTitle>
         <p class="title">Highlights</p>
       </ng-template>
-      <ng-template ngbPanelContent>
-        <div class="highlights-container">
+      <ng-template ngbPanelContent [ngSwitch]="productId">
+        <div class="highlights-container" *ngSwitchCase="1000">
           <div class="highlight-section">
             <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/3.png" alt="img3">
-            <h4>WRAPPED BOOST MIDSOLE</h4>
-            <p>The responsive midsole with a striking gradient delivers the cushioned comfort of wrapped Boost.</p>
+            <h4>{{productDetails.highlight1header}}</h4>
+            <p>{{productDetails.highlight1description}}</p>
           </div>
           <div class="highlight-section">
             <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/2.png" alt="img2">
-            <h4>LIGHTWEIGHT MESH UPPER</h4>
-            <p>A smooth mesh upper with TPU overlays wraps the foot in adaptive support and breathable comfort.</p>
+            <h4>{{productDetails.highlight2header}}</h4>
+            <p>{{productDetails.highlight2description}}</p>
             <br>
           </div>
           <div class="highlight-section">
             <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/1.png" alt="img1">
-            <h4>NEXT-LEVEL COMFORT</h4>
-            <p>Innovated for the ultimate squish, new wrapped Boost makes every step a sensation.</p>
+            <h4>{{productDetails.highlight3header}}</h4>
+            <p>{{productDetails.highlight3description}}</p>
+            <br>
+          </div>
+        </div>
+        <div class="highlights-container" *ngSwitchCase="1001">
+          <div class="highlight-section">
+            <img src="{{productDetails.highlight1img}}" alt="img3">
+            <h4>{{productDetails.highlight1header}}</h4>
+            <p>{{productDetails.highlight1description}}</p>
+          </div>
+          <div class="highlight-section">
+            <img src="{{productDetails.highlight2img}}" alt="img2">
+            <h4>{{productDetails.highlight2header}}</h4>
+            <p>{{productDetails.highlight2description}}</p>
+            <br>
+          </div>
+          <div class="highlight-section">
+            <img src="{{productDetails.highlight3img}}" alt="img2">
+            <h4>{{productDetails.highlight3header}}</h4>
+            <p>{{productDetails.highlight3description}}</p>
+            <br>
+          </div>
+        </div>
+        <div class="highlights-container" *ngSwitchCase="1002">
+          <div class="highlight-section">
+            <!-- <img src="{{productDetails.highlight1img}}" alt="img3"> -->
+            <h4>{{productDetails.highlight1header}}</h4>
+            <p>{{productDetails.highlight1description}}</p>
+          </div>
+          <div class="highlight-section">
+            <!-- <img src="{{productDetails.highlight2img}}" alt="img2"> -->
+            <h4>{{productDetails.highlight2header}}</h4>
+            <p>{{productDetails.highlight2description}}</p>
+            <br>
+          </div>
+          <div class="highlight-section">
+            <!-- <img src="{{productDetails.highlight3img}}" alt="img2"> -->
+            <h4>{{productDetails.highlight3header}}</h4>
+            <p>{{productDetails.highlight3description}}</p>
+            <br>
+          </div>
+          <div class="highlight-section">
+            <!-- <img src="{{productDetails.highlight4img}}" alt="img3"> -->
+            <h4>{{productDetails.highlight4header}}</h4>
+            <p>{{productDetails.highlight4description}}</p>
+          </div>
+          <div class="highlight-section">
+            <!-- <img src="{{productDetails.highlight5img}}" alt="img2"> -->
+            <h4>{{productDetails.highlight5header}}</h4>
+            <p>{{productDetails.highlight5description}}</p>
+            <br>
+          </div>
+          <div class="highlight-section">
+            <!-- <img src="{{productDetails.highlight3img}}" alt="img2"> -->
+            <h4>{{productDetails.highlight6header}}</h4>
+            <p>{{productDetails.highlight6description}}</p>
             <br>
           </div>
         </div>
       </ng-template>
     </ngb-panel>
-    <ngb-panel>
+
+    <!-- Description & Specs  -->
+    <ngb-panel *ngIf="productDescriptionSpecs">
       <ng-template ngbPanelTitle>
-        <p class="title">Description</p>
+        <p class="title">Description & Specs</p>
       </ng-template>
-      <ng-template ngbPanelContent>
-        <div class="description-container">
+      <ng-template ngbPanelContent [ngSwitch]="productId">
+        <div *ngSwitchCase="1000" class="description-container">
           <div class="description">
-            <h4>FUTURE-READY TRAINERS WITH WRAPPED BOOST CUSHIONING IN A VIVID GRADIENT.</h4>
-            <p>Slip in to experience what can't be explained. ZX never felt so good. Innovated for the ultimate squish
-              with new wrapped Boost. Swaddled in a TPU heel cage, it makes stepping a sensation. Feeling starts before
-              you even take the first squishy step.</p>
+            <h4>{{productDetails.descriptionHeader}}</h4>
+            <p>{{productDetails.descriptionText}}</p>
           </div>
           <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/4.png" alt="img4">
         </div>
+        <div *ngSwitchCase="1001" class="description-container-column">
+          <!-- <div class="description">
+
+          </div> -->
+          <!-- <img src="../../../../assets/img/discountedProducts/addidas-shoes/product-details/4.png" alt="img4"> -->
+          <h4>{{productDetails.descriptionHeader}}</h4>
+          <p>{{productDetails.description}}</p>
+          <div>
+            <h5>{{productDetails.generalSpecificationsHeader}}</h5>
+            <ul>
+              <li>{{productDetails.generalSpecificationsBluetoothVersionHeader}} -
+                {{productDetails.generalSpecificationsBluetoothVersion}}</li>
+              <li>{{productDetails.generalSpecificationsDriverSizeHeader}} -
+                {{productDetails.generalSpecificationsDriverSize}}</li>
+            </ul>
+
+            <h5>{{productDetails.audioSpecificationsHeader}}</h5>
+            <ul>
+              <li>{{productDetails.audioSpecificationsDriverSensitivityHeader}} -
+                {{productDetails.audioSpecificationsDriverSensitivity}}</li>
+              <li>{{productDetails.audioSpecificationsDynamicFrequencyRangeHeader}} -
+                {{productDetails.audioSpecificationsDynamicFrequencyRange}}</li>
+              <li>{{productDetails.audioSpecificationsImpedanceHeader}} -
+                {{productDetails.audioSpecificationsImpedance}}</li>
+            </ul>
+
+            <h5>{{productDetails.dimensionsHeader}}</h5>
+            <ul>
+              <li>{{productDetails.dimensionsWeightHeader}} - {{productDetails.dimensionsWeight}}</li>
+              <li>{{productDetails.dimensionsWeight1Header}} - {{productDetails.dimensionsWeight1}}</li>
+            </ul>
+
+            <h5>{{productDetails.cncspecHeader}}</h5>
+            <ul>
+              <li>{{productDetails.bluetoothProfileHeader}} - {{productDetails.bluetoothProfile}}</li>
+              <li>{{productDetails.bluetoothFrequencyHeader}} - {{productDetails.bluetoothFrequency}}</li>
+              <li>{{productDetails.bluetoothTransmittedModulationHeader}} -
+                {{productDetails.bluetoothTransmittedModulation}}</li>
+              <li>{{productDetails.bluetoothTransmitterWowerHeader}} - {{productDetails.bluetoothTransmitterWower}}</li>
+            </ul>
+
+            <h5>{{productDetails.batterHeader}}</h5>
+            <ul>
+              <li>{{productDetails.batteryChargingTimeHeader}} - {{productDetails.batteryChargingTime}}</li>
+              <li>{{productDetails.maxMusicPlayOffHeader}} - {{productDetails.maxMusicPlayOff}}</li>
+              <li>{{productDetails.maxMusicPlayOnHeader}} -
+                {{productDetails.maxMusicPlayOn}}</li>
+            </ul>
+
+            <h5>{{productDetails.featuresHeader}}</h5>
+            <ul>
+              <li>{{productDetails.features1Header}} - {{productDetails.features1}}</li>
+              <li>{{productDetails.features2Header}} - {{productDetails.features2}}</li>
+              <li>{{productDetails.features3Header}} - {{productDetails.features3}}</li>
+              <li>{{productDetails.features4Header}} - {{productDetails.features4}}</li>
+              <li>{{productDetails.features5Header}} - {{productDetails.features5}}</li>
+              <li>{{productDetails.features6Header}} - {{productDetails.features6}}</li>
+              <li>{{productDetails.features7Header}} - {{productDetails.features7}}</li>
+              <li>{{productDetails.features8Header}} - {{productDetails.features8}}</li>
+              <li>{{productDetails.features9Header}} - {{productDetails.features9}}</li>
+              <li>{{productDetails.features10Header}} - {{productDetails.features10}}</li>
+              <li>{{productDetails.features11Header}} - {{productDetails.features11}}</li>
+              <li>{{productDetails.features12Header}} - {{productDetails.features12}}</li>
+              <li>{{productDetails.features13Header}} - {{productDetails.features13}}</li>
+              <li>{{productDetails.features14Header}} - {{productDetails.features14}}</li>
+              <li>{{productDetails.features15Header}} - {{productDetails.features15}}</li>
+            </ul>
+
+            <div class="box-container">
+              <div class="left-panel">
+                <h5>{{productDetails.boxHeader}}</h5>
+                <ul>
+                  <li>{{productDetails.boxHeaderDetails1}}</li>
+                  <li>{{productDetails.boxHeaderDetails2}}</li>
+                  <li>{{productDetails.boxHeaderDetails3}}</li>
+                  <li>{{productDetails.boxHeaderDetails4}}</li>
+                  <li>{{productDetails.boxHeaderDetails5}}</li>
+                  <li>{{productDetails.boxHeaderDetails6}}</li>
+                  <li>{{productDetails.boxHeaderDetails7}}</li>
+                </ul>
+              </div>
+              <div class="right-panel">
+                <img src="{{productDetails.boxImg}}" alt="box-img">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div *ngSwitchCase="1002" class="description-container-column">
+          <p>Detailed specifications can be found in <a href="https://www.samsung.com/my/smartphones/galaxy-s22-ultra/specs/">samsung official page</a> or <a href="https://www.gsmarena.com/samsung_galaxy_s22_ultra_5g-11251.php">gsmarena</a>.</p>
+        </div>
       </ng-template>
     </ngb-panel>
-    <ngb-panel>
+
+    <!-- Details  -->
+    <ngb-panel *ngIf="details">
       <ng-template ngbPanelTitle>
         <p class="title">Details</p>
       </ng-template>
-      <ng-template ngbPanelContent>
-        <div class="details-container">
+      <ng-template ngbPanelContent [ngSwitch]="productId">
+        <div *ngSwitchCase="1000" class="details-container">
           <div class="left-section">
             <ul>
-                <li>Lace closure</li>
-                <li>Mesh upper with TPU overlays</li>
-                <li>Responsive, supportive sneakers</li>
-                <li>Distinctive Boost midsole</li>
+              <li>{{productDetails.details1}}</li>
+              <li>{{productDetails.details2}}</li>
+              <li>{{productDetails.details3}}</li>
+              <li>{{productDetails.details4}}</li>
             </ul>
           </div>
           <div class="right-section">
             <ul>
-                <li>Rubber outsole</li>
-                <li>Color: Cloud White / Cloud White / Shock Pink</li>
-                <li>Product ID: {{productId}}</li>
+              <li>{{productDetails.details5}}</li>
+              <li>{{productDetails.details6}}</li>
+              <li>{{productDetails.details7}}</li>
             </ul>
           </div>
         </div>
       </ng-template>
     </ngb-panel>
+
+    <!-- Documents & downloads  -->
+    <ngb-panel *ngIf="documentsDownloads">
+      <ng-template ngbPanelTitle>
+        <p class="title">{{productDetails.docndownloadsHeader}}</p>
+      </ng-template>
+      <ng-template ngbPanelContent [ngSwitch]="productId">
+        <div *ngSwitchCase="1001" class="details-container">
+          <!-- <div class="left-section">
+
+          </div>
+          <div class="middle-section">
+
+          </div>
+          <div class="right-section">
+
+          </div> -->
+          <ul>
+            <li>
+              <a href="{{productDetails.docndownloadsDoc1Link}}">{{productDetails.docndownloadsDoc1Header}}</a>
+            </li>
+            <li>
+              <a href="{{productDetails.docndownloadsDoc2Link}}">{{productDetails.docndownloadsDoc2Header}}</a>
+            </li>
+            <li>
+              <a href="{{productDetails.docndownloadsDoc3Link}}">{{productDetails.docndownloadsDoc3Header}}</a>
+            </li>
+            <li>
+              <a href="{{productDetails.docndownloadsDoc4Link}}">{{productDetails.docndownloadsDoc4Header}}</a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
+    <!-- What’s in the box  -->
+    <ngb-panel *ngIf="box">
+      <ng-template ngbPanelTitle>
+        <p class="title">What's in the box</p>
+      </ng-template>
+      <ng-template ngbPanelContent [ngSwitch]="productId">
+        <div *ngSwitchCase="1002" class="details-container-column">
+         <img style="width: 800px;" src="{{productDetails.boxImg}}" alt="box-img">
+         <p>{{productDetails.boxDetails1}}</p>
+         <p>{{productDetails.boxDetails2}}</p>
+         <p>{{productDetails.boxDetails3}}</p>
+         <br>
+         <p>{{productDetails.boxWarning}}</p>
+        </div>
+      </ng-template>
+    </ngb-panel>
+
   </ngb-accordion>
 </div>

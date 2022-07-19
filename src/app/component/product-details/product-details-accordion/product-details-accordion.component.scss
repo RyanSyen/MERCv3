@@ -15,6 +15,11 @@
   display: flex;
   justify-content: space-between;
   padding: 0 20px;
+  flex-wrap: wrap;
+}
+
+.box-container{
+  @extend .highlights-container;
 }
 
 .highlight-section {
@@ -27,6 +32,7 @@
 
   img {
     width: 250px;
+    object-fit: scale-down;
   }
 
   h4 {
@@ -42,6 +48,12 @@
 .description-container {
   margin: 20px;
   display: flex;
+
+  #{&}-column{
+    flex-direction: column;
+
+    
+  }
 
   .description{
     padding-right: 30px;
@@ -69,4 +81,8 @@
     display: flex;
     justify-content: space-between;
     margin: 20px;
+}
+
+.left-panel{
+  margin-top: 50px;
 }

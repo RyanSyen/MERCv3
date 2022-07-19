@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Product } from '../domain/product';
+import { ProductDetails } from '../domain/productDetails';
+import { Cart } from '../domain/cart';
 
 @Injectable()
 export class ProductService {
@@ -61,6 +62,20 @@ export class ProductService {
         return this.http.get<any>('/assets/data/products.json')
             .toPromise()
             .then(res => <Product[]>res.data)
+            .then(data => { return data; });
+    }
+
+    getAllProductsDetails() {
+        return this.http.get<any>('/assets/data/productDetails.json')
+            .toPromise()
+            .then(res => <Product[]>res.data)
+            .then(data => { return data; });
+    }
+
+    getCartItems(){
+        return this.http.get<any>('/assets/data/cart.json')
+            .toPromise()
+            .then(res => <Cart[]>res.data)
             .then(data => { return data; });
     }
 
