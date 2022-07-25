@@ -26,13 +26,13 @@
       </tr>
     </thead>
     <tbody *ngFor="let item of items; let i=index">
-      <p>{{i}}</p>
       <tr class="product-row">
         <th>
             <!-- <input class="toggle" type="checkbox" id="{{i}}" name="item" value="item" (click)="checkIndividual(i)"> -->
           <div class="checkbox-container" (click)="checkIndividual(i)">
             <div class="checkbox-border" >
-              <p class="tick" [ngClass]="checkboxIndividual" id="{{i}}">✓</p>
+              <!-- <p class="tick" [ngClass]="checkboxIndividual" id="{{i}}">✓</p> -->
+              <p class="tick" [className]="check" id="{{i}}">✓</p>
             </div>
           </div>
         </th>
@@ -44,7 +44,15 @@
 
         </td>
         <td>RM {{item.discountedPrice}} <span class="old-price">{{item.oldPrice}}</span></td>
-        <td>{{item.quantity}}</td>
+        <td>
+          <div class="quantity">
+            <p (click)="addQuantity(i, item.discountedPrice)">&#43;</p>
+            <!-- <span>{{item.quantity}}</span> -->
+            <span>{{item.quantity}}</span>
+            <p (click)="minusQuantity(i)">&#8722;</p>
+          </div>
+          
+        </td>
         <td class="total-price">RM {{item.totalPrice}} </td>
         <td class="del">Delete</td>
       </tr>
@@ -66,7 +74,7 @@
       </div>
     </div>
 
-    <hr>
+    <!-- <hr> -->
     <div>
 
       <div class="left-bottom-panel">
@@ -74,8 +82,8 @@
         <p>Select All ({{itemCount}})</p>
         <p>Delete</p>
       </div>
-      <div style="float: right;">
-        <p>Total ({{itemCount}} items) : RM {{calculateTotal()}}</p>
+      <div style="display: flex; float: right;">
+        <p>Total ({{itemCount}} items) : </p><p class="totalText"> &nbsp; RM {{total}}</p>
       </div>
     </div>
   </div>

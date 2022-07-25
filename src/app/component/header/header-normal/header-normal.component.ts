@@ -34,7 +34,8 @@ export class HeaderNormalComponent implements OnInit {
   selectedProduct?: Cart;
   products !: Product[];
 
-  dataSource : any;
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource = this.items;
 
   styling = {
     'width': '470px',

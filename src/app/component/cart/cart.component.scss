@@ -1,5 +1,5 @@
 .table-responsive {
-  margin: 15px 20px 0 20px;
+  margin: 25px 30px 0 30px;
 
   table {
     width: 100%;
@@ -9,7 +9,7 @@
     text-align: center;
 
     tr {
-      border-bottom: 2px solid #3184f9;
+      border: 1px solid #3184f9;
     }
   }
 }
@@ -84,7 +84,7 @@
 
   p {
     font-weight: 500;
-    color: red;
+    // color: red;
   }
 }
 
@@ -123,4 +123,39 @@
   background-color: #005DE8;
   color: white;
   height: 100%;
+}
+
+.nonactive {
+  visibility: hidden;
+}
+
+.totalText {
+  // font-size: larger;
+  font-weight: 700;
+  color: red;
+}
+
+.quantity {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    margin-top: 15px;
+  }
+
+  p {
+    margin-top: 10px;
+    border: 1px solid #3184f9;
+    border-radius: 5px;
+    padding: 0px 10px;
+    font-size: x-large;
+    font-weight: 700;
+    color: #005DE8;
+
+    &:hover {
+      background-color: #005DE8;
+      color: white;
+    }
+  }
+
 }

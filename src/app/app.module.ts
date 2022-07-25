@@ -35,7 +35,7 @@ import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
 
 
 // other packages
-import lottie from "lottie-web";
+// import lottie from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -56,8 +56,7 @@ import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import {DialogModule} from 'primeng/dialog';
 // import {DynamicDialogModule} from 'primeng/dynamicdialog';
-// import { AngularMaterialModule } from './angular-material.module';
-
+import { MaterialModule } from './material.module';
 
 // components
 import { LoginComponent } from './component/login/login.component';
@@ -139,8 +138,9 @@ import { CartComponent } from './component/cart/cart.component';
     TableModule,
     DialogModule,
     // DynamicDialogModule,
-    // AngularMaterialModule,
-  ],
+    MaterialModule,
+    materialModules,
+    ],
 
   providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase  }],
   bootstrap: [AppComponent],
@@ -148,6 +148,6 @@ import { CartComponent } from './component/cart/cart.component';
 })
 export class AppModule {
   constructor() {
-    defineLordIconElement(lottie.loadAnimation);
+    // defineLordIconElement(lottie.loadAnimation);
   }
 }

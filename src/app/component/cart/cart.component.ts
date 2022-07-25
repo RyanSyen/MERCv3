@@ -1,7 +1,10 @@
+import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
 import { Component, OnInit } from '@angular/core';
 import { Cart } from 'src/app/domain/cart';
 import { ProductService } from 'src/app/service/productservice';
 import { PrimeNGConfig } from 'primeng/api';
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
+
 
 declare var $: any;
 
@@ -11,7 +14,7 @@ declare var $: any;
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-
+  cartItems: Cart[] = [];
   items: Cart[] = [];
   totalPriceArr: Array<any> = [];
   itemCount: number = 0;
@@ -19,11 +22,18 @@ export class CartComponent implements OnInit {
   checkingAll: boolean = false;
   checkingInidividual: boolean = false;
   discountsApplied: number = 0.00;
-  checkbox : string = '';
-  checkboxIndividual : string = '';
+  checkbox: string = '';
+  checkboxIndividual: string = '';
+  total: any = 0;
+  check: string = 'nonactive';
+  sum = 0;
+  quantity: number = 1;
 
-  constructor(private productService: ProductService, private primengConfig: PrimeNGConfig) {
+  private firestore: FirebaseTSFirestore;
 
+
+  constructor(private productService: ProductService, private primengConfig: PrimeNGConfig, private firebaseService:FirebaseCRUDService)  {
+    this.firestore = new FirebaseTSFirestore();
 
   }
 
@@ -35,6 +45,20 @@ export class CartComponent implements OnInit {
       console.log(items);
     });
 
+    // directly get doc from collection
+    this.firestore.getDocument(
+      {
+         path: [
+            "Cart", 
+            "User1Collection"
+         ]
+      }
+   );
+    
+
+    // this.firebaseService.getCart().subscribe((res:Cart[])=> {
+    //   this.items= res;
+    // })
 
 
   }
@@ -46,105 +70,152 @@ export class CartComponent implements OnInit {
   // }
 
   checkAll() {
-    
-    for (let i = 0; i < Object.keys(this.items).length; i++) {
-      // console.log(i)
-      // $("#i").removeAttr( "checked" );
-      console.log(i)
-      console.log($("#i").is(':checked')) ;
-    }
+    this.total = 0;
 
     this.checkingAll = !this.checkingAll;
+    this.checkingInidividual = !this.checkingInidividual;
 
     // get total item count
     this.itemCount = Object.keys(this.items).length;
 
     // empty array first to avoid conflict with individual check boxes
-    this.totalPriceArr = [];
+    // this.totalPriceArr = [];
 
     if (this.checkingAll == true) {
       this.checkbox = "active";
-      // checked all
-      $(".toggle").attr("checked", true);
-    } else {
-      this.checkbox = "";
-      this.checkIndividual(99999);
-      console.log("uncheck all")
-      // unchecked all
-      this.totalPriceArr = [];
-      $(".toggle").attr("checked", false);
-
-
-    }
-
-    // for (let i = 0; i < Object.keys(this.items).length; i++) {
-
-    let ticked = $(".toggle").is(':checked');
-
-    if (ticked == true) {
+      // this.total = this.sum;
       for (let i = 0; i < Object.keys(this.items).length; i++) {
-        // store item price to array for calculation
+        var element = document.getElementById(i.toString());
+        element?.classList.add('active');
         let price = this.items[i].discountedPrice;
-        this.totalPriceArr.push(price);
-        this.calculateTotal();
+        this.total += price;
       }
+
     } else {
-      console.log("not checked")
+      console.log("non-active")
+      this.checkbox = "";
+      for (let i = 0; i < Object.keys(this.items).length; i++) {
+        var element = document.getElementById(i.toString());
+        element?.classList.remove('active');
+      }
+      this.total = 0;
       this.itemCount = 0;
-      this.totalPriceArr = [];
-      this.calculateTotal();
     }
-    // }
 
   }
 
   checkIndividual(index: number) {
 
-    this.checkingInidividual = !this.checkingInidividual;
-    console.log(this.checkingInidividual)
+    let element = document.getElementById(index.toString());
 
-    for (let i = 0; i < Object.keys(this.items).length; i++) {
+    console.log(this.checkingInidividual + "individual")
 
-      if (index == i) {
-        if (this.checkingInidividual == true) {
-          $("#index").attr("checked", true);
-          // $('.tick[id="index"]').addClass("active");
-          let id = document.getElementById('0');
-          console.log(id)
-          $("#id").attr("class", "active");
-        } else {
-          
-          $("#index").attr("checked", false);
-          $("#index").removeClass("active");
-        }
+    // if previous status is nonactive, then execute to be active
+    if (element?.classList.contains('active')) {
+      // this.checkingInidividual = !this.checkingInidividual;
+      let element = document.getElementById(index.toString());
+      element?.classList.remove('active');
+      let price = this.items[index].discountedPrice;
+      let priceIndex = this.totalPriceArr.indexOf(price, 0);
+      console.log(this.totalPriceArr)
+      console.log(priceIndex);
+      this.totalPriceArr.splice(priceIndex, 1);
+      console.log(this.totalPriceArr)
 
-        let ticked = $(".toggle").is(':checked');
+      this.total = this.calculateTotal();
+      this.itemCount -= 1;
 
-        if (ticked == true) {
-          $("#index").addCLass("active");
-          this.itemCount += 1;
-          // store item price to array for calculation
-          let price = this.items[index].discountedPrice;
-          this.totalPriceArr.push(this.items[i].discountedPrice);
-          this.calculateTotal();
-        } else {
-          $("#index").removeClass("active");
-          this.itemCount = 0;
-          this.totalPriceArr.pop();
-          this.calculateTotal();
-        }
-      }
+    } else {
+      // if click check box then return product
+      // this.checkingInidividual = !this.checkingInidividual;
+      let element = document.getElementById(index.toString());
+      element?.classList.add('active');
+      // this.total = this.items[index].discountedPrice;
+      // better to put in an array
+      // this.totalPriceArr.push(index, this.items[index].discountedPrice);
+      this.totalPriceArr.push(this.items[index].totalPrice);
+      this.total = this.calculateTotal();
+      console.log(this.total);
+      this.itemCount += 1;
     }
 
+    // for (let i = 0; i < Object.keys(this.items).length; i++) {
+
+    //   if (index == i) {
+    //     this.checkingInidividual = !this.checkingInidividual;
+    //     if (this.checkingInidividual == true) {
+    //       let element = document.getElementById(index.toString());
+    //       element?.classList.add('active');
+    //       this.total = this.items[index].discountedPrice;
+    //       this.itemCount = 1;
+    //     } else {
+    //       let element = document.getElementById(index.toString());
+    //       element?.classList.remove('active');
+    //       this.total = 0;
+    //       this.itemCount = 0;
+    //     }
+
+    //     let element = document.getElementById(index.toString());
+    //     if (element!.classList.contains('nonactive')) {
+    //       this.checkbox = "";
+    //     }
+
+    //   }
+    // }
+
+
   }
+
+
 
   showModalDialog() {
     this.displayModal = true;
   }
 
   calculateTotal() {
+    console.log(this.totalPriceArr)
     let total = this.totalPriceArr.reduce((sum, a) => sum + a, 0);
     return total;
+
+  }
+
+  addQuantity(index: number, price : any) {
+    let q = this.items[index].quantity;
+    if (q != 99) {
+      // add and update in firebase
+      for (let i = 0; i < Object.keys(this.items).length; i++) {
+        if (index == i) {
+          this.quantity != this.items[index].quantity;
+          this.quantity++;
+        }
+      }
+
+      // reflect changes to the UI
+      this.items[index].quantity = this.quantity;
+
+      // update total
+      if (this.items[index].discountedPrice != 0 ) {
+        this.items[index].totalPrice = price * this.quantity;
+        this.total = this.calculateTotal();
+        console.log(this.items[index].totalPrice)
+      }
+    }
+
+
+  }
+
+  minusQuantity(index: number) {
+    let q = this.items[index].quantity;
+    if (q != 1) {
+      for (let i = 0; i < Object.keys(this.items).length; i++) {
+        if (index == i) {
+          this.quantity != this.items[index].quantity;
+          this.quantity--;
+        }
+      }
+      this.items[index].quantity = this.quantity;
+    }
+
   }
 
 }

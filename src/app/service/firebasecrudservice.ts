@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../domain/product';
+import { Cart } from '../domain/cart';
 import {
     Firestore, addDoc, collection, collectionData,
     doc, docData, deleteDoc, updateDoc, DocumentReference, setDoc
 } from '@angular/fire/firestore';
+import { update } from 'firebase/database';
 
 @Injectable({
     providedIn: 'root'
@@ -87,5 +89,22 @@ export class FirebaseCRUDService {
     //     return updateDoc(productsRef, { price: amount });
     // }
 
-    
+    //* cart
+    // add to cart
+    setCart(cart: Cart) {
+        const cartsRef = doc(this.firestore, `cart/${cart.id}`);
+        return setDoc(cartsRef, cart);
+    }
+
+    // get all products from cart
+    getCart(){
+        const cartsRef = collection(this.firestore, `cart`);
+        return collectionData(cartsRef, { idField: 'id' }) as Observable<Cart>;
+    }
+
+    // update total price & quantity
+    updateCartPriceQuantity(id: string, quantity: number, subtotal: number){
+        const cartsRef = doc(this.firestore, `cart/${id}`);
+        return updateDoc(cartsRef, {quantity: quantity, totalPrice: subtotal});
+    }
 }

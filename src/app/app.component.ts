@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { FirebaseCRUDService } from './service/firebasecrudservice';
 import { ProductService } from './service/productservice';
-import {TweenMax} from "gsap";
+import { TweenMax } from "gsap";
 
 @Component({
   selector: 'app-root',
@@ -14,12 +14,23 @@ export class AppComponent {
   title = 'MERCv3';
 
   product: any;
+  items: any;
   count !: number;
 
   constructor(private primengConfig: PrimeNGConfig, private firebasecrudservice: FirebaseCRUDService, private productService: ProductService) { }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+
+    // * set cart 
+    // this.productService.getCartItems().then(items => {
+    //   this.items = items;
+    //   this.count = items.length;
+
+    //   for (let i = 0; i < this.count; i++) {
+    //     this.firebasecrudservice.setCart(this.items[i]);
+    //   }
+    // });
 
     // * get all products data 
     // this.productService.getAllProducts().then(products => {

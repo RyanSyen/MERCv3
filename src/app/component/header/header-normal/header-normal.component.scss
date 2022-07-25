@@ -113,3 +113,21 @@ nav {
   font-size: larger;
   font-weight: 600;
 }
+
+.cart-items {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+
+  img {
+    width: 100px;
+  }
+
+  div{
+    margin: auto;
+  }
+}
+
+.item-title{
+  width: 150px;
+}
