@@ -1,10 +1,10 @@
 export interface Cart {
-    id?: string;
+    id: string;
     placeholderImg?: string;
     title?: string;
     variations?: string;
     oldPrice?: number;
-    discountedPrice?: number;
-    quantity?: number;
-    totalPrice?: number;
+    discountedPrice: number;
+    quantity: number;
+    totalPrice: number;
 }

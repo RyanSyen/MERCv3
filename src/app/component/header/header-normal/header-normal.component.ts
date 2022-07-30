@@ -1,3 +1,4 @@
+import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
 import { Component, OnInit, ViewEncapsulation, AfterViewInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
@@ -44,7 +45,7 @@ export class HeaderNormalComponent implements OnInit {
 
 
 
-  constructor(public auth: AuthService, private http: HttpClient, private router: Router, private productService: ProductService, private messageService: MessageService, private modalService: NgbModal) {
+  constructor(public auth: AuthService, private http: HttpClient, private router: Router, private productService: ProductService, private messageService: MessageService, private modalService: NgbModal, private firebaseService: FirebaseCRUDService) {
     if (this.auth.isLoggedIn) {
       this.checkLoggedIn = true;
     } else {
@@ -55,11 +56,18 @@ export class HeaderNormalComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.productService.getCartItems().then(items => {
+
+    // from json
+    // this.productService.getCartItems().then(items => {
+    //   this.items = items;
+    //   // console.log(this.items);
+    //   this.dataSource = items;
+    // });
+
+    // from firebase
+    this.firebaseService.getCart().subscribe(items => {
       this.items = items;
-      // console.log(this.items);
-      this.dataSource = items;
-    });
+    })
   }
 
   goToFAQ() {

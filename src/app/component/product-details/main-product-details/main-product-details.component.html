@@ -57,7 +57,7 @@ height: 100vh;" *ngIf="loaderr">
   </ngx-spinner>
 </div> -->
 
-
+<p-toast></p-toast>
 
 <div class="container product-details-container" *ngIf="!loaderr">
   <div class="row-container">
@@ -98,6 +98,15 @@ height: 100vh;" *ngIf="loaderr">
           <p> RM {{oldPrice}}</p>
 
         </div>
+        <div style="width: 50%; margin-bottom: 15px; display: flex;">
+          <h5  class="quantity">Quantity</h5>
+          <div class="qty-input">
+            <button class="qty-count qty-count--minus" data-action="minus" type="button" (click)="minus()">-</button>
+            <!-- <input class="product-qty" type="number" name="product-qty" min="0" max="10" value="1"> -->
+            <p class="product-qty">{{quantity}}</p>
+            <button class="qty-count qty-count--add" data-action="add" type="button" (click)="add()">+</button>
+          </div>
+        </div>
         <div class="authentic-guarantee">
           <div class="guarantee">
             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24"
@@ -136,12 +145,12 @@ height: 100vh;" *ngIf="loaderr">
         <div *ngSwitchCase="'1000'" class="container-size-container">
           <div class="size-container">
             <h5 class="sizes">Sizes: </h5>
-            <span>UK 7</span>
-            <span>UK 7.5</span>
-            <span>UK 8</span>
-            <span>UK 8.5</span>
-            <span>UK 9</span>
-            <span>UK 9.5</span>
+            <span (click)="size=7">UK 7</span>
+            <span (click)="size=7.5">UK 7.5</span>
+            <span (click)="size=8">UK 8</span>
+            <span (click)="size=8.5">UK 8.5</span>
+            <span (click)="size=9">UK 9</span>
+            <span (click)="size=9.5">UK 9.5</span>
           </div>
           <a (click)="openBackDropCustomClass(content)" class="size-chart-link">Size chart</a>
         </div>
@@ -169,7 +178,7 @@ height: 100vh;" *ngIf="loaderr">
         </div>
       </div>
       <br />
-      <button type="button" class="add-to-cart-btn button"><i class="fa-solid fa-cart-shopping"></i> Add To
+      <button type="button" class="add-to-cart-btn button" (click)="addItemToCart()"><i class="fa-solid fa-cart-shopping"></i> Add To
         Cart</button>
       <button type="button" class="btn btn-primary-color button">Buy Now</button>
     </div>

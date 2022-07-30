@@ -9,14 +9,13 @@
     <thead class="table-header">
       <tr>
         <th>
-          <!-- <input class="checkbox-all" type="checkbox" id="allItems" name="allItems" value="allItems"
-            (click)="checkAll()"> -->
-          <div class="checkbox-container" >
+          <!--* simplify by not including check box due to bugs  -->
+          <!-- https://www.bennadel.com/blog/3364-creating-a-direct-click-dom-event-plug-in-in-angular-4-4-6.htm#:~:text=Angular%20already%20has%20the%20ability,node%20within%20the%20given%20element. -->
+          <!-- <div class="checkbox-container" >
             <div class="checkbox-border" (click)="checkAll()">
               <p class="tick" [ngClass]="checkbox">✓</p>
             </div>
-          </div>
-
+          </div> -->
         </th>
         <th class="product-header">Product</th>
         <th>Price</th>
@@ -28,13 +27,12 @@
     <tbody *ngFor="let item of items; let i=index">
       <tr class="product-row">
         <th>
-            <!-- <input class="toggle" type="checkbox" id="{{i}}" name="item" value="item" (click)="checkIndividual(i)"> -->
-          <div class="checkbox-container" (click)="checkIndividual(i)">
+          <!--* simplify by not including check box due to bugs  -->
+          <!-- <div class="checkbox-container" (click)="checkIndividual(i, $event)">
             <div class="checkbox-border" >
-              <!-- <p class="tick" [ngClass]="checkboxIndividual" id="{{i}}">✓</p> -->
-              <p class="tick" [className]="check" id="{{i}}">✓</p>
+              <p class="tick" [ngStyle]="checkIndividualStyle" id="{{i}}">✓</p>
             </div>
-          </div>
+          </div> -->
         </th>
         <td class="item-product">
           <div>
@@ -46,17 +44,19 @@
         <td>RM {{item.discountedPrice}} <span class="old-price">{{item.oldPrice}}</span></td>
         <td>
           <div class="quantity">
-            <p (click)="addQuantity(i, item.discountedPrice)">&#43;</p>
-            <!-- <span>{{item.quantity}}</span> -->
+            <button (click)="addQuantity(item.id, i, item.discountedPrice)">
+              <p>&#43;</p>
+            </button>
             <span>{{item.quantity}}</span>
-            <p (click)="minusQuantity(i)">&#8722;</p>
+            <button (click)="minusQuantity(item.id,i, item.discountedPrice)">
+              <p>&#8722;</p>
+            </button>
           </div>
-          
         </td>
         <td class="total-price">RM {{item.totalPrice}} </td>
-        <td class="del">Delete</td>
+        <td >
+          <p class="del" (click)="removeItem(item.id)">Delete</p></td>
       </tr>
-
     </tbody>
   </table>
 
@@ -76,14 +76,19 @@
 
     <!-- <hr> -->
     <div>
-
-      <div class="left-bottom-panel">
+      <!--* simplify by not including check box due to bugs  -->
+      <!-- <div class="left-bottom-panel">
         <input class="checkbox-all" type="checkbox" id="allItems" name="allItems" value="allItems" (click)="checkAll()">
         <p>Select All ({{itemCount}})</p>
         <p>Delete</p>
+      </div> -->
+      <div class="left-bottom-panel">
+        <button class="clearCart" (click)="clearCart()">Clear Cart</button>
+        <button (click)="populateCart()">populate</button>
       </div>
       <div style="display: flex; float: right;">
-        <p>Total ({{itemCount}} items) : </p><p class="totalText"> &nbsp; RM {{total}}</p>
+        <p>Total ({{itemCount}} items) : </p>
+        <p class="totalText"> &nbsp; RM {{total}}</p>
       </div>
     </div>
   </div>
@@ -91,11 +96,16 @@
   <!-- voucher modal  -->
   <p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
-    <p class="p-m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-      et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur.
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    
+    <div>
+      <div>
+        left
+      </div>
+      <div>
+        right
+      </div>
+    </div>
+    
     <ng-template pTemplate="footer">
       <p-button icon="pi pi-check" (click)="displayModal=false" label="Yes" class="p-button-text"></p-button>
       <p-button icon="pi pi-times" (click)="displayModal=false" label="No"></p-button>

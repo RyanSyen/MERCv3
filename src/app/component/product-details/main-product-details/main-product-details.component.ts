@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, TitleStrategy } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 import { ProductService } from '../../../service/productservice';
 import { Product } from '../../../domain/product';
@@ -7,6 +7,8 @@ import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Renderer2 } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Cart } from 'src/app/domain/cart';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -17,7 +19,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   .light-blue-backdrop {
     background-color: #5cb3fd !important;
   }
-  `]
+  `],
+  providers: [MessageService]
 })
 export class MainProductDetailsComponent implements OnInit {
   product: any;
@@ -53,7 +56,16 @@ export class MainProductDetailsComponent implements OnInit {
   loaderr = true;
   activeImg: number = 1;
 
-  constructor(private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal, private firebasecrudservice: FirebaseCRUDService, private renderer: Renderer2, private spinner: NgxSpinnerService) {
+  // add to cart
+  variations = "";
+  quantity = 1;
+  subtotal = 0;
+  colorOption = "";
+  size = 0;
+
+  private tempObject: Cart[] = [];
+
+  constructor(private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal, private firebasecrudservice: FirebaseCRUDService, private renderer: Renderer2, private spinner: NgxSpinnerService, private e: ElementRef, private messageService: MessageService) {
 
 
     this.productLogo = '';
@@ -75,7 +87,7 @@ export class MainProductDetailsComponent implements OnInit {
     this.color2 = '';
     this.gallery = true;
 
-    window.onbeforeunload = function() {window.scrollTo(0,0);}
+    window.onbeforeunload = function () { window.scrollTo(0, 0); }
   }
 
 
@@ -83,7 +95,7 @@ export class MainProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     // Called after the constructor and called  after the first ngOnChanges()
 
-    
+
 
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
@@ -135,6 +147,7 @@ export class MainProductDetailsComponent implements OnInit {
 
     // get products data based on id passed from firebase 
     this.firebasecrudservice.getProductByIDFromAllProducts(this.productId).subscribe(res => {
+      // console.log(res)
       this.product = res;
       this.productLogo = res.logo;
       this.productName = res.name;
@@ -158,7 +171,7 @@ export class MainProductDetailsComponent implements OnInit {
     });
 
 
-    
+
 
 
   }
@@ -198,6 +211,8 @@ export class MainProductDetailsComponent implements OnInit {
       this.subImg0 = '';
       this.subImg1 = '';
       this.activeImg = 1;
+
+      this.colorOption = this.color0;
     } else if (color == this.color1) {
       this.MainColor = ['circle', this.color0];
       this.SubColor0 = ['circle', this.color1, 'active'];
@@ -206,6 +221,7 @@ export class MainProductDetailsComponent implements OnInit {
       this.subImg0 = 'active';
       this.subImg1 = '';
       this.activeImg = 2;
+      this.colorOption = this.color1;
     } else if (color == this.color2) {
       console.log(this.color2);
       this.MainColor = ['circle', this.color0];
@@ -215,13 +231,60 @@ export class MainProductDetailsComponent implements OnInit {
       this.subImg0 = '';
       this.subImg1 = 'active';
       this.activeImg = 3;
+      this.colorOption = this.color2;
     } else {
       alert('no products found')
     }
   }
 
-  changeSpecs(){
+  changeSpecs() {
     alert('test')
   }
 
+  addItemToCart() {
+
+    let image = "../../../../assets/img/" + this.productImg1;
+    if (this.colorOption == "") {
+      this.colorOption = this.color0;
+    }
+    this.variations = "size: " + this.size + " color: " + this.colorOption;
+    // console.log(this.quantity)
+
+    this.subtotal = this.quantity * this.discountedPrice;
+
+    let obj: Cart = {
+      id: this.productId,
+      placeholderImg: image,
+      title: this.productName,
+      variations: this.variations,
+      oldPrice: this.oldPrice,
+      discountedPrice: this.discountedPrice,
+      quantity: this.quantity,
+      totalPrice: this.subtotal,
+
+    }
+
+
+    this.firebasecrudservice.setCart(obj);
+
+    // if success then display success msg, else error msg
+    this.showSuccess(this.productName);
+  }
+
+  minus() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  add() {
+    if (this.quantity < 10) {
+      this.quantity++;
+    }
+  }
+
+  //toast success
+  showSuccess(name:any) {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: name + ' has been added to your cart' });
+  }
 }

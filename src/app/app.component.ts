@@ -4,6 +4,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { FirebaseCRUDService } from './service/firebasecrudservice';
 import { ProductService } from './service/productservice';
 import { TweenMax } from "gsap";
+import { Voucher } from './domain/voucher';
 
 @Component({
   selector: 'app-root',
@@ -19,18 +20,43 @@ export class AppComponent {
 
   constructor(private primengConfig: PrimeNGConfig, private firebasecrudservice: FirebaseCRUDService, private productService: ProductService) { }
 
+  discountVoucher : Voucher = {
+    title : "RM 5 off Min.Spend RM 15",
+    min : 15,
+    cashback: 0,
+    freeShipping: false,
+    discount: 5
+  }
+
+  freeShippingVoucher : Voucher = {
+    title : "Free shipping Min.Spend RM 50",
+    min : 50,
+    cashback: 0,
+    freeShipping: true,
+    discount: 0
+  }
+
+  cashBackVoucher : Voucher = {
+    title : "Cashback 15% Min.Spend RM 25",
+    min : 25,
+    cashback: 15,
+    freeShipping: false,
+    discount: 0
+  }
+
   ngOnInit() {
     this.primengConfig.ripple = true;
 
     // * set cart 
-    // this.productService.getCartItems().then(items => {
-    //   this.items = items;
-    //   this.count = items.length;
+    this.productService.getCartItems().then(items => {
+      this.items = items;
+      this.count = items.length;
 
-    //   for (let i = 0; i < this.count; i++) {
-    //     this.firebasecrudservice.setCart(this.items[i]);
-    //   }
-    // });
+      for (let i = 0; i < this.count; i++) {
+        // this.firebasecrudservice.setCart(this.items[i]);
+        // this.firebasecrudservice.populateWithFirebaseTSFirestore(this.items[i]);
+      }
+    });
 
     // * get all products data 
     // this.productService.getAllProducts().then(products => {
@@ -80,5 +106,11 @@ export class AppComponent {
     //   },
     // };
 
+    //* Populate voucher
+    // 1. RM 5 off Min.Spend RM 15
+    // 2. Free shipping Min.Spend RM 50
+    // 3. Cashback 15% Min.Spend RM 25
+
+    
   }
 }

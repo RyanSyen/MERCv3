@@ -17,7 +17,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { provideFirestore, getFirestore  } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
-
+import { FirebaseTSApp } from 'firebasets/firebasetsApp/firebaseTSApp'
 
 // routing
 import { AppRoutingModule } from './app-routing.module';
@@ -84,7 +84,6 @@ import { RatingComponent } from './component/product-details/rating/rating.compo
 import { CartComponent } from './component/cart/cart.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,6 +116,7 @@ import { CartComponent } from './component/cart/cart.component';
     BrowserAnimationsModule,
     AngularFireModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
@@ -142,12 +142,14 @@ import { CartComponent } from './component/cart/cart.component';
     materialModules,
     ],
 
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase  }],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase}],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
   constructor() {
     // defineLordIconElement(lottie.loadAnimation);
+    FirebaseTSApp.init(environment.firebase);
+  
   }
 }

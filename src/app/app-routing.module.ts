@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -16,6 +16,9 @@ import { CartComponent } from './component/cart/cart.component';
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
 import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
+
+import { NavigationStart, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 // Include route guard in routes array
 const routes: Routes = [
@@ -40,6 +43,9 @@ const routes: Routes = [
 
 ];
 
+export let browserRefresh = false;
+
+
 @NgModule({
   declarations: [],
   imports: [
@@ -48,4 +54,18 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule implements OnDestroy {
+  subscription: Subscription;
+
+  constructor(private router: Router) {
+    this.subscription = router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        browserRefresh = !router.navigated;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+}

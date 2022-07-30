@@ -1,6 +1,12 @@
 @import '../../../../mixins';
 @import '../../../../variables';
 
+$black: #000;
+$white: #fff;
+$gray: #ccc;
+$smoke: #e2e2e2;
+$disable: #f2f2f2;
+
 .product-details-container {
   margin-top: 20px;
 }
@@ -224,7 +230,7 @@
 .circle.white.active {
   box-shadow: 0 0 0 2px #fff,
     0 0 0 4px #ccc;
-    // border: 1px solid #ccc;
+  // border: 1px solid #ccc;
 
 }
 
@@ -271,4 +277,112 @@
   font-weight: 600;
 }
 
+.qty-input {
+  color: $black;
+  background: $white;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 
+  p {
+    margin: 0;
+    padding-top: 10px;
+  }
+
+  .product-qty,
+  .qty-count {
+    background: transparent;
+    color: inherit;
+    font-weight: bold;
+    font-size: inherit;
+    border: 0px solid #ccc;
+    display: inline-block;
+    min-width: 0;
+    height: 2.5rem;
+    line-height: 1;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.product-qty {
+  width: 50px;
+  min-width: 0;
+  display: inline-block;
+  text-align: center;
+  appearance: textfield;
+
+  border-top: 1px solid $primary-color !important;
+  border-bottom: 1px solid $primary-color !important;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+}
+
+.qty-count {
+  padding: 0;
+  cursor: pointer;
+  width: 2.5rem;
+  font-size: 1.25em;
+  text-indent: -100px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid $primary-color !important;
+
+  &:hover {
+    color: whitesmoke;
+    background-color: $primary-color;
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    height: 2px;
+    width: 10px;
+    position: absolute;
+    display: block;
+    background: $black;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  // &--minus {
+  //   border-right: 1px solid $primary-color;
+  // }
+  // &--add {
+  //   border-left: 1px solid $primary-color;
+  //   &:after {
+  //     transform: rotate(90deg);
+  //   }
+  // }
+
+  &--add:after {
+    transform: rotate(90deg);
+  }
+
+  &:disabled {
+    color: $gray;
+    background: $disable;
+    cursor: not-allowed;
+    border-color: transparent;
+
+    &:before,
+    &:after {
+      background: $gray;
+    }
+  }
+}
+
+.quantity {
+  color: rgb(99, 99, 99);
+  margin-right: 10px;
+  padding-top: 10px;
+}
