@@ -57,7 +57,20 @@ height: 100vh;" *ngIf="loaderr">
   </ngx-spinner>
 </div> -->
 
-<p-toast></p-toast>
+<!-- <p-toast (click)="goToCart()"></p-toast> -->
+
+<c-toaster [placement]="position" position="fixed" (click)="goToCart()">
+  <c-toast [visible]="visible" class="toastStyle">
+    <c-toast-header class="toastHeader">
+      <toast-sample-icon></toast-sample-icon>
+      Success
+    </c-toast-header>
+    <c-toast-body>
+      <p>Added {{name}} to cart</p>
+      <!-- <a routerLink="/cart">Click here to your shopping cart</a> -->
+    </c-toast-body>
+  </c-toast>
+</c-toaster>
 
 <div class="container product-details-container" *ngIf="!loaderr">
   <div class="row-container">
@@ -86,7 +99,7 @@ height: 100vh;" *ngIf="loaderr">
         <h2>{{productName}}</h2>
         <img *ngIf="productType == 'discounted'" src="../../../../assets/img/productDetails/discount.png"
           alt="discount-logo">
-          <p>({{sold}} sold)</p>
+        <p>({{sold}} sold)</p>
       </div>
 
       <br />
@@ -99,7 +112,7 @@ height: 100vh;" *ngIf="loaderr">
 
         </div>
         <div style="width: 50%; margin-bottom: 15px; display: flex;">
-          <h5  class="quantity">Quantity</h5>
+          <h5 class="quantity">Quantity</h5>
           <div class="qty-input">
             <button class="qty-count qty-count--minus" data-action="minus" type="button" (click)="minus()">-</button>
             <!-- <input class="product-qty" type="number" name="product-qty" min="0" max="10" value="1"> -->
@@ -178,7 +191,8 @@ height: 100vh;" *ngIf="loaderr">
         </div>
       </div>
       <br />
-      <button type="button" class="add-to-cart-btn button" (click)="addItemToCart()"><i class="fa-solid fa-cart-shopping"></i> Add To
+      <button type="button" class="add-to-cart-btn button" (click)="addItemToCart()"><i
+          class="fa-solid fa-cart-shopping"></i> Add To
         Cart</button>
       <button type="button" class="btn btn-primary-color button">Buy Now</button>
     </div>

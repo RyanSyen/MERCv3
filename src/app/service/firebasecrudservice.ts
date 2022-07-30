@@ -94,7 +94,7 @@ export class FirebaseCRUDService {
     //* cart
     // add item to cart
     addToCart(cart: Cart) {
-        const cartsRef = collection(this.firestore, `cart/${cart.id}`);
+        const cartsRef = collection(this.firestore, `cart`);
         return addDoc(cartsRef, cart);
     }
 

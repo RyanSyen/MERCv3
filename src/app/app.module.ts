@@ -15,7 +15,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { provideFirestore, getFirestore  } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { FirebaseTSApp } from 'firebasets/firebasetsApp/firebaseTSApp'
 
@@ -47,16 +47,18 @@ const materialModules = [
 ];
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import {CarouselModule} from 'primeng/carousel';
-import {ButtonModule} from 'primeng/button';
-import {ToastModule} from 'primeng/toast';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+// import {ToastModule} from 'primeng/toast';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
-import {DialogModule} from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
 // import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import { MaterialModule } from './material.module';
+import { ToastModule } from '@coreui/angular';
+import { IconModule, IconSetService } from '@coreui/icons-angular';
 
 // components
 import { LoginComponent } from './component/login/login.component';
@@ -82,6 +84,7 @@ import { ProductDetailsGalleryComponent } from './component/product-details/prod
 import { FooterComponent } from './component/footer/footer.component';
 import { RatingComponent } from './component/product-details/rating/rating.component';
 import { CartComponent } from './component/cart/cart.component';
+import { PaymentComponent } from './component/payment/payment.component';
 
 
 @NgModule({
@@ -109,7 +112,8 @@ import { CartComponent } from './component/cart/cart.component';
     ProductDetailsGalleryComponent,
     FooterComponent,
     RatingComponent,
-    CartComponent
+    CartComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -140,9 +144,9 @@ import { CartComponent } from './component/cart/cart.component';
     // DynamicDialogModule,
     MaterialModule,
     materialModules,
-    ],
+  ],
 
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase}],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -150,6 +154,6 @@ export class AppModule {
   constructor() {
     // defineLordIconElement(lottie.loadAnimation);
     FirebaseTSApp.init(environment.firebase);
-  
+
   }
 }

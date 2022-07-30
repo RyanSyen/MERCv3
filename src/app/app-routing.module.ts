@@ -12,6 +12,7 @@ import { CategoriesMainComponent } from './component/categories/categories-main/
 import { TestComponent } from './component/test/test.component';
 import { MainProductDetailsComponent } from './component/product-details/main-product-details/main-product-details.component';
 import { CartComponent } from './component/cart/cart.component';
+import { PaymentComponent } from './component/payment/payment.component'
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -40,7 +41,7 @@ const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'product_details/:id/:type', component: MainProductDetailsComponent },
   { path: 'cart', component: CartComponent },
-
+  { path: 'payment', component: PaymentComponent }
 ];
 
 export let browserRefresh = false;

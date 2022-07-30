@@ -161,7 +161,7 @@ export class AuthService {
       if (res) {
         alert('Welcome back' + user.name); //wont run, need to put at the home page
         setTimeout(() => {
-          this.router.navigate(['./home']);
+          this.router.navigate(['./user-profile']);
         }, 2000);
 
       }

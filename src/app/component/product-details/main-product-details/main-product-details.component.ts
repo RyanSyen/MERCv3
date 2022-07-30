@@ -9,6 +9,7 @@ import { Renderer2 } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Cart } from 'src/app/domain/cart';
 import { MessageService } from 'primeng/api';
+import { AlertModule } from '@coreui/angular';
 
 
 @Component({
@@ -62,6 +63,14 @@ export class MainProductDetailsComponent implements OnInit {
   subtotal = 0;
   colorOption = "";
   size = 0;
+  cartItemId = 0;
+  image : string = "";
+
+  // toast
+  visible = false;
+  position = 'top-end';
+  percentage = 0;
+ name : string = "";
 
   private tempObject: Cart[] = [];
 
@@ -212,6 +221,7 @@ export class MainProductDetailsComponent implements OnInit {
       this.subImg1 = '';
       this.activeImg = 1;
 
+      this.image = this.productImg1;
       this.colorOption = this.color0;
     } else if (color == this.color1) {
       this.MainColor = ['circle', this.color0];
@@ -221,6 +231,8 @@ export class MainProductDetailsComponent implements OnInit {
       this.subImg0 = 'active';
       this.subImg1 = '';
       this.activeImg = 2;
+
+      this.image = this.productImg2;
       this.colorOption = this.color1;
     } else if (color == this.color2) {
       console.log(this.color2);
@@ -231,6 +243,8 @@ export class MainProductDetailsComponent implements OnInit {
       this.subImg0 = '';
       this.subImg1 = 'active';
       this.activeImg = 3;
+
+      this.image = this.productImg3;
       this.colorOption = this.color2;
     } else {
       alert('no products found')
@@ -242,8 +256,8 @@ export class MainProductDetailsComponent implements OnInit {
   }
 
   addItemToCart() {
-
-    let image = "../../../../assets/img/" + this.productImg1;
+    this.cartItemId++;
+    let image = "../../../../assets/img/" + this.image;
     if (this.colorOption == "") {
       this.colorOption = this.color0;
     }
@@ -253,7 +267,7 @@ export class MainProductDetailsComponent implements OnInit {
     this.subtotal = this.quantity * this.discountedPrice;
 
     let obj: Cart = {
-      id: this.productId,
+      id: this.cartItemId.toString(),
       placeholderImg: image,
       title: this.productName,
       variations: this.variations,
@@ -268,7 +282,8 @@ export class MainProductDetailsComponent implements OnInit {
     this.firebasecrudservice.setCart(obj);
 
     // if success then display success msg, else error msg
-    this.showSuccess(this.productName);
+    // this.showSuccess(this.productName);
+    this.toggleToast();
   }
 
   minus() {
@@ -284,7 +299,27 @@ export class MainProductDetailsComponent implements OnInit {
   }
 
   //toast success
-  showSuccess(name:any) {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: name + ' has been added to your cart' });
+  // prime ng
+  // showSuccess(name:any) {
+  //   this.messageService.add({ severity: 'success', styleClass: 'styleClass', summary: 'Success', detail: name + ' has been added to your cart. Click to go to cart.' });
+  // }
+
+  //coreUi
+  toggleToast() {
+    this.visible = !this.visible;
+    this.name = this.productName;
+  }
+
+  // onVisibleChange($event: boolean) {
+  //   this.visible = $event;
+  //   this.percentage = !this.visible ? 0 : this.percentage;
+  // }
+
+  // onTimerChange($event: number) {
+  //   this.percentage = $event * 25;
+  // }
+
+  goToCart(){
+    this.router.navigate(['/cart']);
   }
 }

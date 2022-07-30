@@ -386,3 +386,19 @@ $disable: #f2f2f2;
   margin-right: 10px;
   padding-top: 10px;
 }
+
+.toast>* {
+  cursor: pointer;
+}
+
+.toastStyle {
+  background-color: rgba(204, 255, 255, 1);
+
+  color: darkgreen;
+}
+
+.toastHeader {
+  background-color: green;
+  color: whitesmoke;
+
+}

@@ -1,0 +1,25 @@
+<p>payment works!</p>
+
+
+<div>
+  <h2>Angular Stripe Checkout Page</h2>
+
+  <div>
+    <button (click)="initializePayment(2)">Paymant of $2</button>
+  </div>
+  <div>
+    <button (click)="initializePayment(25)">Payment $25</button>
+  </div>
+  <div>
+    <button (click)="initializePayment(35)">Payment of $35</button>
+  </div>
+</div>
+
+
+
+<div *ngIf="success">
+  <h1>Your Payment is complete successfully</h1>
+</div>
+<div *ngIf="failure">
+  <h1>Some Error is taken place inside the payment</h1>
+</div>
