@@ -9,13 +9,6 @@
     <thead class="table-header">
       <tr>
         <th>
-          <!--* simplify by not including check box due to bugs  -->
-          <!-- https://www.bennadel.com/blog/3364-creating-a-direct-click-dom-event-plug-in-in-angular-4-4-6.htm#:~:text=Angular%20already%20has%20the%20ability,node%20within%20the%20given%20element. -->
-          <!-- <div class="checkbox-container" >
-            <div class="checkbox-border" (click)="checkAll()">
-              <p class="tick" [ngClass]="checkbox">✓</p>
-            </div>
-          </div> -->
         </th>
         <th class="product-header">Product</th>
         <th>Price</th>
@@ -27,17 +20,11 @@
     <tbody *ngFor="let item of items; let i=index">
       <tr class="product-row">
         <th>
-          <!--* simplify by not including check box due to bugs  -->
-          <!-- <div class="checkbox-container" (click)="checkIndividual(i, $event)">
-            <div class="checkbox-border" >
-              <p class="tick" [ngStyle]="checkIndividualStyle" id="{{i}}">✓</p>
-            </div>
-          </div> -->
         </th>
         <td class="item-product">
           <div>
             <img class="cart-img" src="{{item.placeholderImg}}" alt="">
-            {{item.title}} - 
+            {{item.title}} -
             {{item.variations}}
           </div>
 
@@ -55,18 +42,28 @@
           </div>
         </td>
         <td class="total-price">RM {{item.totalPrice}} </td>
-        <td >
-          <p class="del" (click)="removeItem(item.id)">Delete</p></td>
+        <td>
+          <p class="del" (click)="removeItem(item.id)">Delete</p>
+        </td>
       </tr>
     </tbody>
   </table>
 
-  <div style="display: flex; flex-direction: column;">
+  <div class="stickBottom">
     <div>
       <div style="float: right;">
-        <div class="voucher-container">
-          <h6>Vouchers</h6>
-          <span class="voucherModalBtn" (click)="showModalDialog()">Select or enter voucher ></span>
+        <div class="voucher-cart-container">
+          <div class="select-voucher">
+            <h6>Vouchers</h6>
+            <span class="voucherModalBtn" (click)="showModalDialog()">Select voucher ></span>
+          </div>
+
+          <div class="selectedVouchers" [hidden]="displayVouchersModal">
+            <!-- display selected vouchers -->
+            <p>{{feedback}}</p>
+            <p>{{feedback1}}</p>
+            <p>{{feedback2}}</p>
+          </div>
         </div>
         <div class="discount-container">
           <h6>Discount Applied</h6>
@@ -74,15 +71,7 @@
         </div>
       </div>
     </div>
-
-    <!-- <hr> -->
     <div>
-      <!--* simplify by not including check box due to bugs  -->
-      <!-- <div class="left-bottom-panel">
-        <input class="checkbox-all" type="checkbox" id="allItems" name="allItems" value="allItems" (click)="checkAll()">
-        <p>Select All ({{itemCount}})</p>
-        <p>Delete</p>
-      </div> -->
       <div class="left-bottom-panel">
         <button class="clearCart" (click)="clearCart()">Clear Cart</button>
         <button (click)="populateCart()">populate</button>
@@ -91,26 +80,82 @@
         <p>Total ({{itemCount}} items) : </p>
         <p class="totalText"> &nbsp; RM {{total}}</p>
       </div>
+      <div><button (click)="goToCheckout()">Checkout</button></div>
     </div>
   </div>
 
   <!-- voucher modal  -->
-  <p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+  <p-dialog header="Voucher" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
     [draggable]="false" [resizable]="false">
-    
-    <div>
-      <div>
-        left
+
+    <div class="voucherContainer">
+
+      <div class="voucherMain" id="firstVoucher" (click)="selectVoucher('cashback')">
+        <div class="voucherLeft">
+          <h6>{{voucher0Title}}</h6>
+        </div>
+        <div class="voucherRight">
+          <p>
+            Mininum total of RM {{voucher0Min}}
+          </p>
+        </div>
+        <div>
+          <p class="voucherNotSelected" id="cashback">✔️</p>
+        </div>
       </div>
-      <div>
-        right
+      <div class="voucherMain" id="secondVoucher" (click)="selectVoucher('discount')">
+        <div class="voucherLeft">
+          <h6>{{voucher1Title}}</h6>
+        </div>
+        <div class="voucherRight">
+          <p>
+            Mininum total of RM {{voucher1Min}}
+          </p>
+
+        </div>
+        <div>
+          <p class="voucherNotSelected" id="discount">✔️</p>
+        </div>
+
+
+      </div>
+      <div class="voucherMain" id="thirdVoucher" (click)="selectVoucher('freeShipping')">
+        <div class="voucherLeft">
+          <h6>{{voucher2Title}}</h6>
+        </div>
+        <div class="voucherRight">
+          <p>
+            Mininum total of RM {{voucher2Min}}
+          </p>
+
+        </div>
+        <div>
+          <p class="voucherNotSelected" id="freeShipping">✔️</p>
+        </div>
+
       </div>
     </div>
-    
+
+
     <ng-template pTemplate="footer">
-      <p-button icon="pi pi-check" (click)="displayModal=false" label="Yes" class="p-button-text"></p-button>
-      <p-button icon="pi pi-times" (click)="displayModal=false" label="No"></p-button>
+      <button (click)="displayModal=false" class="cancelBtn">CANCEL</button>
+      <button (click)="selectingVoucher()" class="okBtn">OK</button>
     </ng-template>
   </p-dialog>
+
+  <c-toaster [placement]="position" position="fixed">
+    <c-toast [visible]="visible" class="toastStyle">
+      <c-toast-header class="toastHeader">
+        <toast-sample-icon></toast-sample-icon>
+        Success
+      </c-toast-header>
+      <c-toast-body>
+        <p>{{feedback}}</p>
+        <p>{{feedback1}}</p>
+        <p>{{feedback2}}</p>
+      </c-toast-body>
+    </c-toast>
+  </c-toaster>
+
 
 </section>

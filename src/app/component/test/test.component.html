@@ -67,7 +67,7 @@
   </ng-template>
 </ngb-carousel> -->
 
-<style>
+<!-- <style>
   .slick-slider {
     width: 88%;
     margin: auto;
@@ -95,4 +95,58 @@
 <button (click)="addSlide()">Add</button>
 <button (click)="removeSlide()">Remove</button>
 <button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
-<button (click)="slickModal.unslick()">unslick</button>
+<button (click)="slickModal.unslick()">unslick</button> -->
+
+
+<!-- <div *ngFor="let data of movies.movieCollection">
+  <mat-checkbox>
+    {{data.name}}
+  </mat-checkbox>
+</div>
+
+<button (click)="showResults()">Button</button>
+
+<div *ngFor="let movies of moviesList">
+
+  <p>{{movies.name}}</p>
+  <p>{{movies.selected}}</p>
+  <p>{{movies.disabled}}</p>
+</div> -->
+
+
+<!-- <section class="example-section" [formGroup]="toppings">
+  <h4>Select your toppings:</h4>
+  <p>
+    <mat-checkbox formControlName="pepperoni">Pepperoni</mat-checkbox>
+  </p>
+  <p>
+    <mat-checkbox formControlName="extracheese">Extra Cheese</mat-checkbox>
+  </p>
+  <p>
+    <mat-checkbox formControlName="mushroom">Mushroom</mat-checkbox>
+  </p>
+  <mat-checkbox class="example-margin" [(ngModel)]="checked">Checked</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox>
+</section>
+
+<section class="example-section" [formGroup]="toppings">
+  <h4>You chose:</h4>
+  {{toppings.value | json}}
+
+</section>
+
+<section [formGroup]="test">
+  {{test.value | json}}
+</section>
+
+{{checked}}
+
+<mat-checkbox class="example-margin" [(ngModel)]="checked" [(indeterminate)]="indeterminate">
+  I'm a checkbox
+</mat-checkbox> -->
+
+<div class="card">
+  <p-toast></p-toast>
+  <p-steps [model]="items" [readonly]="true"></p-steps>
+</div>
+<router-outlet></router-outlet>

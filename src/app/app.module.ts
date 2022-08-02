@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -59,6 +59,8 @@ import { DialogModule } from 'primeng/dialog';
 import { MaterialModule } from './material.module';
 import { ToastModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 // components
 import { LoginComponent } from './component/login/login.component';
@@ -85,6 +87,9 @@ import { FooterComponent } from './component/footer/footer.component';
 import { RatingComponent } from './component/product-details/rating/rating.component';
 import { CartComponent } from './component/cart/cart.component';
 import { PaymentComponent } from './component/payment/payment.component';
+import { PersonalComponent } from './component/test/personal/personal.component';
+import { SeatComponent } from './component/test/seat/seat.component';
+import { ConfirmationComponent } from './component/test/confirmation/confirmation.component';
 
 
 @NgModule({
@@ -113,7 +118,10 @@ import { PaymentComponent } from './component/payment/payment.component';
     FooterComponent,
     RatingComponent,
     CartComponent,
-    PaymentComponent
+    PaymentComponent,
+    PersonalComponent,
+    SeatComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -144,6 +152,8 @@ import { PaymentComponent } from './component/payment/payment.component';
     // DynamicDialogModule,
     MaterialModule,
     materialModules,
+    MatCheckboxModule,
+    ReactiveFormsModule,
   ],
 
   providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],

@@ -20,29 +20,35 @@ export class AppComponent {
 
   constructor(private primengConfig: PrimeNGConfig, private firebasecrudservice: FirebaseCRUDService, private productService: ProductService) { }
 
-  discountVoucher : Voucher = {
-    title : "RM 5 off Min.Spend RM 15",
-    min : 15,
-    cashback: 0,
-    freeShipping: false,
-    discount: 5
-  }
+  voucher: Voucher[] = [
+    {
+      title: "RM 50 off",
+      min: 500,
+      cashback: 0,
+      freeShipping: false,
+      discount: 50,
+      type: "discount"
+    },
 
-  freeShippingVoucher : Voucher = {
-    title : "Free shipping Min.Spend RM 50",
-    min : 50,
-    cashback: 0,
-    freeShipping: true,
-    discount: 0
-  }
+    {
+      title: "Free shipping",
+      min: 500,
+      cashback: 0,
+      freeShipping: true,
+      discount: 0,
+      type: "free shipping"
+    },
 
-  cashBackVoucher : Voucher = {
-    title : "Cashback 15% Min.Spend RM 25",
-    min : 25,
-    cashback: 15,
-    freeShipping: false,
-    discount: 0
-  }
+    {
+      title: "Cashback 15%",
+      min: 100,
+      cashback: 15,
+      freeShipping: false,
+      discount: 0,
+      type: "cash back"
+    }
+  ]
+
 
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -111,6 +117,9 @@ export class AppComponent {
     // 2. Free shipping Min.Spend RM 50
     // 3. Cashback 15% Min.Spend RM 25
 
-    
+    // this.voucher.forEach(element => {
+    //   this.firebasecrudservice.populateVoucher(element);
+    // });
+
   }
 }

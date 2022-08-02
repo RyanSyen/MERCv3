@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../domain/product';
 import { Cart } from '../domain/cart';
+import { Voucher } from '../domain/voucher';
 import {
     Firestore, addDoc, collection, collectionData,
     doc, docData, deleteDoc, updateDoc, DocumentReference, setDoc
@@ -152,5 +153,17 @@ export class FirebaseCRUDService {
         return deleteDoc(cartsRef);
     }
 
-    
+    //* voucher
+
+    populateVoucher(voucher: Voucher) {
+        const voucherRef = doc(this.firestore, `voucher/${voucher.type}`);
+        return setDoc(voucherRef, voucher);
+    }
+
+    getVouchers(): Observable<Voucher[]> {
+        const voucherRef = collection(this.firestore, `voucher`);
+        return collectionData(voucherRef, { idField: 'type' }) as Observable<Voucher[]>;
+    }
+
+
 }

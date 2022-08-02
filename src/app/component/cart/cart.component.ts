@@ -1,5 +1,6 @@
+
 import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Cart } from 'src/app/domain/cart';
 import { ProductService } from 'src/app/service/productservice';
 import { PrimeNGConfig } from 'primeng/api';
@@ -7,6 +8,10 @@ import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFi
 import { browserRefresh } from '../../app-routing.module';
 import { throttleTime } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { Voucher } from './../../domain/voucher';
+// import { FormBuilder } from '@angular/forms';
+import { HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -15,7 +20,8 @@ declare var $: any;
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit {
+
+export class CartComponent implements OnInit, AfterViewInit {
   cartItems: Cart[] = [];
   items: Cart[] = [];
   totalPriceArr: Array<any> = [];
@@ -33,12 +39,45 @@ export class CartComponent implements OnInit {
   count: number = 0;
   newCheck = false;
 
+  // voucher
+  vouchers: Voucher[] = [];
+  checked = false;
+  voucher0Title: string = "";
+  voucher1Title: string = "";
+  voucher2Title: string = "";
+  voucher0Min: number = 0;
+  voucher1Min: number = 0;
+  voucher2Min: number = 0;
+  feedback: string = "";
+  feedback1: string = "";
+  feedback2: string = "";
+
+  // toast
+  visible = false;
+  position = 'top-end';
+  percentage = 0;
+
+  loaded = false;
+
+  displayVouchersModal = true;
 
   private firestore: FirebaseTSFirestore;
 
   public browserRefresh: boolean = false;
 
-  constructor(private productService: ProductService, private primengConfig: PrimeNGConfig, private firebaseService: FirebaseCRUDService, private messageService: MessageService) {
+  // toppings = this._formBuilder.group({
+  //   1: false,
+  //   2: false,
+  //   3: false,
+  // });
+  @HostListener('window:load')
+  onLoad() {
+    this.loaded = true;
+    console.log('is window:load');
+
+  }
+
+  constructor(private productService: ProductService, private primengConfig: PrimeNGConfig, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private router: Router) {
 
     this.firestore = new FirebaseTSFirestore();
 
@@ -53,9 +92,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-
-    // this.testFunction(1000);
-
 
 
     // check if browser refreshed
@@ -78,108 +114,33 @@ export class CartComponent implements OnInit {
         this.total = this.total + this.items[i].totalPrice;
         this.itemCount++;
       }
+
       console.log("get cart service triggered")
+
+
+    })
+
+    //* fetch voucher from firebase
+    // error and completion signal is not working, maybe observable is not emitted
+    this.firebaseService.getVouchers().subscribe((voucher: Voucher[]) => {
+      this.vouchers = voucher;
+      this.voucher0Title = voucher[0].title;
+      this.voucher1Title = voucher[1].title;
+      this.voucher2Title = voucher[2].title;
+      this.voucher0Min = voucher[0].min;
+      this.voucher1Min = voucher[1].min;
+      this.voucher2Min = voucher[2].min;
+      console.log(voucher)
     })
 
   }
 
-
-
-  //* simplify by not including check box due to bugs
-  // checkAll() {
-  //   console.log(" checkAll is running now!");
-  //   this.total = 0;
-
-  //   this.checkingAll = !this.checkingAll;
-  //   this.checkingInidividual = !this.checkingInidividual;
-
-  //   // get total item count
-  //   this.itemCount = Object.keys(this.items).length;
-
-  //   // empty array first to avoid conflict with individual check boxes
-  //   // this.totalPriceArr = [];
-
-  //   if (this.checkingAll == true) {
-  //     this.checkbox = "active";
-  //     // this.total = this.sum;
-  //     for (let i = 0; i < Object.keys(this.items).length; i++) {
-  //       var element = document.getElementById(i.toString());
-  //       element?.classList.add('active');
-  //       let price = this.items[i].totalPrice;
-  //       this.total += price;
-  //     }
-
-  //   } else {
-  //     console.log("non-active")
-  //     this.checkbox = "";
-  //     for (let i = 0; i < Object.keys(this.items).length; i++) {
-  //       var element = document.getElementById(i.toString());
-  //       element?.classList.remove('active');
-
-  //     }
-  //     this.total = 0;
-  //     this.itemCount = 0;
-
-  //     // to update value of total. When not checked then total = 0
-  //     this.onSelectChange();
-  //   }
-
-  // }
-
-  // checkIndividual(index: number, event: Event) {
-
-
-  //   let element = document.getElementById(index.toString());
-
-
-  //   // if previous status is nonactive, then execute to be active
-  //   if (element?.classList.contains('active')) {
-
-  //     let element = document.getElementById(index.toString());
-  //     element?.classList.remove('active');
-
-  //     // this.checkIndividualStyle.visibility = "hidden";
-
-  //     // let price = this.items[index].discountedPrice;
-  //     // let priceIndex = this.totalPriceArr.indexOf(price, 0);
-  //     // console.log(this.totalPriceArr)
-  //     // console.log(priceIndex);
-  //     // this.totalPriceArr.splice(priceIndex, 1);
-  //     // console.log(this.totalPriceArr)
-
-  //     // just displaying product subtotal
-  //     // this.total = this.calculateTotal();
-  //     this.total = this.items[index].totalPrice;
-  //     this.itemCount -= 1;
-
-
-  //     // to update value of total. When not checked then total = 0
-  //     this.onSelectChange();
-  //   } else {
-  //     // if click check box then return product
-
-  //     let element = document.getElementById(index.toString());
-  //     element?.classList.add('active');
-  //     // this.checkIndividualStyle.visibility = "visible";
-  //     // element?.addEventListener("click", function () {
-  //     //   element?.classList.add("active");
-  //     // })
-
-  //     this.totalPriceArr.push(this.items[index].totalPrice);
-  //     this.total = this.items[index].totalPrice;
-  //     console.log(this.total);
-  //     this.itemCount += 1;
-  //     console.log(this.itemCount)
-  //   }
-  // }
-
-
-
-
-
-  showModalDialog() {
-    this.displayModal = true;
+  ngAfterViewInit(): void {
+    // let elementt = document.getElementById("cashback");
+    // alert(elementt)
   }
+
+
 
   addQuantity(id: any, index: number, price: any) {
     console.log(" addQuantity is running now!");
@@ -187,26 +148,24 @@ export class CartComponent implements OnInit {
     let q = this.items[index].quantity;
     let subtotal: any;
     if (q < 100) {
+      q++;
       this.quantity = q;
-      this.quantity++;
+      // this.quantity = q;
+      // this.quantity++;
 
       // reflect changes to the UI
       this.items[index].quantity = this.quantity;
 
       // update item's subtotal
-      this.items[index].totalPrice = price * this.quantity;
+      this.items[index].totalPrice = price * q;
       subtotal = this.items[index].totalPrice;
 
       // update to firebase
-      // this.firebaseService.updateCartPriceQuantity(id, this.quantity, subtotal);
-      this.updateFunction(id, this.quantity, subtotal);
-
-      // continue to make it active so that it wont dissapear
-      // let element = document.getElementById(index.toString());
-      // element?.classList.add('active');
-
-      // check if product is selected, if yes display total, else total = 0
-      // this.onSelectChange();
+      this.firebaseService.updateCartPriceQuantity(id, q, subtotal).then(() => {
+        console.log("Data updated successfully!");
+        this.function();
+      })
+      // this.updateFunction(id, this.quantity, subtotal);
     }
 
 
@@ -218,77 +177,51 @@ export class CartComponent implements OnInit {
     if (q != 1) {
       q--;
       this.items[index].quantity = q;
+
+      this.items[index].totalPrice = price * q;
+      subtotal = this.items[index].totalPrice;
+
+
+      // update to firebase
+      this.firebaseService.updateCartPriceQuantity(id, q, subtotal).then(() => {
+        console.log("Data updated successfully!");
+        this.function();
+      })
     }
 
 
-    this.items[index].totalPrice = price * q;
-    subtotal = this.items[index].totalPrice;
 
 
-    // update to firebase
-    this.firebaseService.updateCartPriceQuantity(id, q, subtotal);
-
+    // console.log(this.firebaseService.updateCartPriceQuantity(id, q, subtotal));
     // check if product is selected, if yes display total, else total = 0
     // this.onSelectChange();
   }
 
-  // *related to the checked functionality
-  // onSelectChange() {
-  //   // if all is not checked then display total = 0, if checked then display total
-  //   for (let i = 0; i < Object.keys(this.items).length; i++) {
-  //     var element = document.getElementById(i.toString());
-  //     var checked = element?.classList.contains('active');
-  //     if (!checked) {
-  //       this.total = 0;
+
+  // backup method to do CRUD -> refer to onenote
+  // updateFunction(id: any, quantity: number, subtotal: any) {
+
+  //   this.firestore.update(
+  //     {
+  //       path: [
+  //         "cart",
+  //         id
+  //       ],
+  //       data: {
+  //         quantity: quantity,
+  //         totalPrice: subtotal
+  //       },
+  //       onComplete: docRef => {
+  //         // Code gets executed when it was successful.
+  //         // alert("Data updated!");
+  //       },
+  //       onFail: err => {
+  //         // Code gets executed when it fails.
+  //         alert(err.message);
+  //       }
   //     }
-
-  //   }
+  //   );
   // }
-
-  updateFunction(id: any, quantity: number, subtotal: any) {
-
-    this.firestore.update(
-      {
-        path: [
-          "cart",
-          id
-        ],
-        data: {
-          quantity: quantity,
-          totalPrice: subtotal
-        },
-        onComplete: docRef => {
-          // Code gets executed when it was successful.
-          // alert("Data updated!");
-        },
-        onFail: err => {
-          // Code gets executed when it fails.
-          alert(err.message);
-        }
-      }
-    );
-  }
-
-  testFunction(id: any) {
-    let test = this.items[0];
-    this.firestore.create({
-      path: [
-        "Cart",
-        id
-      ],
-      data: {
-        test
-      },
-      onComplete: docId => {
-        // Code gets executed when it was successful.
-        alert("Data recorded!");
-      },
-      onFail: err => {
-        // Code gets executed when it fails.
-        alert(err.message);
-      }
-    });
-  }
 
   removeItem(id: string) {
     this.firebaseService.deleteCartItem(id);
@@ -315,9 +248,104 @@ export class CartComponent implements OnInit {
 
       for (let i = 0; i < this.count; i++) {
         this.firebaseService.setCart(this.items[i]);
-        this.firebaseService.populateWithFirebaseTSFirestore(this.items[i]);
+        // this.firebaseService.populateWithFirebaseTSFirestore(this.items[i]);
       }
     });
+  }
+
+  showModalDialog() {
+    console.log(this.total)
+    if (this.loaded == true) {
+      // this.function();
+      // alert("executed function")
+      setTimeout(() => {
+        this.function();
+      }, 100)
+      // this.function();
+      this.displayModal = true;
+    }
+
+  }
+
+  selectVoucher(id: string) {
+
+    let element = document.getElementById(id);
+    let unchecked = element?.classList.contains("voucherNotSelected");
+    if (unchecked == true) {
+      element?.classList.remove("voucherNotSelected");
+      element?.classList.add("voucherSelected");
+
+      if (id == "cashback") {
+        this.feedback = "Cashback voucher selected."
+      }
+    } else {
+      element?.classList.remove("voucherSelected");
+      element?.classList.add("voucherNotSelected");
+    }
+  }
+
+  selectingVoucher() {
+    console.log(this.discountsApplied)
+    let element = document.getElementById("cashback");
+    let element1 = document.getElementById("discount");
+    let element2 = document.getElementById("freeShipping");
+    let unchecked = element?.classList.contains("voucherSelected");
+    let unchecked1 = element1?.classList.contains("voucherSelected");
+    let unchecked2 = element2?.classList.contains("voucherSelected");
+
+    if (unchecked == true) {
+      this.feedback = "Cashback voucher applied successfully."
+      this.discountsApplied += this.total * (this.vouchers[0].cashback / 100);
+    } else {
+      this.feedback = "";
+    }
+    if (unchecked1 == true) {
+      this.feedback1 = "Discount voucher applied successfully."
+      console.log(this.vouchers[1].discount)
+      this.discountsApplied += this.vouchers[1].discount;
+    } else {
+      this.feedback1 = "";
+    }
+    if (unchecked2 == true) {
+      this.feedback2 = "Free Shipping voucher applied successfully."
+      this.discountsApplied += 5;
+    } else {
+      this.feedback2 = "";
+    }
+
+    this.displayModal = false;
+    this.toggleToast();
+    this.displayVouchersModal = false;
+  }
+
+  toggleToast() {
+    console.log("toggle toast" + this.visible)
+    // this.visible = !this.visible;
+    this.visible = true;
+  }
+
+  function() {
+    var firstVoucher = document.getElementById('firstVoucher');
+    var secondVoucher = document.getElementById('secondVoucher');
+    var thirdVoucher = document.getElementById('thirdVoucher');
+
+    console.log(this.total)
+    if (this.total < 100) {
+      firstVoucher?.classList.add('disabled');
+    } else if (this.total < 500) {
+      secondVoucher?.classList.add('disabled');
+      thirdVoucher?.classList.add('disabled');
+      console.log("blocked successfully");
+    } else {
+      firstVoucher?.classList.remove('disabled');
+      secondVoucher?.classList.remove('disabled');
+      thirdVoucher?.classList.remove('disabled');
+      console.log("removed block successfully");
+    }
+  }
+
+  goToCheckout() {
+    this.router.navigate(['/payment']);
   }
 
 }

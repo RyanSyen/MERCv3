@@ -1,3 +1,6 @@
+require("dotenv").config({
+  path: "./environment.env"
+});
 const express = require("express");
 const bodyparser = require('body-parser')
 const app = express();
@@ -22,7 +25,7 @@ app.post('/payment', async (req, res) => {
       .then((customer) => {
         console.log(customer);
         return stripe.charges.create({
-          amount: 1000,
+          amount: req.body.amount * 100,
           description: "Test Purchase using express and Node",
           currency: "USD",
           customer: customer.id,
