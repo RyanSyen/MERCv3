@@ -177,6 +177,7 @@ import { Component, OnInit, HostListener, ElementRef, ChangeDetectorRef } from '
 import { MenuItem, MessageService } from 'primeng/api';
 import { TicketService } from './ticketservice';
 import { Subscription } from 'rxjs';
+import { CheckoutService } from 'src/app/service/checkout.service';
 
 @Component({
     selector: 'app-root',
@@ -190,35 +191,97 @@ export class TestComponent implements OnInit {
 
     subscription: Subscription | undefined;
 
-    constructor(public messageService: MessageService, public ticketService: TicketService) { }
+    // constructor(public messageService: MessageService, public ticketService: TicketService) { }
+
+    // ngOnInit() {
+    //     this.items = [{
+    //         label: 'Personal',
+    //         routerLink: 'personal'
+    //     },
+    //     {
+    //         label: 'Seat',
+    //         routerLink: 'seat'
+    //     },
+    //     {
+    //         label: 'Payment',
+    //         routerLink: 'payment'
+    //     },
+    //     {
+    //         label: 'Confirmation',
+    //         routerLink: 'confirmation'
+    //     }
+    //     ];
+
+    //     this.subscription = this.ticketService.paymentComplete$.subscribe((personalInformation) => {
+    //         this.messageService.add({ severity: 'success', summary: 'Order submitted', detail: 'Dear, ' + personalInformation.firstname + ' ' + personalInformation.lastname + ' your order completed.' });
+    //     });
+    // }
+
+    // ngOnDestroy() {
+    //     if (this.subscription) {
+    //         this.subscription.unsubscribe();
+    //     }
+    // }
+
+
+    paymentHandler: any = null;
+
+    success: boolean = false
+
+    failure: boolean = false
+
+    constructor(private checkout: CheckoutService) { }
 
     ngOnInit() {
-        this.items = [{
-            label: 'Personal',
-            routerLink: 'personal'
-        },
-        {
-            label: 'Seat',
-            routerLink: 'seat'
-        },
-        {
-            label: 'Payment',
-            routerLink: 'payment'
-        },
-        {
-            label: 'Confirmation',
-            routerLink: 'confirmation'
-        }
-        ];
+        this.invokeStripe();
+    }
 
-        this.subscription = this.ticketService.paymentComplete$.subscribe((personalInformation) => {
-            this.messageService.add({ severity: 'success', summary: 'Order submitted', detail: 'Dear, ' + personalInformation.firstname + ' ' + personalInformation.lastname + ' your order completed.' });
+    makePayment(amount: number) {
+        const paymentHandler = (<any>window).StripeCheckout.configure({
+            key: 'pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4',
+            locale: 'auto',
+            token: function (stripeToken: any) {
+                console.log(stripeToken);
+                paymentstripe(stripeToken, amount);
+            },
+        });
+
+        const paymentstripe = (stripeToken: any, amount: number) => {
+            this.checkout.makePayment(stripeToken, amount).subscribe((data: any) => {
+                console.log(data);
+                if (data.data === "success") {
+                    this.success = true
+                }
+                else {
+                    this.failure = true
+                }
+            });
+        };
+
+        paymentHandler.open({
+            name: 'Coding Shiksha',
+            description: 'This is a sample pdf file',
+            amount: amount * 100,
         });
     }
 
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
+    invokeStripe() {
+        if (!window.document.getElementById('stripe-script')) {
+            const script = window.document.createElement('script');
+            script.id = 'stripe-script';
+            script.type = 'text/javascript';
+            script.src = 'https://checkout.stripe.com/checkout.js';
+            script.onload = () => {
+                this.paymentHandler = (<any>window).StripeCheckout.configure({
+                    key: 'pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4',
+                    locale: 'auto',
+                    token: function (stripeToken: any) {
+                        console.log(stripeToken);
+                    },
+                });
+            };
+
+            window.document.body.appendChild(script);
         }
     }
 }

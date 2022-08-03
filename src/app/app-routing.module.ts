@@ -13,6 +13,7 @@ import { TestComponent } from './component/test/test.component';
 import { MainProductDetailsComponent } from './component/product-details/main-product-details/main-product-details.component';
 import { CartComponent } from './component/cart/cart.component';
 import { PaymentComponent } from './component/payment/payment.component'
+import { Test1Component } from './component/test1/test1.component';
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -20,6 +21,7 @@ import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
 
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
 
 // Include route guard in routes array
 const routes: Routes = [
@@ -41,7 +43,8 @@ const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'product_details/:id/:type', component: MainProductDetailsComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'payment', component: PaymentComponent }
+  { path: 'payment', component: PaymentComponent },
+  { path: 'test1', component: Test1Component }
 ];
 
 export let browserRefresh = false;

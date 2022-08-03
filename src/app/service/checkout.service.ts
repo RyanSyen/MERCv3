@@ -13,10 +13,10 @@ export class CheckoutService {
 
   // this will pass the stripeToken from the payment component file to the server
 
-  makePayment(stripeToken: any): Observable<any> {
-    const url = "http://localhost:5000/payment/"
+  makePayment(stripeToken: any, amount: number): Observable<any> {
+    const url = "http://localhost:5000/checkout/"
 
 
-    return this.http.post<any>(url, { token: stripeToken })
+    return this.http.post<any>(url, { token: stripeToken, amount: amount })
   }
 }

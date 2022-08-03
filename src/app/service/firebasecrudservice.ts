@@ -9,6 +9,8 @@ import {
 } from '@angular/fire/firestore';
 import { update } from 'firebase/database';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
+import { selectedVoucher } from '../domain/selectedVoucher';
+
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +18,8 @@ import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFi
 export class FirebaseCRUDService {
 
     private firestoreDB: FirebaseTSFirestore;
+
+
 
     constructor(private firestore: Firestore) {
         this.firestoreDB = new FirebaseTSFirestore();
@@ -165,5 +169,14 @@ export class FirebaseCRUDService {
         return collectionData(voucherRef, { idField: 'type' }) as Observable<Voucher[]>;
     }
 
+    setSelectedVouchers(voucher: selectedVoucher) {
+        const voucherRef = doc(this.firestore, `selectedVoucher/${voucher.id}`);
+        return setDoc(voucherRef, voucher);
+    }
+
+    getSelectedVouchers(): Observable<selectedVoucher[]> {
+        const voucherRef = collection(this.firestore, `selectedVoucher`);
+        return collectionData(voucherRef, { idField: 'id' }) as Observable<selectedVoucher[]>;
+    }
 
 }

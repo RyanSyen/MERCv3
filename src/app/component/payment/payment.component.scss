@@ -1,0 +1,376 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,600);
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400;500&display=swap");
+
+$blue: hsl(206, 72%, 68%);
+$green: hsl(120, 42%, 54%);
+$white: hsl(0, 0%, 100%);
+$grey: hsl(226, 10%, 55%);
+$disa: hsl(226, 15%, 83%);
+
+.step {
+  display: flex;
+  // width: 700px;
+  // height: 300px;
+  justify-content: space-between;
+  justify-items: center;
+}
+
+.step-container {
+  display: flex;
+  justify-content: center;
+}
+
+.step-case {
+  width: 800px;
+  margin-bottom: 20px;
+}
+
+.step-circle-circles {
+  display: flex;
+  justify-content: center;
+}
+
+.caption {
+  color: #ccc;
+}
+
+.caption.active {
+  color: #000;
+}
+
+.step-circle {
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+
+  p {
+    text-align: center;
+    margin: 15px 0 0 0;
+    color: #ccc;
+  }
+}
+
+
+
+.step-circle.active {
+  border: 1px solid rgba(0, 93, 232, 0.5);
+
+  p {
+    color: #000;
+  }
+}
+
+.step-circle.active.done {
+  background-color: #005DE8;
+
+  p {
+    color: whitesmoke;
+  }
+
+}
+
+.hori-container {
+  width: 100px;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
+
+.horizontal-line {
+  transform: rotate(90deg);
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+
+  &.active {
+    border: 1px solid #005DE8;
+  }
+}
+
+.products-ordered-header {
+  margin: 10px 0 15px 0;
+}
+
+.products-ordered-table {
+  margin: 10px 0 5px 0;
+}
+
+.table {
+  width: 100%;
+  // border: 1px solid #3184f9 ;
+  padding: 10px 10px 0 10px;
+  border-spacing: 30px;
+  text-align: center;
+
+  tr {
+    border: 1px solid #3184f9;
+  }
+}
+
+.table-header {
+  padding-bottom: 15px;
+
+  tr {}
+}
+
+.cart-img {
+  width: 100px;
+}
+
+.product-header {
+  text-align: left;
+}
+
+.item-product {
+  text-align: left;
+}
+
+.product-row {
+  vertical-align: middle;
+
+  &:hover {
+    background-color: #d8f9ff;
+
+  }
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #ccc;
+  font-size: smaller;
+}
+
+.total-price {
+  color: #005DE8;
+}
+
+.right-panel {
+  float: right;
+}
+
+.voucher-cart-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-voucher {
+  display: flex;
+  margin: 15px 0;
+
+  h6 {
+    font-weight: 700;
+    margin-right: 15px;
+  }
+}
+
+.selectedVouchers {
+  p {
+    font-size: x-small;
+  }
+}
+
+.total {
+  display: flex;
+}
+
+.receivers-information {
+  @extend .products-ordered-header;
+}
+
+.footer-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.cancel-btn {
+  border: 1px solid #005DE8;
+  border-radius: 5px;
+  background-color: rgba(0, 93, 232, 0.2);
+  color: #005DE8;
+  margin-right: 20px;
+  padding: 5px 8px 5px 8px;
+
+  &:hover {
+    box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+  }
+}
+
+.next-btn {
+  border: 1px solid #005DE8;
+  border-radius: 5px;
+  background-color: #005DE8;
+  color: whitesmoke;
+  padding: 5px 12px 5px 12px;
+
+  &:hover {
+    box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+  }
+}
+
+.select-payment-method {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+// merc credit
+.merc-credit {
+  // width: 300px;
+  max-height: 100px;
+  padding: 10px 20px 10px 20px;
+  border: 1px solid #005DE8;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  position: relative;
+
+  h4 {
+    color: #005DE8;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &:hover {
+    background-color: #005DE8;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(204, 204, 204, 0.75);
+
+    h4,
+    p {
+      color: whitesmoke;
+      margin: 0;
+    }
+  }
+}
+
+.credit-debit {
+  @extend .merc-credit;
+  margin: 0;
+  height: 90px;
+  position: relative;
+}
+
+.merc-credit:first {
+  margin-right: 20px;
+}
+
+// credit card
+.credit-card {
+  position: relative;
+  max-width: 260px;
+  min-width: 260px;
+  margin: 50px auto;
+  max-height: 150px;
+  min-height: 150px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  box-sizing: border-box;
+  background: linear-gradient(-240deg, #fffc00, #fc00ff, #00fffc);
+  justify-content: space-between;
+  font-family: "Dosis", sans-serif;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    color: rgb(249 249 249 / 10%);
+    background: linear-gradient(135deg, currentColor 25%, transparent 25%) -100px 0,
+      linear-gradient(225deg, currentColor 25%, transparent 25%) -100px 0,
+      linear-gradient(315deg, currentColor 25%, transparent 25%),
+      linear-gradient(45deg, currentColor 25%, transparent 25%);
+    background-size: calc(2 * 100px) calc(2 * 100px);
+  }
+}
+
+// .credit-card:after {
+//   content: "";
+//   position: absolute;
+//   height: 100%;
+//   width: 100%;
+//   left: 0;
+//   top: 0;
+//   z-index: 0;
+//   color: rgb(249 249 249 / 10%);
+//   background: linear-gradient(135deg, currentColor 25%, transparent 25%) -100px 0,
+//     linear-gradient(225deg, currentColor 25%, transparent 25%) -100px 0,
+//     linear-gradient(315deg, currentColor 25%, transparent 25%),
+//     linear-gradient(45deg, currentColor 25%, transparent 25%);
+//   background-size: calc(2 * 100px) calc(2 * 100px);
+// }
+
+.logo {
+  width: 72px;
+  display: flex;
+  align-self: flex-end;
+  filter: drop-shadow(1px 1px 0 #555);
+  z-index: 1;
+}
+
+.name-and-expiry {
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+  color: #fff;
+  // font-size: 22px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  filter: drop-shadow(1px 0px 1px #555);
+  text-transform: uppercase;
+}
+
+.numbers {
+  // font-size: 36px;
+  font-size: 12px;
+  letter-spacing: 9px;
+  text-align: center;
+  color: #fff;
+  filter: drop-shadow(1px 0px 1px #555);
+  z-index: 1;
+}
+
+.selectedPaymentMethod {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+}
+
+// toast
+
+.toastStyle {
+  // background-color: rgba(204, 255, 255, 1);
+  // background-color: rgba(139, 0, 0, 0.5);
+
+  p {
+    color: #EE4B2B;
+    // font-weight: 700;
+  }
+
+}
+
+.toastHeader {
+  background-color: #EE4B2B;
+  color: whitesmoke;
+
+}

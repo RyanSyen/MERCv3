@@ -145,8 +145,21 @@
   I'm a checkbox
 </mat-checkbox> -->
 
-<div class="card">
+<!-- <div class="card">
   <p-toast></p-toast>
   <p-steps [model]="items" [readonly]="true"></p-steps>
 </div>
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> -->
+
+
+
+<h2>Angular Stripe Checkout Example</h2>
+
+<button (click)="makePayment(15)">Pay With Stripe</button>
+
+<div *ngIf="success">
+  <h1>Your Payment is complete successfully</h1>
+</div>
+<div *ngIf="failure">
+  <h1>Some Error is taken place inside the payment</h1>
+</div>

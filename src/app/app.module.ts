@@ -29,6 +29,9 @@ import { ProductService } from './service/productservice';
 import { PhotoService } from './service/photoservice';
 import { CommentService } from './service/commentservice';
 
+// for testing purposes
+import { TicketService } from './component/test/ticketservice';
+
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
 import { SecureInnerPagesGuard } from './shared/secure-inner-pages.guard';
@@ -90,6 +93,7 @@ import { PaymentComponent } from './component/payment/payment.component';
 import { PersonalComponent } from './component/test/personal/personal.component';
 import { SeatComponent } from './component/test/seat/seat.component';
 import { ConfirmationComponent } from './component/test/confirmation/confirmation.component';
+import { Test1Component } from './component/test1/test1.component';
 
 
 @NgModule({
@@ -121,7 +125,8 @@ import { ConfirmationComponent } from './component/test/confirmation/confirmatio
     PaymentComponent,
     PersonalComponent,
     SeatComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    Test1Component
   ],
   imports: [
     BrowserModule,
@@ -156,7 +161,7 @@ import { ConfirmationComponent } from './component/test/confirmation/confirmatio
     ReactiveFormsModule,
   ],
 
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

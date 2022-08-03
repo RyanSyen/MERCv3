@@ -115,8 +115,6 @@ export class CartComponent implements OnInit, AfterViewInit {
         this.itemCount++;
       }
 
-      console.log("get cart service triggered")
-
 
     })
 
@@ -254,16 +252,13 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   showModalDialog() {
-    console.log(this.total)
-    if (this.loaded == true) {
-      // this.function();
-      // alert("executed function")
-      setTimeout(() => {
-        this.function();
-      }, 100)
-      // this.function();
-      this.displayModal = true;
-    }
+
+    setTimeout(() => {
+      this.function();
+    }, 100)
+    this.displayModal = true;
+    console.log(this.displayModal)
+
 
   }
 
@@ -275,17 +270,19 @@ export class CartComponent implements OnInit, AfterViewInit {
       element?.classList.remove("voucherNotSelected");
       element?.classList.add("voucherSelected");
 
-      if (id == "cashback") {
-        this.feedback = "Cashback voucher selected."
-      }
+      // if (id == "cashback") {
+      //   this.feedback = "Cashback voucher selected."
+      // }
     } else {
       element?.classList.remove("voucherSelected");
       element?.classList.add("voucherNotSelected");
     }
   }
 
+  // ok btn in voucher modal
   selectingVoucher() {
-    console.log(this.discountsApplied)
+    console.log("then run this")
+    this.discountsApplied = 0;
     let element = document.getElementById("cashback");
     let element1 = document.getElementById("discount");
     let element2 = document.getElementById("freeShipping");
@@ -295,7 +292,8 @@ export class CartComponent implements OnInit, AfterViewInit {
 
     if (unchecked == true) {
       this.feedback = "Cashback voucher applied successfully."
-      this.discountsApplied += this.total * (this.vouchers[0].cashback / 100);
+      let str = (this.total * (this.vouchers[0].cashback / 100)).toFixed(2);
+      this.discountsApplied += parseFloat(str);
     } else {
       this.feedback = "";
     }
@@ -314,8 +312,15 @@ export class CartComponent implements OnInit, AfterViewInit {
     }
 
     this.displayModal = false;
-    this.toggleToast();
+
+    if (unchecked == true || unchecked1 == true || unchecked2 == true) {
+      this.toggleToast();
+    }
+
     this.displayVouchersModal = false;
+
+    // update selected vouchers to firebase
+
   }
 
   toggleToast() {
@@ -325,14 +330,27 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   function() {
+    console.log("run this first")
     var firstVoucher = document.getElementById('firstVoucher');
     var secondVoucher = document.getElementById('secondVoucher');
     var thirdVoucher = document.getElementById('thirdVoucher');
 
-    console.log(this.total)
+    let element = document.getElementById("cashback");
+    let element1 = document.getElementById("discount");
+    let element2 = document.getElementById("freeShipping");
+
     if (this.total < 100) {
+      element?.classList.remove("voucherSelected");
+      element?.classList.add("voucherNotSelected");
+      this.feedback = "";
       firstVoucher?.classList.add('disabled');
     } else if (this.total < 500) {
+      element1?.classList.remove("voucherSelected");
+      element1?.classList.add("voucherNotSelected");
+      this.feedback1 = "";
+      element2?.classList.remove("voucherSelected");
+      element2?.classList.add("voucherNotSelected");
+      this.feedback2 = "";
       secondVoucher?.classList.add('disabled');
       thirdVoucher?.classList.add('disabled');
       console.log("blocked successfully");

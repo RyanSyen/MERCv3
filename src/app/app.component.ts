@@ -5,6 +5,8 @@ import { FirebaseCRUDService } from './service/firebasecrudservice';
 import { ProductService } from './service/productservice';
 import { TweenMax } from "gsap";
 import { Voucher } from './domain/voucher';
+import { selectedVoucher } from './domain/selectedVoucher';
+
 
 @Component({
   selector: 'app-root',
@@ -49,6 +51,26 @@ export class AppComponent {
     }
   ]
 
+  selectedVoucher: selectedVoucher[] = [
+    {
+      id: "v001",
+      voucher1: "",
+      voucher2: "",
+      voucher3: ""
+    },
+    {
+      id: "v002",
+      voucher1: "",
+      voucher2: "",
+      voucher3: ""
+    },
+    {
+      id: "v003",
+      voucher1: "",
+      voucher2: "",
+      voucher3: ""
+    }
+  ]
 
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -120,6 +142,11 @@ export class AppComponent {
     // this.voucher.forEach(element => {
     //   this.firebasecrudservice.populateVoucher(element);
     // });
+
+    //* populate selectedVoucher
+    this.selectedVoucher.forEach(element => {
+      this.firebasecrudservice.setSelectedVouchers(element);
+    })
 
   }
 }
