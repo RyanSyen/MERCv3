@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as AOS from 'aos';
+import { ActivatedRoute } from '@angular/router';
+import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
+import { User } from 'src/app/shared/user';
+import { Unary } from '@angular/compiler';
 
 @Component({
   selector: 'app-home-main',
@@ -8,10 +12,23 @@ import * as AOS from 'aos';
 })
 export class HomeMainComponent implements OnInit {
 
-  constructor() { }
+  userid: any;
+  user: any;
+
+  constructor(private _Activatedroute: ActivatedRoute, private firebaseService: FirebaseCRUDService) { }
 
   ngOnInit(): void {
     AOS.init();
+
+
+
+    this._Activatedroute.paramMap.subscribe(params => {
+      this.userid = params.get('userid');
+      console.log("user id = " + this.userid)
+    });
+
+    this.user = this.firebaseService.getUserData();
+    console.log("email: " + this.firebaseService.getUserData())
   }
 
   body = document.body;
@@ -29,5 +46,7 @@ export class HomeMainComponent implements OnInit {
     'margin': '0',
     'background-color': '#5ca0f2',
     'background-image': 'linear-gradient(315deg, #5ca0f2 0%, #f5f7f6 74%)'
-    }
+  }
+
+
 }

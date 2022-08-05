@@ -1,0 +1,54 @@
+li {
+  margin: 5px 0;
+
+  &:hover {
+    background-color: rgba(135, 206, 250, 0.5);
+    color: #005DE8;
+  }
+}
+
+.media {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  justify-items: center;
+
+  img {
+    width: 120px;
+    height: 120px;
+  }
+
+  p {
+    text-align: center;
+    font-weight: 700;
+    font-style: italic;
+    margin-top: 8px;
+  }
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.nav.flex-column>.nav-item:first-of-type {
+  margin-bottom: 20px;
+}
+
+/* 
+ * Select all but the first .red child of .home,
+ * and remove the border from the previous rule.
+ */
+//  .home > .red ~ .red {
+//     border: none;
+// }
+
+.nav-link {
+  color: #63666A;
+
+  img {
+    margin-right: 5px;
+  }
+}

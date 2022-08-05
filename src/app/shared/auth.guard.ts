@@ -10,22 +10,22 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanDeactivate<u
 
   constructor(public authService: AuthService, public router: Router) { }
 
-  // canActivate(
-  //   route: ActivatedRouteSnapshot,
-  //   state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-  //   return true;
-  // }
-
   // We are creating this guard to prevent users to access some pages when the user is already logged in.
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.authService.isLoggedIn !== true) {
-      window.alert('Access Denied, Login is Required to Access This Page!');
+    if (this.authService.isLoggedIn == true) {
+      // window.alert('Welcome back!');
+      return true;
+    } else {
+      window.alert('Access Denied!');
       this.router.navigate(['login']);
+      return false
     }
-    return true;
+
+
+
   }
 
   canActivateChild(

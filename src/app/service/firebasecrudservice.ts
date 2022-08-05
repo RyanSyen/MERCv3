@@ -10,6 +10,7 @@ import {
 import { update } from 'firebase/database';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 import { selectedVoucher } from '../domain/selectedVoucher';
+import { User } from '../shared/user';
 
 
 @Injectable({
@@ -177,6 +178,12 @@ export class FirebaseCRUDService {
     getSelectedVouchers(): Observable<selectedVoucher[]> {
         const voucherRef = collection(this.firestore, `selectedVoucher`);
         return collectionData(voucherRef, { idField: 'id' }) as Observable<selectedVoucher[]>;
+    }
+
+    // get user data
+    getUserData(): Observable<User[]> {
+        const userRef = collection(this.firestore, `users`);
+        return collectionData(userRef, { idField: 'id' }) as Observable<User[]>;
     }
 
 }

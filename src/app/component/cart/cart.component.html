@@ -76,11 +76,15 @@
         <button class="clearCart" (click)="clearCart()">Clear Cart</button>
         <button (click)="populateCart()">populate</button>
       </div>
-      <div style="display: flex; float: right;">
-        <p>Total ({{itemCount}} items) : </p>
-        <p class="totalText"> &nbsp; RM {{total}}</p>
+      <div style="float: right;">
+        <div style="display: flex; ">
+          <p>Total ({{itemCount}} items) : </p>
+          <p class="totalText"> &nbsp; RM {{total}}</p>
+        </div>
+        <div style="float: right;"><button class="checkoutBtn" (click)="goToCheckout()">Checkout</button></div>
       </div>
-      <div><button (click)="goToCheckout()">Checkout</button></div>
+
+
     </div>
   </div>
 

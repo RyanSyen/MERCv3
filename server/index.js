@@ -70,7 +70,7 @@ app.post('/checkout', async (req, res) => {
   try {
     console.log(req.body);
     token = req.body.token
-    amount = req.amount
+    amount = req.body.amount
     const customer = stripe.customers
       .create({
         email: req.body.email,
@@ -79,7 +79,7 @@ app.post('/checkout', async (req, res) => {
       .then((customer) => {
         console.log(customer);
         return stripe.charges.create({
-          amount: this.amount,
+          amount: 1000, //dunno how to reflect change dynamically
           description: "Test Purchase using express and Node",
           currency: "MYR",
           customer: customer.id,

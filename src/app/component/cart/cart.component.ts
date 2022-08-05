@@ -1,4 +1,5 @@
 
+
 import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Cart } from 'src/app/domain/cart';
@@ -12,6 +13,8 @@ import { Voucher } from './../../domain/voucher';
 // import { FormBuilder } from '@angular/forms';
 import { HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
+
 
 declare var $: any;
 
@@ -77,7 +80,7 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   }
 
-  constructor(private productService: ProductService, private primengConfig: PrimeNGConfig, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private router: Router) {
+  constructor(private productService: ProductService, private primengConfig: PrimeNGConfig, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private router: Router, public authService: AuthService) {
 
     this.firestore = new FirebaseTSFirestore();
 
@@ -363,7 +366,13 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   goToCheckout() {
-    this.router.navigate(['/payment']);
+    if (this.authService.isLoggedIn == true) {
+      this.router.navigate(['/payment']);
+    } else {
+      window.alert('Access Denied!');
+      this.router.navigate(['/login']);
+    }
+
   }
 
 }

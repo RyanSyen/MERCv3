@@ -14,6 +14,9 @@ import { MainProductDetailsComponent } from './component/product-details/main-pr
 import { CartComponent } from './component/cart/cart.component';
 import { PaymentComponent } from './component/payment/payment.component'
 import { Test1Component } from './component/test1/test1.component';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
+
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -29,7 +32,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [SecureInnerPagesGuard],
+    // canActivate: [SecureInnerPagesGuard],
   },
   {
     path: 'user-profile',
@@ -39,12 +42,17 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'home', component: HomeMainComponent },
+  { path: 'home/:userid', component: HomeMainComponent },
   { path: 'categories', component: CategoriesMainComponent },
   { path: 'test', component: TestComponent },
   { path: 'product_details/:id/:type', component: MainProductDetailsComponent },
   { path: 'cart', component: CartComponent },
   { path: 'payment', component: PaymentComponent },
-  { path: 'test1', component: Test1Component }
+  { path: 'test1', component: Test1Component },
+  { path: 'user', component: MainComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'verify-email', component: VerifyEmailComponent },
+
 ];
 
 export let browserRefresh = false;

@@ -94,6 +94,8 @@ import { PersonalComponent } from './component/test/personal/personal.component'
 import { SeatComponent } from './component/test/seat/seat.component';
 import { ConfirmationComponent } from './component/test/confirmation/confirmation.component';
 import { Test1Component } from './component/test1/test1.component';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
 
 
 @NgModule({
@@ -126,7 +128,9 @@ import { Test1Component } from './component/test1/test1.component';
     PersonalComponent,
     SeatComponent,
     ConfirmationComponent,
-    Test1Component
+    Test1Component,
+    ForgotPasswordComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,
