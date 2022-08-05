@@ -96,6 +96,12 @@ import { ConfirmationComponent } from './component/test/confirmation/confirmatio
 import { Test1Component } from './component/test1/test1.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
+import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
+import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { provideMessaging,getMessaging } from '@angular/fire/messaging';
+import { providePerformance,getPerformance } from '@angular/fire/performance';
+import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 
 
 @NgModule({
@@ -163,9 +169,15 @@ import { VerifyEmailComponent } from './component/verify-email/verify-email.comp
     materialModules,
     MatCheckboxModule,
     ReactiveFormsModule,
+    provideAnalytics(() => getAnalytics()),
+    provideFunctions(() => getFunctions()),
+    provideMessaging(() => getMessaging()),
+    providePerformance(() => getPerformance()),
+    provideRemoteConfig(() => getRemoteConfig()),
+    provideStorage(() => getStorage()),
   ],
 
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService,UserTrackingService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
