@@ -1,0 +1,36 @@
+<!-- <main>
+  <div class="container">
+    <div class="pages">
+      <div class="page one" id="page">
+        <h1>PAGE 1</h1>
+        <div>
+          <button (click)="slide('next')">Next</button>
+        </div>
+      </div>
+      <div class="page two" id="page">
+        <h1>PAGE 2</h1>
+        <div>
+          <button (click)="slide('prev')">Previous</button>
+          <button (click)="slide('next')">Next</button>
+        </div>
+      </div>
+      <div class="page three" id="page">
+        <h1>PAGE 3</h1>
+        <div>
+          <button (click)="slide('prev')">Previous</button>
+          <button (click)="slide('next')">Next</button>
+        </div>
+      </div>
+      <div class="page four" id="page">
+        <h1>PAGE 4</h1>
+        <div>
+          <button (click)="slide('prev')">Previous</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main> -->
+
+<label for="file">File:</label>
+<input type="file" (change)="upload($event)" accept=".png,.jpg" />
+<button (click)="uploadImage()">Upload Image</button>

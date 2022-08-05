@@ -11,6 +11,7 @@ export class MainComponent implements OnInit {
 
   userName: string = "";
   user: any;
+  userAccPage = "profile";
 
   constructor(public authService: AuthService) {
 
@@ -19,6 +20,20 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
+
+  }
+
+
+  slide(page: string) {
+
+    // $('.pages').toggleClass('move-right');
+    $('.pages').addClass('move-right');
+
+
+    setTimeout(() => {
+      this.userAccPage = page;
+      $('.pages').removeClass('move-right');
+    }, 800)
 
   }
 

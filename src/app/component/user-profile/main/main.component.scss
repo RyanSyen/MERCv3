@@ -1,7 +1,35 @@
+//* -------------overriding classes-----------------
+.row {
+  flex-wrap: nowrap;
+}
+
+.row>* {
+  width: auto;
+}
+
+//* ----------------------------------------------------
+
+.main {
+  overflow: hidden;
+}
+
+.pages {
+  margin: 10px 20px;
+  transition: 1s ease-in-out;
+  -webkit-transition: 1s ease-in-out;
+}
+
+.move-right {
+  transform: translateX(-200%);
+  -webkit-transform: translateX(-200%);
+}
+
 li {
   margin: 5px 0;
 
-  &:hover {
+  // meaning every element except the first element will have the hover effect
+  &~&:hover {
+    cursor: pointer;
     background-color: rgba(135, 206, 250, 0.5);
     color: #005DE8;
   }
@@ -38,9 +66,9 @@ li {
 }
 
 /* 
- * Select all but the first .red child of .home,
- * and remove the border from the previous rule.
- */
+   * Select all but the first .red child of .home,
+   * and remove the border from the previous rule.
+   */
 //  .home > .red ~ .red {
 //     border: none;
 // }
@@ -50,5 +78,17 @@ li {
 
   img {
     margin-right: 5px;
+  }
+}
+
+.userAttr {
+  display: flex;
+
+  &-title {
+    width: 100px;
+  }
+
+  strong {
+    margin-left: 15px;
   }
 }

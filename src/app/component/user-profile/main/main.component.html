@@ -1,9 +1,10 @@
 <app-header-normal></app-header-normal>
 
 
-<!-- Sidebar navigation -->
+
 <div class="container-fluid dashboardContainer">
   <div class="row">
+    <!-- Sidebar navigation -->
     <nav class="col-md-3 d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column" *ngIf="authService.userData as user">
@@ -20,85 +21,134 @@
               </div>
             </div>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item" (click)="userAccPage='profile'"> -->
+          <li class="nav-item" (click)="slide('profile')">
             <a class="nav-link active">
               <img src="../../../../assets/img/account/user.png" alt="profile">
               Profile
             </a>
           </li>
           <li>
-            <a href="/" class="nav-link ">
-              <img src="../../../../assets/img/account/credit-card.png" alt="credit">
+            <a class="nav-link" (click)="slide('cards')">
+              <img src="../../../../assets/img/account/credit-card.png" alt="cards">
               Credit/Debit Cards
             </a>
           </li>
           <li>
-            <a href="/" class="nav-link ">
+            <a class="nav-link" (click)="slide('address')">
               <img src="../../../../assets/img/account/address.png" alt="address">
               Addresses
             </a>
           </li>
           <li>
-            <a href="/" class="nav-link ">
+            <a class="nav-link" (click)="slide('password')">
               <img src="../../../../assets/img/account/password.png" alt="password">
               Change Password
             </a>
           </li>
           <li>
-            <a href="/" class="nav-link ">
+            <a class="nav-link" (click)="slide('purchases')">
               <img src="../../../../assets/img/account/checklist.png" alt="purchases">
-              My Purchase
+              My Purchases
             </a>
           </li>
           <li>
-            <a href="/" class="nav-link ">
+            <a class="nav-link" (click)="slide('vouchers')">
               <img src="../../../../assets/img/account/price-tag.png" alt="vouchers">
               My vouchers
             </a>
           </li>
           <!-- Calling SignOut() Api from AuthService -->
           <li class="nav-item">
-            <button (click)="authService.logout()"><a class="nav-link"> Log out </a></button>
-
+            <a class="nav-link" (click)="authService.logout()">
+              <img src="../../../../assets/img/account/exit.png" alt="logout">
+              Log out
+            </a>
           </li>
         </ul>
       </div>
     </nav>
     <!-- Main content -->
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div class="inner-adjust">
-        <div class="pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">User Profile</h1>
-        </div>
-        <!-- Show user data when logged in -->
-        <div class="row" *ngIf="authService.userData as user">
-          <div class="col-md-12">
-            <div>
-              <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main" [ngSwitch]="userAccPage">
+      <div class="pages">
+        <!-- first page: profile page  -->
+        <div class="inner-adjust" *ngSwitchCase="'profile'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">User Profile</h1>
+          </div>
+          <!-- Show user data when logged in -->
+          <div class="row" *ngIf="authService.userData as user">
+            <div class="col-md-12">
+              <div>
+                <div>
+                  <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{
                     user.photoURL ? user.photoURL : '/assets/dummy-user.png'
                   }}" alt="{{ user.displayName }}" />
-              <div class="media-body">
-                <p>Testing {{user.email}}</p>
-                <h1>
-                  Hello:
-                  <strong>{{
-                      user.displayName ? user.displayName : "Super Admin"
-                    }}</strong>
-                </h1>
-                <p>
-                  User ID: <strong>{{ user.uid }}</strong>
-                </p>
-                <p>
-                  Email: <strong>{{ user.email }}</strong>
-                </p>
-                <p>
-                  Address: <strong>{{user.location}}</strong>
-                </p>
+                  <div>
+                    <!-- <input type="file" ng2FileSelect [uploader]="uploader" />
+                    <button [disabled]="loading" (click)="upload()" class="btn">Upload</button> -->
+                  </div>
+
+                </div>
+
+                <div class="media-body">
+                  <span class="userAttr">
+                    <p class="userAttr-title">Name</p>
+                    <p> : </p>
+                    <strong>{{user.displayName}}</strong>
+                  </span>
+                  <span class="userAttr">
+                    <p class="userAttr-title">Email</p>
+                    <p> : </p>
+                    <strong>{{user.email}}</strong>
+                  </span>
+                  <span class="userAttr">
+                    <p class="userAttr-title">Address</p>
+                    <p> : </p>
+                    <strong>{{user.location}}</strong>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- second page: credit/debit cards page  -->
+        <div class="inner-adjust" *ngSwitchCase="'cards'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Credit Debit Cards</h1>
+          </div>
+        </div>
+
+        <!-- third page: addresses page  -->
+        <div class="inner-adjust" *ngSwitchCase="'address'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Addresses</h1>
+          </div>
+        </div>
+
+        <!-- fourth page: chg pw page  -->
+        <div class="inner-adjust" *ngSwitchCase="'password'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Password</h1>
+          </div>
+        </div>
+
+        <!-- fifth page: my purchases page  -->
+        <div class="inner-adjust" *ngSwitchCase="'purchases'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">My Purchases</h1>
+          </div>
+        </div>
+
+        <!-- sixth page: my vouchers page  -->
+        <div class="inner-adjust" *ngSwitchCase="'vouchers'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">My Vouchers</h1>
+          </div>
+        </div>
       </div>
+
     </main>
   </div>
 </div>
