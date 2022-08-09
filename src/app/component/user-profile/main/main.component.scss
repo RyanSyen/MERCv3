@@ -59,6 +59,8 @@ li {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+  width: 120px;
+  height: 120px;
 }
 
 .nav.flex-column>.nav-item:first-of-type {
@@ -88,7 +90,48 @@ li {
     width: 100px;
   }
 
+  &-title-empty {
+    width: 100px;
+    color: red;
+  }
+
   strong {
     margin-left: 15px;
+  }
+}
+
+.profile-pic {
+  display: flex;
+  // justify-content: center;
+  // justify-items: center;
+  // vertical-align: middle;
+  margin-bottom: 20px;
+}
+
+.upload-profile-pic {
+  margin: 25px 0 0 10px;
+}
+
+.nameInputBox {
+  height: 25px;
+  // width: 100%;
+  margin-left: 15px;
+}
+
+.locationTextArea {
+  margin-left: 15px;
+}
+
+.saveBtn {
+  border: 1px solid #005DE8;
+  background-color: whitesmoke;
+  color: #005DE8;
+  padding: 5px 8px;
+  margin-top: 25px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #005DE8;
+    color: whitesmoke;
   }
 }

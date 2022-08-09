@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FileUploadService } from 'src/app/service/file-upload.service';
 import { map } from 'rxjs/operators';
+import { FileUpload } from 'src/app/models/file-upload.model';
 
 @Component({
   selector: 'app-personal',
@@ -8,7 +9,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./personal.component.scss']
 })
 export class PersonalComponent implements OnInit {
-  fileUploads?: any[];
+  fileUploads!: any[];
   constructor(private uploadService: FileUploadService) { }
   ngOnInit(): void {
     this.uploadService.getFiles(6).snapshotChanges().pipe(
@@ -20,4 +21,9 @@ export class PersonalComponent implements OnInit {
       this.fileUploads = fileUploads;
     });
   }
+
+  deleteFileUpload(fileUpload: FileUpload): void {
+    this.uploadService.deleteFile(fileUpload);
+  }
+
 }

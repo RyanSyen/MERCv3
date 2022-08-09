@@ -1,6 +1,24 @@
 <app-header-normal></app-header-normal>
 
-
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div class="p-flex p-flex-column" style="flex: 1">
+      <div class="p-text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{message.summary}}</h4>
+        <p>{{message.detail}}</p>
+      </div>
+      <div class="p-grid p-fluid">
+        <div class="p-col-6">
+          <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+        </div>
+        <div class="p-col-6">
+          <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
 
 <div class="container-fluid dashboardContainer">
   <div class="row">
@@ -13,7 +31,7 @@
               <div class="media">
                 <div style="justify-content: center; justify-items: center;">
                   <img class=" align-self-start mr-5 img-thumbnail rounded-circle center"
-                    src="{{user.photoURL ? user.photoURL : '/assets/img/account/dummy.png'}}"
+                    src="{{person.photoURL ? person.photoURL : '/assets/img/account/dummy.png'}}"
                     alt="{{ user.displayName }}" />
                 </div>
 
@@ -80,34 +98,55 @@
           <div class="row" *ngIf="authService.userData as user">
             <div class="col-md-12">
               <div>
-                <div>
-                  <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{
-                    user.photoURL ? user.photoURL : '/assets/dummy-user.png'
-                  }}" alt="{{ user.displayName }}" />
-                  <div>
-                    <!-- <input type="file" ng2FileSelect [uploader]="uploader" />
-                    <button [disabled]="loading" (click)="upload()" class="btn">Upload</button> -->
-                  </div>
+                <div class="profile-pic">
+                  <img class="align-self-start mr-5 img-thumbnail rounded-circle center" src="{{
+                    person.photoURL ? person.photoURL : '/assets/img/account/dummy.png'
+                  }}" alt="{{ person.displayName }}" />
 
+                  <div class="upload-profile-pic">
+
+                    <label>
+                      <input type="file" class="text-nowrap text-truncate" (change)="selectFile($event)" />
+                    </label>
+                    <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+                      Upload
+                    </button>
+                    <div *ngIf="currentFileUpload" class="progress mt-2">
+                      <div class="progress-bar progress-bar-info" role="progressbar"
+                        attr.aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100"
+                        [ngStyle]="{ width: percentage + '%' }">
+                        {{ percentage }}%
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="media-body">
-                  <span class="userAttr">
+                  <!-- <div #filled class="userAttr" *ngIf="name else notFilled"> -->
+                  <div class="userAttr">
                     <p class="userAttr-title">Name</p>
                     <p> : </p>
-                    <strong>{{user.displayName}}</strong>
-                  </span>
+                    <!-- <strong>{{person.displayName}}</strong> -->
+                    <input #nameInput class="nameInputBox" type="text" id="name" name="name"
+                      [(ngModel)]="person.displayName">
+                  </div>
                   <span class="userAttr">
                     <p class="userAttr-title">Email</p>
                     <p> : </p>
-                    <strong>{{user.email}}</strong>
+                    <strong>{{person.email}}</strong>
                   </span>
                   <span class="userAttr">
                     <p class="userAttr-title">Address</p>
                     <p> : </p>
-                    <strong>{{user.location}}</strong>
+                    <textarea #locationInput class="locationTextArea" name="location" rows="5" cols="25" wrap="soft"
+                      maxlength="100" style="overflow:hidden; resize:none;"> </textarea>
                   </span>
                 </div>
+              </div>
+              <div>
+                <!-- <button type="button" pButton pRipple class="saveBtn" (click)="saveUserData(locationInput.value, nameInput.value)">save</button> -->
+                <button type="button" pButton pRipple (click)="showConfirm(locationInput.value, nameInput.value)"
+                  label="Confirm" class="ui-button-warning"></button>
               </div>
             </div>
           </div>

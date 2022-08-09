@@ -180,10 +180,23 @@ export class FirebaseCRUDService {
         return collectionData(voucherRef, { idField: 'id' }) as Observable<selectedVoucher[]>;
     }
 
-    // get user data
+    //* get user data
     getUserData(): Observable<User[]> {
         const userRef = collection(this.firestore, `users`);
         return collectionData(userRef, { idField: 'id' }) as Observable<User[]>;
+    }
+
+    getIndividualUser(id: string): Observable<User[]> {
+        const userRef = doc(this.firestore, `users/${id}`);
+        return docData(userRef, { idField: 'id' }) as Observable<User[]>;
+    }
+
+
+    updateProfileImage(url: string, id: string) {
+        // const cartsRef = doc(this.firestore, `cart/${id}`);
+        const userRef = doc(this.firestore, `users/${id}`);
+
+        return updateDoc(userRef, { photoURL: url });
     }
 
 }

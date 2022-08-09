@@ -23,14 +23,14 @@ export class ConfirmationComponent implements OnInit {
       this.selectedFiles = undefined;
       if (file) {
         this.currentFileUpload = new FileUpload(file);
-        this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
-          percentage => {
-            this.percentage = Math.round(percentage ? percentage : 0);
-          },
-          error => {
-            console.log(error);
-          }
-        );
+        // this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
+        //   percentage => {
+        //     this.percentage = Math.round(percentage ? percentage : 0);
+        //   },
+        //   error => {
+        //     console.log(error);
+        //   }
+        // );
       }
     }
   }

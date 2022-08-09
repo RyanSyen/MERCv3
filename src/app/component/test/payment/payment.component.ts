@@ -3,7 +3,7 @@ import { FileUploadService } from 'src/app/service/file-upload.service';
 import { FileUpload } from 'src/app/models/file-upload.model';
 
 @Component({
-  selector: 'app-payment',
+  selector: 'app-paymentt',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
 })

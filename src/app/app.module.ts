@@ -51,18 +51,17 @@ const materialModules = [
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { CarouselModule } from 'primeng/carousel';
-import { ButtonModule } from 'primeng/button';
-// import {ToastModule} from 'primeng/toast';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
-// import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import { MaterialModule } from './material.module';
-import { ToastModule } from '@coreui/angular';
 import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
 
 
 // components
@@ -96,12 +95,12 @@ import { ConfirmationComponent } from './component/test/confirmation/confirmatio
 import { Test1Component } from './component/test1/test1.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
-import { provideAnalytics,getAnalytics,ScreenTrackingService,UserTrackingService } from '@angular/fire/analytics';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
-import { provideMessaging,getMessaging } from '@angular/fire/messaging';
-import { providePerformance,getPerformance } from '@angular/fire/performance';
-import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideAnalytics, getAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
+import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import { provideMessaging, getMessaging } from '@angular/fire/messaging';
+import { providePerformance, getPerformance } from '@angular/fire/performance';
+import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-config';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 
 @NgModule({
@@ -159,6 +158,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     SlickCarouselModule,
     CarouselModule,
     ButtonModule,
+    RippleModule,
     ToastModule,
     NgxSpinnerModule,
     OverlayPanelModule,
@@ -177,7 +177,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     provideStorage(() => getStorage()),
   ],
 
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService,UserTrackingService],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService, UserTrackingService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
