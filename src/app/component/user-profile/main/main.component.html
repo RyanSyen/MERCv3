@@ -31,11 +31,10 @@
               <div class="media">
                 <div style="justify-content: center; justify-items: center;">
                   <img class=" align-self-start mr-5 img-thumbnail rounded-circle center"
-                    src="{{person.photoURL ? person.photoURL : '/assets/img/account/dummy.png'}}"
-                    alt="{{ user.displayName }}" />
+                    src="{{userImage ? userImage : '/assets/img/account/dummy.png'}}" alt="{{ userName }}" />
                 </div>
 
-                <p>{{ user.displayName }}</p>
+                <p>{{ userName }}</p>
               </div>
             </div>
           </li>
@@ -100,8 +99,8 @@
               <div>
                 <div class="profile-pic">
                   <img class="align-self-start mr-5 img-thumbnail rounded-circle center" src="{{
-                    person.photoURL ? person.photoURL : '/assets/img/account/dummy.png'
-                  }}" alt="{{ person.displayName }}" />
+                    userImage ? userImage : '/assets/img/account/dummy.png'
+                  }}" alt="{{ userName }}" />
 
                   <div class="upload-profile-pic">
 
@@ -127,19 +126,18 @@
                     <p class="userAttr-title">Name</p>
                     <p> : </p>
                     <!-- <strong>{{person.displayName}}</strong> -->
-                    <input #nameInput class="nameInputBox" type="text" id="name" name="name"
-                      [(ngModel)]="person.displayName">
+                    <input #nameInput class="nameInputBox" type="text" id="name" name="name" [(ngModel)]="userName">
                   </div>
                   <span class="userAttr">
                     <p class="userAttr-title">Email</p>
                     <p> : </p>
-                    <strong>{{person.email}}</strong>
+                    <strong>{{userEmail}}</strong>
                   </span>
                   <span class="userAttr">
                     <p class="userAttr-title">Address</p>
                     <p> : </p>
                     <textarea #locationInput class="locationTextArea" name="location" rows="5" cols="25" wrap="soft"
-                      maxlength="100" style="overflow:hidden; resize:none;"> </textarea>
+                      maxlength="100" style="overflow:hidden; resize:none;">{{userAddress}}</textarea>
                   </span>
                 </div>
               </div>

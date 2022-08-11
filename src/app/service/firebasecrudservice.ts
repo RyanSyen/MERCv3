@@ -11,7 +11,7 @@ import { update } from 'firebase/database';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 import { selectedVoucher } from '../domain/selectedVoucher';
 import { User } from '../shared/user';
-
+import { userDetails } from '../domain/userDetails';
 
 @Injectable({
     providedIn: 'root'
@@ -197,6 +197,16 @@ export class FirebaseCRUDService {
         const userRef = doc(this.firestore, `users/${id}`);
 
         return updateDoc(userRef, { photoURL: url });
+    }
+
+    getUserDetails(id: string): Observable<userDetails[]> {
+        const userDetailsRef = doc(this.firestore, `userDetails/${id}`);
+        return docData(userDetailsRef, { idField: 'id' }) as Observable<userDetails[]>;
+    }
+
+    updateUserDetails(id: string, address: string) {
+        const userDetailsRef = doc(this.firestore, `userDetails/${id}`);
+        return updateDoc(userDetailsRef, { address: address });
     }
 
 }

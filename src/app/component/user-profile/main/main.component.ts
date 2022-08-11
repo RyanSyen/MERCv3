@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { FirebaseCRUDService } from 'src/app/service/firebasecrudservice';
 import { MessageService } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+import { userDetails } from 'src/app/domain/userDetails';
 
 @Component({
   selector: 'app-main',
@@ -17,8 +18,14 @@ import { PrimeNGConfig } from 'primeng/api';
 export class MainComponent implements OnInit {
 
   userName: string = "";
-  currentUser: any;
   userAccPage = "profile";
+  userImg = "";
+  userEmail = "";
+  userAddress = "";
+  userUser: any;
+
+  currentUser: any;
+
   person: any;
   userImage: string = "";
   name = false;
@@ -40,12 +47,21 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.firebaseService.getUserDetails(this.currentUser.email).subscribe((userDetails: userDetails[]) => {
+      this.userUser = userDetails;
+      this.userAddress = this.userUser.address;
+      console.log(this.userUser)
+    })
+
 
     this.firebaseService.getIndividualUser(this.currentUser.email).subscribe((person: User[]) => {
       this.person = person;
-      if (this.person.displayName) {
-        this.name == true;
-      }
+      this.userImage = this.person.photoURL;
+      this.userName = this.person.displayName;
+      this.userEmail = this.person.email;
+      // if (this.person.displayName) {
+      //   this.name == true;
+      // }
     })
 
 
@@ -105,7 +121,7 @@ export class MainComponent implements OnInit {
 
   // toast
   showConfirm(location: string, name: string) {
-    // console.log(location + " and " + name)
+    console.log(location + " and " + name)
     this.newName = name;
     this.newAddress = location;
     this.messageService.clear();
@@ -114,6 +130,7 @@ export class MainComponent implements OnInit {
 
   onConfirm() {
     // save new values to user profile in firebase
+    this.firebaseService.updateUserDetails(this.currentUser.email, this.newAddress);
     this.messageService.clear('c');
   }
 

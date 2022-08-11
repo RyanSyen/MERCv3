@@ -16,7 +16,7 @@ import { PaymentComponent } from './component/payment/payment.component'
 import { Test1Component } from './component/test1/test1.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
-
+import { Test2Component } from './component/test2/test2.component';
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -52,6 +52,7 @@ const routes: Routes = [
   { path: 'user', component: MainComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'test2', component: Test2Component },
 
 ];
 
