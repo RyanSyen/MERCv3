@@ -11,8 +11,8 @@ import { userDetails } from 'src/app/domain/userDetails';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { cardDetails } from 'src/app/domain/cardDetails';
-import { TrianglesDrawMode } from 'three';
-import { connectStorageEmulator } from 'firebase/storage';
+import { address } from 'src/app/domain/address';
+import { AnimateTimings } from '@angular/animations';
 
 @Component({
   selector: 'app-main',
@@ -89,6 +89,17 @@ export class MainComponent implements OnInit {
   secondID?= 0;
   thirdID?= 0;
 
+  // address
+  address1?: address;
+  allAddresses: any;
+  addAddressStatus = true;
+  addressTextArea = " ";
+  addressHeaderStatus = "Addresses";
+  editAddressStatus = true;
+  selectedAddress = "";
+  addressList = false;
+  selectedAddressIndex = 0; // for edit address
+  deleteAddressIndex = 0;
 
   constructor(public authService: AuthService, private uploadService: FileUploadService, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private primengConfig: PrimeNGConfig, private modalService: NgbModal, private fb: FormBuilder) {
     this.currentUser = this.authService.getCurrentUserData();
@@ -96,13 +107,25 @@ export class MainComponent implements OnInit {
 
   }
 
+  address: address[] = [
+    {
+      address: "",
+    }
+  ]
 
   ngOnInit(): void {
 
     this.firebaseService.getUserDetails(this.currentUser.email).subscribe((userDetails: userDetails[]) => {
       this.userUser = userDetails;
       this.userAddress = this.userUser.address;
-      console.log(this.userUser)
+      console.log(userDetails.length)
+
+      // initialize default address
+      // this.initializeAddress(this.userAddress);
+
+      // for(let i = 1; i <= userDetails.length; i++){
+
+      // }
     })
 
 
@@ -130,9 +153,6 @@ export class MainComponent implements OnInit {
         this.thirdID = card[2].id;
         console.log(this.firstID, this.secondID, this.thirdID)
       }
-
-
-
 
       // scenario is when delete card number1 it not add a new card with id 1 but updates the 3rd card everytime because our numOfCards is refering to 3
       // now we want to check from the db which id is not used where length < 3
@@ -263,8 +283,16 @@ export class MainComponent implements OnInit {
 
     })
 
+    // get user address
+    this.firebaseService.getUserAddress(this.currentUser.email).subscribe((address) => {
+      this.allAddresses = address;
+      this.address = address;
+      console.log(this.allAddresses.length)
+    });
 
   }
+
+
 
 
   slide(page: string) {
@@ -334,6 +362,10 @@ export class MainComponent implements OnInit {
     } else if (this.confirmState == "deleteCard") {
       // delete card
       this.firebaseService.deleteCard(this.currentUser.email, this.idDelete);
+    } else if (this.confirmState == "deleteAddress") {
+      this.firebaseService.deleteAddress(this.currentUser.email, this.deleteAddressIndex.toString());
+
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address deleted successfully' });
     }
 
     this.messageService.clear('c');
@@ -413,6 +445,8 @@ export class MainComponent implements OnInit {
 
       this.firebaseService.storeUserCard(this.currentUser.email, this.thirdCard);
     }
+
+
 
     this.showSuccess();
     setTimeout(() => {
@@ -504,5 +538,67 @@ export class MainComponent implements OnInit {
     this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
 
     // this.firebaseService.deleteCard(this.currentUser.email, id);
+  }
+
+  initializeAddress(address: string) {
+    this.address[0].address = address;
+    this.address.forEach(element => {
+      this.firebaseService.addAddress(this.currentUser.email, '0', element);
+    });
+    // this.address[0].address1 = address;
+    // console.log(this.address1!.address1);
+    // this.firebaseService.addAddress(this.currentUser.email, '0', this.address1!.address1);
+  }
+
+  addAddress() {
+    this.addressHeaderStatus = "Add Address";
+    this.addAddressStatus = false;
+    this.addressList = true;
+  }
+
+  saveAddress(address: any) {
+    this.address.push(
+      {
+        address: address,
+      }
+    );
+    let size = this.address.length - 1;
+    this.firebaseService.addAddress(this.currentUser.email, size.toString(), this.address[size]);
+    const textarea = document.getElementById('textAreaAddress') as HTMLTextAreaElement;
+    textarea!.value = '';
+    // console.log(this.address)
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address saved successfully' });
+    this.backFromAddAddress();
+  }
+
+  backFromAddAddress() {
+    this.addressHeaderStatus = "Addresses";
+    this.addAddressStatus = true;
+    this.addressList = false;
+    this.editAddressStatus = true;
+  }
+
+  editAddress(index: any) {
+    this.addressHeaderStatus = "Edit Address " + index;
+    this.selectedAddress = this.address[index].address;
+    this.selectedAddressIndex = index;
+    this.editAddressStatus = false;
+    this.addressList = true;
+  }
+
+  updateAddress(address: any) {
+    console.log(address)
+    this.firebaseService.updateAddress(this.currentUser.email, this.selectedAddressIndex.toString(), address);
+
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address updated successfully' });
+
+    this.backFromAddAddress();
+  }
+
+  deleteAddress(index: any) {
+    this.deleteAddressIndex = index;
+    this.confirmState = "deleteAddress";
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
   }
 }

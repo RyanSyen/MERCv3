@@ -556,7 +556,48 @@
         <!-- third page: addresses page  -->
         <div class="inner-adjust" *ngSwitchCase="'address'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Addresses</h1>
+            <h1 class="h2">{{addressHeaderStatus}}</h1>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary mb-2 me-2" (click)="addAddress()">Add address</button>
+
+            <!-- add address  -->
+            <div [hidden]="addAddressStatus">
+              <div style="display: flex; justify-content: center; align-items: center; margin: 10px 0 15px 10px;">
+                <p style="margin-right: 10px;">Address: </p>
+                <textarea #address class="addressTextArea" name="address" rows="5" cols="25" wrap="soft" maxlength="100"
+                  style="overflow:hidden; resize:none;" id="textAreaAddress">{{addressTextArea}}</textarea>
+              </div>
+              <div style="float: left;">
+                <button class="btn btn-outline-secondary mb-2 me-2" (click)="backFromAddAddress()">back</button>
+                <button class="btn btn-success mb-2 me-2" (click)="saveAddress(address.value)">save</button>
+              </div>
+            </div>
+
+            <!-- edit address  -->
+            <div [hidden]="editAddressStatus">
+              <div style="display: flex; justify-content: center; align-items: center; margin: 10px 0 15px 10px;">
+                <p style="margin-right: 10px;">Address: </p>
+                <textarea #addressUpdate class="addressTextArea" name="address" rows="5" cols="25" wrap="soft"
+                  maxlength="100" style="overflow:hidden; resize:none;"
+                  id="textAreaAddress">{{selectedAddress}}</textarea>
+              </div>
+              <div style="float: left;">
+                <button class="btn btn-outline-secondary mb-2 me-2" (click)="backFromAddAddress()">back</button>
+                <button class="btn btn-success mb-2 me-2" (click)="updateAddress(addressUpdate.value)">save</button>
+              </div>
+            </div>
+
+            <!-- display list of addresses -->
+            <div class="addressContainer" *ngFor="let address of allAddresses; let i = index" [hidden]="addressList">
+              <p>Address {{i+1}} : {{address.address}}</p>
+              <div class="addressBtn">
+                <button class="btn btn-secondary mb-2 me-2" (click)="editAddress(i)">Edit</button>
+                <button class="btn btn-danger mb-2 me-2" (click)="deleteAddress(i)">Delete</button>
+              </div>
+            </div>
+
+
           </div>
         </div>
 

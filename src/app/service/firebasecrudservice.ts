@@ -13,6 +13,7 @@ import { selectedVoucher } from '../domain/selectedVoucher';
 import { User } from '../shared/user';
 import { userDetails } from '../domain/userDetails';
 import { cardDetails } from '../domain/cardDetails';
+import { address } from '../domain/address';
 
 @Injectable({
     providedIn: 'root'
@@ -225,6 +226,26 @@ export class FirebaseCRUDService {
         let newID = parseInt(id);
         const cardRef = doc(this.firestore, `${email}/${newID}`);
         return deleteDoc(cardRef);
+    }
+
+    addAddress(email: string, id: string, address: address) {
+        const addressRef = doc(this.firestore, `${email}+_address/${id}`);
+        return setDoc(addressRef, address);
+    }
+
+    getUserAddress(email: string): Observable<address[]> {
+        const addressRef = collection(this.firestore, `${email}+_address`);
+        return collectionData(addressRef, { idField: 'id' }) as Observable<address[]>;
+    }
+
+    updateAddress(email: string, id: string, address: string) {
+        const addressRef = doc(this.firestore, `${email}+_address/${id}`);
+        return updateDoc(addressRef, { address: address });
+    }
+
+    deleteAddress(email: string, id: string) {
+        const addressRef = doc(this.firestore, `${email}+_address/${id}`);
+        return deleteDoc(addressRef);
     }
 
 }
