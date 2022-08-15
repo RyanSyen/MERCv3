@@ -12,6 +12,7 @@ import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFi
 import { selectedVoucher } from '../domain/selectedVoucher';
 import { User } from '../shared/user';
 import { userDetails } from '../domain/userDetails';
+import { cardDetails } from '../domain/cardDetails';
 
 @Injectable({
     providedIn: 'root'
@@ -207,6 +208,23 @@ export class FirebaseCRUDService {
     updateUserDetails(id: string, address: string) {
         const userDetailsRef = doc(this.firestore, `userDetails/${id}`);
         return updateDoc(userDetailsRef, { address: address });
+    }
+
+    storeUserCard(email: string, card: cardDetails) {
+        console.log(card.id)
+        const cardRef = doc(this.firestore, `${email}/${card.id}`);
+        return setDoc(cardRef, card);
+    }
+
+    getUserCard(email: string): Observable<cardDetails[]> {
+        const cardRef = collection(this.firestore, `${email}`);
+        return collectionData(cardRef, { idField: 'id' }) as Observable<cardDetails[]>;
+    }
+
+    deleteCard(email: string, id: string) {
+        let newID = parseInt(id);
+        const cardRef = doc(this.firestore, `${email}/${newID}`);
+        return deleteDoc(cardRef);
     }
 
 }

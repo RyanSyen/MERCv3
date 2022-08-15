@@ -25,19 +25,21 @@ export class Test2Component implements OnInit {
   getLocation() {
     if (navigator.geolocation) {
       // navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
-      navigator.geolocation.getCurrentPosition((position) => {
-        let x = document.getElementById("demo");
-        x!.innerHTML = "Latitude: " + position.coords.latitude +
-          "<br>Longitude: " + position.coords.longitude;
 
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
 
-        this.url = "https://api.openweathermap.org/data/2.5/weather?lat=" + this.lat + "&lon=" + this.lng + "&appid=768357fecaa0b2f655d1ade597c19ab1";
+      // navigator.geolocation.getCurrentPosition((position) => {
+      //   let x = document.getElementById("demo");
+      //   x!.innerHTML = "Latitude: " + position.coords.latitude +
+      //     "<br>Longitude: " + position.coords.longitude;
 
-        this.getWeatherData();
+      //   this.lat = position.coords.latitude;
+      //   this.lng = position.coords.longitude;
 
-      }, this.showError);
+      //   this.url = "https://api.openweathermap.org/data/2.5/weather?lat=" + this.lat + "&lon=" + this.lng + "&appid=768357fecaa0b2f655d1ade597c19ab1";
+
+      //   this.getWeatherData();
+
+      // }, this.showError);
     }
   }
 

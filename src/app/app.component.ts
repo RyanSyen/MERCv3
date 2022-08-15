@@ -144,9 +144,9 @@ export class AppComponent {
     // });
 
     //* populate selectedVoucher
-    this.selectedVoucher.forEach(element => {
-      this.firebasecrudservice.setSelectedVouchers(element);
-    })
+    // this.selectedVoucher.forEach(element => {
+    //   this.firebasecrudservice.setSelectedVouchers(element);
+    // })
 
   }
 }

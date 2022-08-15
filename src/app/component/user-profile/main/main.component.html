@@ -1,5 +1,25 @@
 <app-header-normal></app-header-normal>
 
+<p-toast position="bottom-center" key="a" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div class="p-flex p-flex-column" style="flex: 1">
+      <div class="p-text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{message.summary}}</h4>
+        <p>{{message.detail}}</p>
+      </div>
+      <div class="p-grid p-fluid">
+        <div class="p-col-6">
+          <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+        </div>
+        <div class="p-col-6">
+          <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+
 <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
   <ng-template let-message pTemplate="message">
     <div class="p-flex p-flex-column" style="flex: 1">
@@ -154,6 +174,382 @@
         <div class="inner-adjust" *ngSwitchCase="'cards'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Credit Debit Cards</h1>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary mb-2 me-2" (click)="openModal(content)" id="addCardBtn"
+              [disabled]="numOfCards === 3">Add
+              Card</button>
+            <p class="max-card-warning">(* Maximum number of cards allowed = 3)</p>
+            <!-- modal  -->
+            <ng-template #content let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">Add card</h4>
+                <button type="button" class="btn-close" aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-body">
+                  <!-- Card Number -->
+                  <input #cardNum type="text" class="card-number" placeholder="Card Number" maxlength="16"
+                    minlength="13" (keyup)="keyup(cardNum.value)">
+                  <!-- <div [ngSwitch]="cardNumber">
+                    <div *ngSwtichCase="'1'">
+                      <div *ngIf="card==='visa'; then visa">
+                        -----Visa-----
+                        All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                        4444444444444444.
+
+                        -----Mastercard-----
+                        MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                        2720. All have 16 digits. For example, 5124123412341244.
+
+                        credit card regex -> https://www.regular-expressions.info/creditcard.html
+                      </div>
+
+                      <ng-template #visa>
+                        <img class="card-logo" src="../../../../assets/img/visa.png" alt="visa">
+                      </ng-template>
+
+                      <div *ngIf="card==='mastercard'">
+                        <img class="card-logo" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                      </div>
+                    </div>
+                    <div *ngSwtichCase="'2'">
+                      <div *ngIf="card1==='visa'; then visa">
+                        -----Visa-----
+                        All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                        4444444444444444.
+
+                        -----Mastercard-----
+                        MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                        2720. All have 16 digits. For example, 5124123412341244.
+
+                        credit card regex -> https://www.regular-expressions.info/creditcard.html
+                      </div>
+
+                      <ng-template #visa>
+                        <img class="card-logo" src="../../../../assets/img/visa.png" alt="visa">
+                      </ng-template>
+
+                      <div *ngIf="card1==='mastercard'">
+                        <img class="card-logo" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                      </div>
+                    </div>
+                    <div *ngSwtichCase="'3'">
+                      <div *ngIf="card2==='visa'; then visa">
+                        -----Visa-----
+                        All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                        4444444444444444.
+
+                        -----Mastercard-----
+                        MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                        2720. All have 16 digits. For example, 5124123412341244.
+
+                        credit card regex -> https://www.regular-expressions.info/creditcard.html
+                      </div>
+
+                      <ng-template #visa>
+                        <img class="card-logo" src="../../../../assets/img/visa.png" alt="visa">
+                      </ng-template>
+
+                      <div *ngIf="card2==='mastercard'">
+                        <img class="card-logo" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div *ngIf="unusedID == 1">
+                    <div *ngIf="card==='visa'; then visa">
+                      -----Visa-----
+                      All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                      4444444444444444.
+
+                      -----Mastercard-----
+                      MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                      2720. All have 16 digits. For example, 5124123412341244.
+
+                      credit card regex -> https://www.regular-expressions.info/creditcard.html
+                    </div>
+
+                    <ng-template #visa>
+                      <img class="card-logo" src="../../../../assets/img/visa.png" alt="visa">
+                    </ng-template>
+
+                    <div *ngIf="card==='mastercard'">
+                      <img class="card-logo" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                    </div>
+                  </div>
+
+                  <div *ngIf="unusedID == 2">
+                    <div *ngIf="card1==='visa'; then visa">
+                      -----Visa-----
+                      All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                      4444444444444444.
+
+                      -----Mastercard-----
+                      MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                      2720. All have 16 digits. For example, 5124123412341244.
+
+                      credit card regex -> https://www.regular-expressions.info/creditcard.html
+                    </div>
+
+                    <ng-template #visa>
+                      <img class="card-logo" src="../../../../assets/img/visa.png" alt="visa">
+                    </ng-template>
+
+                    <div *ngIf="card1==='mastercard'">
+                      <img class="card-logo" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                    </div>
+                  </div>
+
+                  <div *ngIf="unusedID == 3">
+                    <div *ngIf="card2==='visa'; then visa">
+                      -----Visa-----
+                      All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                      4444444444444444.
+
+                      -----Mastercard-----
+                      MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                      2720. All have 16 digits. For example, 5124123412341244.
+
+                      credit card regex -> https://www.regular-expressions.info/creditcard.html
+                    </div>
+
+                    <ng-template #visa>
+                      <img class="card-logo" src="../../../../assets/img/visa.png" alt="visa">
+                    </ng-template>
+
+                    <div *ngIf="card2==='mastercard'">
+                      <img class="card-logo" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                    </div>
+                  </div>
+
+
+                  <!-- Date Field -->
+                  <div class="date-field">
+                    <div class="month">
+                      <select #month name="Month">
+                        <option value="january">January</option>
+                        <option value="february">February</option>
+                        <option value="march">March</option>
+                        <option value="april">April</option>
+                        <option value="may">May</option>
+                        <option value="june">June</option>
+                        <option value="july">July</option>
+                        <option value="august">August</option>
+                        <option value="september">September</option>
+                        <option value="october">October</option>
+                        <option value="november">November</option>
+                        <option value="december">December</option>
+                      </select>
+                    </div>
+                    <div class="year">
+                      <select #year name="Year">
+                        <!-- max 7 years of expiry -->
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <!-- <option value="2023">2023</option>
+                        <option value="2024">2024</option> -->
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Card Verification Field -->
+                  <div class="card-verification">
+                    <div class="cvv-input">
+                      <input #CVV type="text" placeholder="CVV" maxlength="3" minlength="3">
+                      <div class="cvv-details">
+                        <p>3 or 4 digits usually found <br> on the signature strip</p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary"
+                    (click)="saveCardDetails(cardNum.value, month.value, year.value, CVV.value)">{{savedStatus}}</button>
+                  <button type="button" class="btn btn-light" (click)="modal.close('Close click')"
+                    id="closeBtn">Close</button>
+                </div>
+              </div>
+            </ng-template>
+
+            <!-- credit card UI  -->
+            <section>
+              <!-- card #1 -->
+              <div class="card" *ngIf="ID1" id="1">
+                <div class="card-content">
+                  <div>
+                    <img class="chip" src="../../../../assets/img/chip.png" alt="chip">
+                    <button class="deleteBtn" (click)="deleteCard('1')">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </div>
+
+                  <div class="lower-card">
+                    <label>Card Number</label>
+                    <div style="display: flex;">
+                      <div *ngFor="let num of cardNum">
+                        <p class="card-number-4">{{num}}&nbsp; &nbsp; &nbsp;</p>
+                      </div>
+                    </div>
+
+                    <div class="third-row-card">
+                      <div class="exp exp-month">
+                        <label>Exp. Mth</label>
+                        <p>{{cardExpMonth}}</p>
+                      </div>
+                      <div class="exp exp-year">
+                        <label>Exp. Year</label>
+                        <p>{{cardExpYear}}</p>
+                      </div>
+                      <div class="exp cvv">
+                        <label>CVV</label>
+                        <p>{{cardCVV}}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <div *ngIf="card==='visa'; then visa">
+                        -----Visa-----
+                        All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                        4444444444444444.
+
+                        -----Mastercard-----
+                        MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                        2720. All have 16 digits. For example, 5124123412341244.
+
+                        credit card regex -> https://www.regular-expressions.info/creditcard.html
+                      </div>
+
+                      <ng-template #visa>
+                        <img class="card-type" src="../../../../assets/img/visa.png" alt="visa">
+                      </ng-template>
+
+                      <div *ngIf="card==='mastercard'">
+                        <img class="card-type" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- card #2 -->
+              <div class="card" *ngIf="ID2" id="2">
+                <div class="card-content">
+                  <div>
+                    <img class="chip" src="../../../../assets/img/chip.png" alt="chip">
+                    <button class="deleteBtn" (click)="deleteCard('2')">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </div>
+                  <div class="lower-card">
+                    <label>Card Number</label>
+                    <div style="display: flex;">
+                      <div *ngFor="let num1 of cardNum1">
+                        <p class="card-number-4">{{num1}}&nbsp; &nbsp; &nbsp;</p>
+                      </div>
+                    </div>
+
+                    <div class="third-row-card">
+                      <div class="exp exp-month">
+                        <label>Exp. Mth</label>
+                        <p>{{cardExpMonth1}}</p>
+                      </div>
+                      <div class="exp exp-year">
+                        <label>Exp. Year</label>
+                        <p>{{cardExpYear1}}</p>
+                      </div>
+                      <div class="exp cvv">
+                        <label>CVV</label>
+                        <p>{{cardCVV1}}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <div *ngIf="card1==='visa'; then visa">
+                        -----Visa-----
+                        All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                        4444444444444444.
+
+                        -----Mastercard-----
+                        MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                        2720. All have 16 digits. For example, 5124123412341244.
+
+                        credit card regex -> https://www.regular-expressions.info/creditcard.html
+                      </div>
+
+                      <ng-template #visa>
+                        <img class="card-type" src="../../../../assets/img/visa.png" alt="visa">
+                      </ng-template>
+
+                      <div *ngIf="card1==='mastercard'">
+                        <img class="card-type" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- card #3 -->
+              <div class="card" *ngIf="ID3" id="3">
+                <div class="card-content">
+                  <div>
+                    <img class="chip" src="../../../../assets/img/chip.png" alt="chip">
+                    <button class="deleteBtn" (click)="deleteCard('3')">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </div>
+                  <div class="lower-card">
+                    <label>Card Number</label>
+                    <div style="display: flex;">
+                      <div *ngFor="let num2 of cardNum2">
+                        <p class="card-number-4">{{num2}}&nbsp; &nbsp; &nbsp;</p>
+                      </div>
+                    </div>
+
+                    <div class="third-row-card">
+                      <div class="exp exp-month">
+                        <label>Exp. Mth</label>
+                        <p>{{cardExpMonth2}}</p>
+                      </div>
+                      <div class="exp exp-year">
+                        <label>Exp. Year</label>
+                        <p>{{cardExpYear2}}</p>
+                      </div>
+                      <div class="exp cvv">
+                        <label>CVV</label>
+                        <p>{{cardCVV2}}</p>
+                      </div>
+                    </div>
+                    <div>
+                      <div *ngIf="card2==='visa'; then visa">
+                        -----Visa-----
+                        All Visa card numbers start with a 4. New cards have 16 digits. Old cards have 13. For example,
+                        4444444444444444.
+
+                        -----Mastercard-----
+                        MasterCard numbers either start with the numbers 51 through 55 or with the numbers 2221 through
+                        2720. All have 16 digits. For example, 5124123412341244.
+
+                        credit card regex -> https://www.regular-expressions.info/creditcard.html
+                      </div>
+
+                      <ng-template #visa>
+                        <img class="card-type" src="../../../../assets/img/visa.png" alt="visa">
+                      </ng-template>
+
+                      <div *ngIf="card2==='mastercard'">
+                        <img class="card-type" src="../../../../assets/img/mastercard.png" alt="mastercard">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
           </div>
         </div>
 
