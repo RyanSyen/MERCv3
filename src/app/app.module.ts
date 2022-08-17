@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 // Firebase services + enviorment module
 import { AngularFireModule } from '@angular/fire/compat';
@@ -62,6 +63,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+import { MatInputModule } from "@angular/material/input";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+// import { ReactiveFormsModule } from '@angular/forms';
+import { ApiModule } from 'elasticemail-angular';
+import { BASE_PATH } from 'elasticemail-angular';
 
 
 // components
@@ -101,6 +108,8 @@ import { provideMessaging, getMessaging } from '@angular/fire/messaging';
 import { providePerformance, getPerformance } from '@angular/fire/performance';
 import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-config';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { ContactFormComponent } from './component/contact-form/contact-form.component';
+import { TestARComponent } from './component/test-ar/test-ar.component';
 
 
 @NgModule({
@@ -135,7 +144,9 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     ConfirmationComponent,
     Test1Component,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ContactFormComponent,
+    TestARComponent
   ],
   imports: [
     BrowserModule,
@@ -153,6 +164,9 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     provideFirestore(() => getFirestore()),
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    NoopAnimationsModule,
+    MatInputModule,
     HttpClientModule,
     NgbModule,
     SlickCarouselModule,
@@ -168,7 +182,9 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     MaterialModule,
     materialModules,
     MatCheckboxModule,
-    ReactiveFormsModule,
+    MatAutocompleteModule,
+    CommonModule,
+    ApiModule,
     provideAnalytics(() => getAnalytics()),
     provideFunctions(() => getFunctions()),
     provideMessaging(() => getMessaging()),
@@ -176,8 +192,12 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     provideRemoteConfig(() => getRemoteConfig()),
     provideStorage(() => getStorage()),
   ],
-
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService, UserTrackingService],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService, UserTrackingService, { provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

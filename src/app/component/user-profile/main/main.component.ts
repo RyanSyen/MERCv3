@@ -13,6 +13,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { cardDetails } from 'src/app/domain/cardDetails';
 import { address } from 'src/app/domain/address';
 import { AnimateTimings } from '@angular/animations';
+import { Voucher } from 'src/app/domain/voucher';
 
 @Component({
   selector: 'app-main',
@@ -30,6 +31,7 @@ export class MainComponent implements OnInit {
   userUser: any;
 
   currentUser: any;
+  currentUserDetails: any;
 
   person: any;
   userImage: string = "";
@@ -101,9 +103,29 @@ export class MainComponent implements OnInit {
   selectedAddressIndex = 0; // for edit address
   deleteAddressIndex = 0;
 
+  // password
+  hidePWError = true;
+  hideVerifiedOldPW = true;
+  errorCount = 0;
+  hideTimer = true;
+
+  // voucher
+  vouchers: Voucher[] = [];
+  checked = false;
+  voucher0Title: string = "";
+  voucher1Title: string = "";
+  voucher2Title: string = "";
+  voucher0Min: number = 0;
+  voucher1Min: number = 0;
+  voucher2Min: number = 0;
+
   constructor(public authService: AuthService, private uploadService: FileUploadService, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private primengConfig: PrimeNGConfig, private modalService: NgbModal, private fb: FormBuilder) {
-    this.currentUser = this.authService.getCurrentUserData();
-    console.log(this.currentUser.email);
+    this.currentUser = this.authService.getCurrentUserCredentials();
+    console.log(this.currentUser.userEmail);
+    console.log(this.currentUser.userPassword);
+
+    this.currentUserDetails = this.authService.getCurrentUserData();
+
 
   }
 
@@ -115,10 +137,24 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.firebaseService.getUserDetails(this.currentUser.email).subscribe((userDetails: userDetails[]) => {
+    //* fetch voucher from firebase
+    // error and completion signal is not working, maybe observable is not emitted
+    this.firebaseService.getVouchers().subscribe((voucher: Voucher[]) => {
+      this.vouchers = voucher;
+      this.voucher0Title = voucher[0].title;
+      this.voucher1Title = voucher[1].title;
+      this.voucher2Title = voucher[2].title;
+      this.voucher0Min = voucher[0].min;
+      this.voucher1Min = voucher[1].min;
+      this.voucher2Min = voucher[2].min;
+      // console.log(voucher)
+    })
+
+    this.firebaseService.getUserDetails(this.currentUser.userEmail).subscribe((userDetails: userDetails[]) => {
+      console.log(userDetails)
       this.userUser = userDetails;
       this.userAddress = this.userUser.address;
-      console.log(userDetails.length)
+      console.log(userDetails)
 
       // initialize default address
       // this.initializeAddress(this.userAddress);
@@ -129,7 +165,7 @@ export class MainComponent implements OnInit {
     })
 
 
-    this.firebaseService.getIndividualUser(this.currentUser.email).subscribe((person: User[]) => {
+    this.firebaseService.getIndividualUser(this.currentUser.userEmail).subscribe((person: User[]) => {
       this.person = person;
       this.userImage = this.person.photoURL;
       this.userName = this.person.displayName;
@@ -139,7 +175,8 @@ export class MainComponent implements OnInit {
       // }
     })
 
-    this.firebaseService.getUserCard(this.currentUser.email).subscribe((card) => {
+    this.firebaseService.getUserCard(this.currentUser.userEmail).subscribe((card) => {
+      console.log(card)
       this.numOfCards = card.length;
       if (this.numOfCards == 1) {
         this.firstID = card[0].id;
@@ -284,7 +321,7 @@ export class MainComponent implements OnInit {
     })
 
     // get user address
-    this.firebaseService.getUserAddress(this.currentUser.email).subscribe((address) => {
+    this.firebaseService.getUserAddress(this.currentUser.userEmail).subscribe((address) => {
       this.allAddresses = address;
       this.address = address;
       console.log(this.allAddresses.length)
@@ -319,7 +356,7 @@ export class MainComponent implements OnInit {
       this.selectedFiles = undefined;
       if (file) {
         this.currentFileUpload = new FileUpload(file);
-        this.uploadService.pushFileToStorage(this.currentFileUpload, this.currentUser.email).subscribe(
+        this.uploadService.pushFileToStorage(this.currentFileUpload, this.currentUser.userEmail).subscribe(
           percentage => {
             this.percentage = Math.round(percentage ? percentage : 0);
           },
@@ -358,12 +395,12 @@ export class MainComponent implements OnInit {
   onConfirm() {
     if (this.confirmState == "saveProfile") {
       // save new values to user profile in firebase
-      this.firebaseService.updateUserDetails(this.currentUser.email, this.newAddress);
+      this.firebaseService.updateUserDetails(this.currentUser.userEmail, this.newAddress);
     } else if (this.confirmState == "deleteCard") {
       // delete card
-      this.firebaseService.deleteCard(this.currentUser.email, this.idDelete);
+      this.firebaseService.deleteCard(this.currentUser.userEmail, this.idDelete);
     } else if (this.confirmState == "deleteAddress") {
-      this.firebaseService.deleteAddress(this.currentUser.email, this.deleteAddressIndex.toString());
+      this.firebaseService.deleteAddress(this.currentUser.userEmail, this.deleteAddressIndex.toString());
 
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address deleted successfully' });
     }
@@ -420,7 +457,7 @@ export class MainComponent implements OnInit {
         CVV: this.cardCVV
       }
 
-      this.firebaseService.storeUserCard(this.currentUser.email, this.firstCard);
+      this.firebaseService.storeUserCard(this.currentUser.userEmail, this.firstCard);
     } else if (this.numOfCards === 2) {
       console.log(this.cardNum1)
       this.secondCard =
@@ -432,7 +469,7 @@ export class MainComponent implements OnInit {
         CVV: this.cardCVV
       }
 
-      this.firebaseService.storeUserCard(this.currentUser.email, this.secondCard);
+      this.firebaseService.storeUserCard(this.currentUser.userEmail, this.secondCard);
     } else if (this.numOfCards === 3) {
       this.thirdCard =
       {
@@ -443,7 +480,7 @@ export class MainComponent implements OnInit {
         CVV: this.cardCVV
       }
 
-      this.firebaseService.storeUserCard(this.currentUser.email, this.thirdCard);
+      this.firebaseService.storeUserCard(this.currentUser.userEmail, this.thirdCard);
     }
 
 
@@ -543,7 +580,7 @@ export class MainComponent implements OnInit {
   initializeAddress(address: string) {
     this.address[0].address = address;
     this.address.forEach(element => {
-      this.firebaseService.addAddress(this.currentUser.email, '0', element);
+      this.firebaseService.addAddress(this.currentUser.userEmail, '0', element);
     });
     // this.address[0].address1 = address;
     // console.log(this.address1!.address1);
@@ -563,7 +600,7 @@ export class MainComponent implements OnInit {
       }
     );
     let size = this.address.length - 1;
-    this.firebaseService.addAddress(this.currentUser.email, size.toString(), this.address[size]);
+    this.firebaseService.addAddress(this.currentUser.userEmail, size.toString(), this.address[size]);
     const textarea = document.getElementById('textAreaAddress') as HTMLTextAreaElement;
     textarea!.value = '';
     // console.log(this.address)
@@ -588,7 +625,7 @@ export class MainComponent implements OnInit {
 
   updateAddress(address: any) {
     console.log(address)
-    this.firebaseService.updateAddress(this.currentUser.email, this.selectedAddressIndex.toString(), address);
+    this.firebaseService.updateAddress(this.currentUser.userEmail, this.selectedAddressIndex.toString(), address);
 
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address updated successfully' });
 
@@ -600,5 +637,101 @@ export class MainComponent implements OnInit {
     this.confirmState = "deleteAddress";
     this.messageService.clear();
     this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
+  }
+
+  checkOldPwd(pw: string) {
+
+    if (this.currentUser.userPassword == pw) {
+      this.hideVerifiedOldPW = false;
+
+    } else {
+      this.hidePWError = false;
+      if (this.errorCount >= 3) {
+        this.showMaximumNumberOfAttempts();
+
+        // start timer
+        // this.hideTimer = false;
+        // document.getElementById('timer')!.innerHTML = "01" + ":" + "11";
+        // this.startTimer();
+        // this.testing();
+
+        setTimeout(() => {
+
+          alert("done")
+          this.errorCount = 0;
+          this.hidePWError = true;
+          this.hideTimer = true;
+          let text = document.getElementById("oldPwd") as HTMLInputElement;
+          text.value = " ";
+        }, 5000)
+
+
+      } else {
+        this.errorCount++;
+        this.showIncorrectPasswordMessage();
+      }
+
+    }
+  }
+
+  showIncorrectPasswordMessage() {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Incorrect password' });
+  }
+
+  showMaximumNumberOfAttempts() {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Maximum attempts reached! Please try again later.' });
+  }
+
+  startTimer() {
+    var presentTime = document.getElementById('timer')!.innerHTML;
+    let timeArray: any = presentTime.split(/[:]+/);
+    var m = parseInt(timeArray[0]);
+
+    // var s = this.checkSec(second);
+    let sec: any;
+    let s: any;
+    sec = parseInt(timeArray[1]) - 1;
+    console.log(sec)
+    if (sec < 10 && sec >= 0) { s = "0" + sec }; // add zero in front of numbers < 10
+    // sec = parseInt(sec);
+    if (sec < 0) { s = "59"; sec == 59 };
+    console.log("seconds = " + sec)
+    if (sec == 59) { m = m - 1 }
+    if (m < 0) {
+      return
+    }
+
+    if (sec == 0 && m == 0) {
+      this.hideTimer = false;
+    }
+
+    // let s = parseInt(sec);
+    document.getElementById('timer')!.innerHTML =
+      m + ":" + sec;
+    console.log(m, sec)
+    setTimeout(this.startTimer, 1000);
+  }
+
+  // checkSecond(sec: any) {
+  //   if (sec < 10 && sec >= 0) { sec = "0" + sec }; // add zero in front of numbers < 10
+  //   if (sec < 0) { sec = "59" };
+  //   return sec;
+  // }
+
+  // checkSec(sec: any) {
+  //   if (sec < 10 && sec >= 0) { sec = "0" + sec }; // add zero in front of numbers < 10
+  //   if (sec < 0) { sec = "59" };
+  //   return sec;
+  // }
+
+  testing() {
+    let second = 5000 / 1000;
+    second = second - 1;
+    document.getElementById('timer')!.innerHTML = second.toString();
+    setTimeout(this.testing, 1000)
+  }
+
+  updatePassword(password: string) {
+
   }
 }

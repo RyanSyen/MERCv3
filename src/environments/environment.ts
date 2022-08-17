@@ -15,7 +15,8 @@ export const environment = {
     authDomain: 'fyp-my108-351404.firebaseapp.com',
     messagingSenderId: '978276168904',
     measurementId: 'G-YLXFJ43G7Q',
-  }
+  },
+  API_BASE_PATH: 'http://localhost:4200'
 };
 
 /*

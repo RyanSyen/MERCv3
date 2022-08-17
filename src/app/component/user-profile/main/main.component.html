@@ -606,6 +606,24 @@
           <div class="pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Password</h1>
           </div>
+          <div [hidden]="!hideVerifiedOldPW">
+            <div>
+              <p>Enter old password :</p>
+              <input #oldPassword class="oldPwd" type="text" id="oldPwd" name="oldPwd">
+            </div>
+            <p [hidden]="hidePWError">Incorrect attempts (max 3) : {{errorCount}}</p>
+            <div [hidden]="hideTimer">Time left = <span id="timer"></span></div>
+            <button (click)="checkOldPwd(oldPassword.value)">OK</button>
+          </div>
+          <div [hidden]="hideVerifiedOldPW">
+            <div class="chgPwdContainer">
+              <!-- <p>Change password: </p>
+              <input #changePassword class="chgPwd" type="text" id="chgPassword" name="chgPwd" [(ngModel)]="currentUser.userPassword"> -->
+              <!-- <button (click)="authService.forgotPassword(currentUser.userEmail)">Click to change password</button> -->
+            </div>
+            <!-- <button (click)="updatePassword(changePassword.value)">Update password</button> -->
+            <button (click)="authService.forgotPassword(currentUser.userEmail)">Click to change password</button>
+          </div>
         </div>
 
         <!-- fifth page: my purchases page  -->
@@ -619,6 +637,12 @@
         <div class="inner-adjust" *ngSwitchCase="'vouchers'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">My Vouchers</h1>
+          </div>
+          <div *ngFor="let v of vouchers; let i = index" class="voucherMain">
+            <p *ngIf="v.cashback != 0">{{v.cashback}}</p>
+            <p *ngIf="v.discount != 0">{{v.discount}}</p>
+            <p *ngIf="v.freeShipping">{{v.freeShipping}}</p>
+            <p>{{v.title}}</p>
           </div>
         </div>
       </div>

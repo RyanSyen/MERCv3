@@ -6,15 +6,47 @@ import { Router } from '@angular/router';
 import { User } from '../shared/user';
 import { user } from '@angular/fire/auth';
 import * as e from 'cors';
+import { FirebaseCRUDService } from '../service/firebasecrudservice';
+import { userDetails } from '../domain/userDetails';
+import { address } from '../domain/address';
+
+export interface userCredentials {
+  userEmail: string,
+  userPassword: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  userDetails: userDetails[] = [
+    {
+      email: "",
+      address: "",
+    }
+
+  ]
+
+  address: address[] = [
+    {
+      address: "",
+    }
+  ]
+
   userData: any; // Save logged in user data
+  userEmail = "";
+  userPassword = "";
+
+  userCred: userCredentials =
+    {
+      userEmail: "",
+      userPassword: ""
+    }
+
 
   constructor(
+    private firebaseService: FirebaseCRUDService,
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
@@ -26,11 +58,20 @@ export class AuthService {
       if (user) {
         console.log("saving user data in local storage when logged in" + user.email)
         this.userData = user;
+
         localStorage.setItem('user', JSON.stringify(this.userData));
+        // localStorage.setItem('userCredentials', JSON.stringify(this.userCred));
+        // console.log(JSON.parse(localStorage.getItem('userCredentials')!))
+
+
+        localStorage.setItem('userCredentials', JSON.stringify(this.userCred));
+        console.log(JSON.parse(localStorage.getItem('userCredentials')!))
+
         let test = JSON.parse(localStorage.getItem('user')!);
         console.log(test)
       } else {
         localStorage.setItem('user', 'null');
+        localStorage.setItem('userCredentials', 'null');
         JSON.parse(localStorage.getItem('user')!);
       }
     });
@@ -41,14 +82,26 @@ export class AuthService {
     // const user = JSON.parse(localStorage.getItem('user')!);
     // console.log(user)
     // alert(user)
+    // this.userEmail = email;
+    // this.userPassword = password;
+    this.userCred.userEmail = email;
+    this.userCred.userPassword = password;
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         this.ngZone.run(() => {
+          // this.userCred.userEmail = email;
+          // this.userCred.userPassword = password;
+          localStorage.setItem('userCredentials', JSON.stringify(this.userCred));
+          console.log(JSON.parse(localStorage.getItem('userCredentials')!))
+
+          this.userCred.userEmail = email;
+          this.userCred.userPassword = password;
+
           this.router.navigate(['./home/' + result.user?.uid]);
         });
         console.log(result.user)
-        this.SetUserData(result.user);
+        this.SetUserData(result.user, password);
       })
       .catch((error) => {
         window.alert(error.message);
@@ -60,6 +113,26 @@ export class AuthService {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
+
+
+        console.log(this.isLoggedIn);
+        // initialization
+        let defaultCard =
+        {
+          id: 0,
+          cardNum: "",
+          expMonth: "",
+          expYear: "",
+          CVV: ""
+        }
+
+
+        this.firebaseService.addAddress(email, "0", this.address[0])
+        this.firebaseService.storeUserCard(email, defaultCard);
+        this.firebaseService.setUserDetails(email, this.userDetails[0])
+
+        this.userCred.userEmail = email;
+        this.userCred.userPassword = password;
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
         console.log(result.user)
@@ -120,6 +193,14 @@ export class AuthService {
     }
   }
 
+  getCurrentUserCredentials() {
+    if (this.isLoggedIn) {
+      const user1 = JSON.parse(localStorage.getItem('userCredentials')!);
+      console.log(user1)
+      return user1
+    }
+  }
+
   // Sign in with Google
   googleSignIn() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
@@ -135,10 +216,13 @@ export class AuthService {
 
   // Auth logic to run auth providers
   AuthLogin(provider: any) {
+    localStorage.setItem('userCredentials', JSON.stringify(this.userCred));
+    console.log(JSON.parse(localStorage.getItem('userCredentials')!))
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
+
           this.router.navigate(['/home/' + result.user?.uid]);
         });
         this.SetUserData(result.user);
@@ -151,7 +235,7 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user: any) {
+  SetUserData(user: any, password?: string) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.email}`
     );
@@ -162,6 +246,7 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
     };
+
     return userRef.set(userData, {
       merge: true,
     });

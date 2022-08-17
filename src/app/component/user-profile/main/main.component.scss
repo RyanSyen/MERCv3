@@ -349,3 +349,33 @@ li {
   margin: 15px 15px 0 15px;
   max-width: 500px;
 }
+
+.chgPwdContainer {
+  display: flex;
+
+  p {
+    margin-right: 10px;
+  }
+}
+
+.chgPwd {
+  padding: 10px 15px;
+}
+
+.voucherMain {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  // border shadow
+  display: flex;
+  margin: 0 30px 8px 30px;
+  height: 80px;
+  cursor: pointer;
+  align-items: center;
+  // vertical-align: middle;
+
+  &:hover {
+    box-shadow: 0px 0px 5px 5px rgba(204, 204, 204, 0.75);
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(204, 204, 204, 0.75);
+    -moz-box-shadow: 0px 0px 5px 5px rgba(204, 204, 204, 0.75);
+  }
+}

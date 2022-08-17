@@ -201,6 +201,11 @@ export class FirebaseCRUDService {
         return updateDoc(userRef, { photoURL: url });
     }
 
+    setUserDetails(id: string, userDetails: userDetails) {
+        const userDetailsRef = doc(this.firestore, `userDetails/${id}`);
+        return setDoc(userDetailsRef, userDetails);
+    }
+
     getUserDetails(id: string): Observable<userDetails[]> {
         const userDetailsRef = doc(this.firestore, `userDetails/${id}`);
         return docData(userDetailsRef, { idField: 'id' }) as Observable<userDetails[]>;
