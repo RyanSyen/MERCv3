@@ -18,6 +18,9 @@ import { ForgotPasswordComponent } from './component/forgot-password/forgot-pass
 import { VerifyEmailComponent } from './component/verify-email/verify-email.component';
 import { Test2Component } from './component/test2/test2.component';
 import { ContactFormComponent } from './component/contact-form/contact-form.component';
+import { TestARComponent } from './component/test-ar/test-ar.component';
+import { TestCarouselComponent } from './component/test-carousel/test-carousel.component';
+import { ArComponent } from './component/home/ar/ar.component';
 
 // Import canActivate guards
 import { AuthGuard } from './shared/auth.guard';
@@ -29,7 +32,7 @@ import { Subscription } from 'rxjs';
 
 // Include route guard in routes array
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
@@ -55,6 +58,9 @@ const routes: Routes = [
   { path: 'verify-email', component: VerifyEmailComponent },
   { path: 'test2', component: Test2Component },
   { path: 'contact', component: ContactFormComponent },
+  { path: 'testAR/:item', component: TestARComponent },
+  { path: 'testCarousel', component: TestCarouselComponent },
+  { path: 'ar', component: ArComponent },
 
 ];
 

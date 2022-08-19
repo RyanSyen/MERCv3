@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface product {
   id: number,
@@ -10,19 +11,20 @@ export interface product {
   numReviews: string
 }
 
+
 @Component({
-  selector: 'app-ar',
-  templateUrl: './ar.component.html',
-  styleUrls: ['./ar.component.scss']
+  selector: 'app-test-carousel',
+  templateUrl: './test-carousel.component.html',
+  styleUrls: ['./test-carousel.component.scss']
 })
-export class ArComponent implements OnInit {
+export class TestCarouselComponent implements OnInit {
 
   test = "24"
 
   products: product[] = [
     {
       id: 0,
-      image: "../../../assets/img/models/white-bucket-hat.png",
+      image: "https://i5.walmartimages.com/asr/d9c259ca-bcda-48ab-aab1-b334ce0c6021_1.59243493546490ec8e379b64a36566ef.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
       name: "White Bucket Hat",
       oldPrice: 30,
       newPrice: 20,
@@ -78,7 +80,7 @@ export class ArComponent implements OnInit {
 
   responsiveOptions: any;
 
-  constructor() {
+  constructor(private router: Router) {
     this.responsiveOptions = [
       {
         breakpoint: '1024px',
@@ -124,5 +126,4 @@ export class ArComponent implements OnInit {
     // window.location.href = "../../../ar.html?item=" + item, "_blank";
     window.open("../../../ar.html?item=" + item, "_blank");
   }
-
 }

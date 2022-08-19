@@ -6,6 +6,14 @@
   <title>MERCv3</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- cannot put the ar js script here as it will affect the other pages as well, it cannot load the home page but only the login page so I did a separate static page that is under the folder src. -->
+  
+  <!-- <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-face.prod.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-face-aframe.prod.js"></script> -->
+
+
   <link rel="icon" type="image/x-icon" href="assets/diamond.png">
 
   <!-- google material icons and symbols -->
@@ -38,17 +46,33 @@
   <!-- email  -->
   <script src="https://smtpjs.com/v3/smtp.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <!-- <script type="text/javascript">
-    (function () {
-      emailjs.init("YOUR_USER_ID");
-    })();
 
-  </script> -->
+
+
+
 </head>
 
 <body>
   <!-- <div class="cursor"></div> -->
   <app-root></app-root>
+  <!-- NoScript -->
+  <noscript>
+    <div class="app-issue">
+      <div class="vertical-center">
+        <div class="text-center">
+          <h1>JavaScript is disabled in your browser.</h1>
+          <span>Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser to
+            register for Groover.</span>
+        </div>
+      </div>
+    </div>
+    <style>
+      #app {
+        display: none;
+      }
+
+    </style>
+  </noscript>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
 </body>
 

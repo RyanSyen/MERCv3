@@ -45,10 +45,13 @@
  *
  */
 
+// import 'aframe'; // -> not needed anymore as it gives some error and the ar component is made as a separate static html file under the folder src called ar.html
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
 import 'zone.js';  // Included with Angular CLI.
+
+
 import '@angular/localize/init';
 
 /***************************************************************************************************

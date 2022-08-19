@@ -1,0 +1,27 @@
+.productImage {
+  width: 200px;
+  height: 200px;
+}
+
+.item-container {
+  border: 1px solid #ccc;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ccc;
+  }
+
+}
+
+.item-container {
+  padding: 10px 15px;
+
+
+}
+
+.price-ar {
+  width: 100%;
+  display: flex;
+  justify-items: end;
+  justify-content: end;
+}

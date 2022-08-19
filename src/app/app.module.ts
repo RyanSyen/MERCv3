@@ -110,6 +110,7 @@ import { provideRemoteConfig, getRemoteConfig } from '@angular/fire/remote-confi
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { ContactFormComponent } from './component/contact-form/contact-form.component';
 import { TestARComponent } from './component/test-ar/test-ar.component';
+import { TestCarouselComponent } from './component/test-carousel/test-carousel.component';
 
 
 @NgModule({
@@ -146,7 +147,8 @@ import { TestARComponent } from './component/test-ar/test-ar.component';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     ContactFormComponent,
-    TestARComponent
+    TestARComponent,
+    TestCarouselComponent
   ],
   imports: [
     BrowserModule,

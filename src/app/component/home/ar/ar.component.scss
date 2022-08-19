@@ -1,0 +1,49 @@
+.ar-container {
+  display: flex;
+  height: 100%;
+  
+}
+
+.product-slider {
+  display: flex;
+}
+
+// product img
+.item-img-wrapper-link {
+  img {
+    width: 300px;
+    height: 250px;
+  }
+}
+
+// product details
+.item-title {
+  font-style: normal;
+  text-decoration: none;
+}
+
+.item-stars {
+  display: flex;
+}
+
+// price
+.price-template {
+  float: right;
+}
+
+.item-new-price {
+  font-weight: 600;
+  font-size: larger;
+}
+
+.item-old-price {
+  font-weight: 400;
+  font-size: smaller;
+  color: darkgray;
+}
+
+// product container 
+.item {
+  width: 250px;
+  height: 200px;
+}
