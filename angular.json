@@ -40,14 +40,7 @@
               "node_modules/jarallax/dist/jarallax.css",
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
-              "node_modules/font-awesome/css/font-awesome.css",
-              "src/css/fontawesome.min.css",
-              "src/css/ionicons.min.css",
-              "src/css/animate.min.css",
-              "src/css/owl.carousel.min.css",
-              "src/css/jquery-ui-range-slider.min.css",
-              "src/css/utility.css",
-              "src/css/bundle.css"
+              "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
               "node_modules/aframe/dist/aframe-master.js",
@@ -66,13 +59,13 @@
             "production": {
               "budgets": [{
                   "type": "initial",
-                  "maximumWarning": "4mb",
+                  "maximumWarning": "5mb",
                   "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "6mb"
                 }
               ],
               "fileReplacements": [{

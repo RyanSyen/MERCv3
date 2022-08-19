@@ -1,10 +1,9 @@
-<p>ar works!</p>
+<!-- <p>ar works!</p>
 
 
 
 <div class="ar-container">
   <div class="products-slider owl-carousel" data-item="4">
-    <!-- item  -->
     <div class="item">
       <div class="image-container">
         <a class="item-img-wrapper-link" href="single-product.html">
@@ -43,7 +42,7 @@
         <span>NEW</span>
       </div>
     </div>
-    <!-- item  -->
+
     <div class="item">
       <div class="image-container">
         <a class="item-img-wrapper-link" href="single-product.html">
@@ -83,7 +82,7 @@
         </div>
       </div>
     </div>
-    <!-- item  -->
+
     <div class="item">
       <div class="image-container">
         <a class="item-img-wrapper-link" href="single-product.html">
@@ -123,7 +122,7 @@
         </div>
       </div>
     </div>
-    <!-- item  -->
+
     <div class="item">
       <div class="image-container">
         <a class="item-img-wrapper-link" href="single-product.html">
@@ -166,7 +165,7 @@
         <span>NEW</span>
       </div>
     </div>
-    <!-- item  -->
+
     <div class="item">
       <div class="image-container">
         <a class="item-img-wrapper-link" href="single-product.html">
@@ -209,7 +208,7 @@
         <span>SALE</span>
       </div>
     </div>
-    <!-- item  -->
+
     <div class="item">
       <div class="image-container">
         <a class="item-img-wrapper-link" href="single-product.html">
@@ -250,4 +249,29 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<p-carousel [value]="products" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true"
+  [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+  <ng-template pTemplate="header">
+    <div class="category-header">
+      <h1>AR Virtual Fitting</h1>
+    </div>
+  </ng-template>
+  <ng-template let-product pTemplate="item">
+    <div class="product-item">
+      <div class="product-item-content">
+        <div class="p-mb-3">
+        </div>
+        <div class="item-container" (click)="initiateAR(product.id)">
+          <img class="productImage" src="{{product.image}}" alt="productImage">
+          <h4 class="p-mb-1">{{product.name}}</h4>
+          <div class="price-ar">
+            <h6 class="p-mt-0 p-mb-3">RM {{product.oldPrice}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

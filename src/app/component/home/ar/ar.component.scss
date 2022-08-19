@@ -1,7 +1,19 @@
 .ar-container {
   display: flex;
   height: 100%;
-  
+
+}
+
+.category-header {
+  text-transform: uppercase;
+  margin: 0 auto;
+  background-image: linear-gradient(315deg, #2a2a72 20%, #009ffd 94%);
+  background-clip: text;
+  -moz-background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
+  margin: 15px 0;
 }
 
 .product-slider {
@@ -46,4 +58,33 @@
 .item {
   width: 250px;
   height: 200px;
+}
+
+
+.productImage {
+  width: 200px;
+  height: 200px;
+}
+
+.item-container {
+  border: 1px solid #ccc;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ccc;
+  }
+
+}
+
+.item-container {
+  padding: 10px 15px;
+
+
+}
+
+.price-ar {
+  width: 100%;
+  display: flex;
+  justify-items: end;
+  justify-content: end;
 }

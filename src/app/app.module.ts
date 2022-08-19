@@ -199,7 +199,7 @@ import { TestCarouselComponent } from './component/test-carousel/test-carousel.c
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService, UserTrackingService, { provide: BASE_PATH, useValue: environment.API_BASE_PATH }],
+  providers: [AuthService, AuthGuard, ProductService, MessageService, PhotoService, CommentService, SecureInnerPagesGuard, TicketService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }, ScreenTrackingService, UserTrackingService,],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Jacket
+* source:	https://sketchfab.com/3d-models/jacket-3436d75888484d42b594984b6eafe43f
+* author:	xman97782 (https://sketchfab.com/xman97782)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Jacket" (https://sketchfab.com/3d-models/jacket-3436d75888484d42b594984b6eafe43f) by xman97782 (https://sketchfab.com/xman97782) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
