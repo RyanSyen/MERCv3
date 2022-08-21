@@ -1,5 +1,7 @@
 <app-header-normal></app-header-normal>
 
+<p-toast key="normal"></p-toast>
+
 <div style="display: flex; justify-content: center; margin-top: 25px">
   <div class="step">
 
@@ -99,19 +101,15 @@
       </div>
       <div class="right-panel">
 
-        <div class="voucher-cart-container">
+        <!-- <div class="voucher-cart-container">
           <div class="select-voucher">
             <h6>Vouchers Selected</h6>
             <p>No Vouchers Selected</p>
           </div>
 
           <div class="selectedVouchers">
-            <!-- display selected vouchers -->
-            <!-- <p>{{feedback}}</p>
-        <p>{{feedback1}}</p>
-        <p>{{feedback2}}</p> -->
           </div>
-        </div>
+        </div> -->
 
         <div class="delivery">
           <p>Delivery fee: <strong>RM 5</strong></p>
@@ -128,30 +126,69 @@
 
   <!-- 2 - receiver's information  -->
   <main class="step-container">
-    <div *ngSwitchCase="'2'" class="step-case">
-      <div class="receivers-information-header">
-        <h4>Receiver's Information</h4>
-      </div>
-      <div>
-        <div>user profile pic</div>
+    <div class="secondContainer">
+      <div *ngSwitchCase="'2'" class="step-case">
+        <div class="receivers-information-header">
+          <h4>Receiver's Information</h4>
+        </div>
         <div>
-          <div>
-            <p>Receiver's name: </p>
-            <!-- display name, provide edit function. If user click edit, then hide display unhide input -->
-          </div>
-          <div>
-            <p>Receiver's phone number: </p>
-          </div>
-          <div>
-            <p>Receiver's address: </p>
-          </div>
-          <div>
-            <p>Emergency contact (optional):</p>
+          <div class="receiver-info">
+            <div class="information-field">
+              <p class="information-label header">Receiver's name *: </p>
+              <input #changeReceiverName class="input chgReceiverName" type="text" id="chgReceiverName"
+                name="chgReceiverName" [(ngModel)]="userName">
+            </div>
+            <div style="margin-bottom: 15px;">
+              <div style="display: flex;">
+                <p class="information-label header">Receiver's phone number *: </p>
+                <input #userHP class="input userHP" type="tel" id="userHP" name="userHP" [(ngModel)]="phoneNumber"
+                  pattern="^(\+?6?01)[0-46-9]-*[0-9]{7,8}$" (keyup)="keyup(userHP.value)" required>
+              </div>
+              <p class="error" [hidden]="invalidHP">Invalid phone number!</p>
+              <p class="sub-header">Format: 011-11111111 / 01111111111</p>
+            </div>
+            <div>
+
+              <div class="information-field">
+                <p class="header">Receiver's address *: </p>
+                <input class="input userAddress" type="text" id="" name="userAddress" [(ngModel)]="userAddress"
+                  required>
+                <!-- <p class="input">{{userAddress}}</p> -->
+              </div>
+
+
+
+              <!-- <p-button [label]="'change'" icon="pi pi-search" (click)="op.toggle($event); changeAddress()"></p-button> -->
+              <p class="changeAddress" (click)="op.toggle($event); changeAddress()">Change Address</p>
+            </div>
           </div>
         </div>
+        <button (click)="saveInfo()">Save Information</button>
       </div>
     </div>
   </main>
+
+  <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
+    <ng-template pTemplate>
+      <p-table [value]="allAddress" selectionMode="single" [(selection)]="selectedAddress"
+        (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="5">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="addIndex">Address Index<p-sortIcon field="addIndex"></p-sortIcon>
+            </th>
+            <th pSortableColumn="address">Address <p-sortIcon field="address"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-allAddress>
+          <tr [pSelectableRow]="rowData">
+            <td>Address {{allAddress.id}}</td>
+            <td>{{allAddress.address}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </p-overlayPanel>
 
   <!-- 3 - payment method  -->
   <main class="step-container">
@@ -172,42 +209,8 @@
               <h4>Credit/Debit card</h4>
               <img src="../../../assets/img/tick.png" alt="tick" class="selectedPaymentMethod" [hidden]="visibleCD">
             </div>
-
-            <!-- <div class="credit-card" [hidden]="visible">
-              <img
-                src="https://raw.githubusercontent.com/ismailvtl/ismailvtl.github.io/3d5c5c3d591463bfba973d10ebfadd9eb063dbbc/images/visa-logo.png"
-                class="logo">
-              <div class="numbers">1234 9090 3838 5678</div>
-              <div class="name-and-expiry">
-                <span>John</span>
-                <span>11/21</span>
-              </div>
-            </div> -->
           </div>
         </div>
-
-
-        <!-- <div>
-          <h2>Angular Stripe Checkout Page</h2>
-
-          <div>
-            <button (click)="initializePayment(2)">Paymant of $2</button>
-          </div>
-          <div>
-            <button (click)="initializePayment(25)">Payment $25</button>
-          </div>
-          <div>
-            <button (click)="initializePayment(35)">Payment of $35</button>
-          </div>
-        </div>
-
-        <div *ngIf="success">
-          <h1>Your Payment is complete successfully</h1>
-        </div>
-        <div *ngIf="failure">
-          <h1>Some Error is taken place inside the payment</h1>
-        </div> -->
-
       </div>
     </div>
   </main>
@@ -260,21 +263,17 @@
 
       <!-- receiver's info  -->
       <div>
-        <div>user profile pic</div>
         <div>
-          <div>
-            <p>Receiver's name: </p>
-            <!-- display name, provide edit function. If user click edit, then hide display unhide input -->
-          </div>
-          <div>
-            <p>Receiver's phone number: </p>
-          </div>
-          <div>
-            <p>Receiver's address: </p>
-          </div>
-          <div>
-            <p>Emergency contact (optional):</p>
-          </div>
+          <p>Receiver's name: </p>
+        </div>
+        <div>
+          <p>Receiver's phone number: </p>
+        </div>
+        <div>
+          <p>Receiver's address: </p>
+        </div>
+        <div>
+          <p>Emergency contact (optional):</p>
         </div>
       </div>
 
@@ -286,19 +285,15 @@
           <p>Payment method: {{paymentMethod}}</p>
         </div>
 
-        <div class="voucher-cart-container">
+        <!-- <div class="voucher-cart-container">
           <div class="select-voucher">
             <h6>Vouchers Selected</h6>
             <p>No Vouchers Selected</p>
           </div>
 
           <div class="selectedVouchers">
-            <!-- display selected vouchers -->
-            <!-- <p>{{feedback}}</p>
-        <p>{{feedback1}}</p>
-        <p>{{feedback2}}</p> -->
           </div>
-        </div>
+        </div> -->
 
         <div class="delivery">
           <p>Delivery fee: <strong>RM 5</strong></p>
@@ -331,19 +326,7 @@
   <div>
     <button class="cancel-btn" (click)="cancelCheckout()" id="cancel">Cancel</button>
     <button class="next-btn" (click)="nextStep()" id="next">Next</button>
-    <button (click)="initializePayment(10)">$10</button>
+    <!-- <button (click)="initializePayment(10)">$10</button> -->
   </div>
 
 </div>
-
-<c-toaster [placement]="position" position="fixed">
-  <c-toast [autohide]="false" [fade]="false" [visible]="toastError" class="toastStyle">
-    <c-toast-header class="toastHeader">
-      <toast-sample-icon></toast-sample-icon>
-      Error
-    </c-toast-header>
-    <c-toast-body>
-      <p>Payment method not selected. Please select one of the payment methods to proceed.</p>
-    </c-toast-body>
-  </c-toast>
-</c-toaster>

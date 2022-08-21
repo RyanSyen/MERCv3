@@ -1,5 +1,7 @@
 <app-header-normal></app-header-normal>
 
+<p-toast key="normal"></p-toast>
+
 <section class="table-responsive">
   <div>
     <h4>Shopping Cart</h4>
@@ -51,7 +53,7 @@
 
   <div class="stickBottom">
     <div>
-      <div style="float: right;">
+      <!-- <div style="float: right;">
         <div class="voucher-cart-container">
           <div class="select-voucher">
             <h6>Vouchers</h6>
@@ -59,7 +61,6 @@
           </div>
 
           <div class="selectedVouchers" [hidden]="displayVouchersModal">
-            <!-- display selected vouchers -->
             <p>{{feedback}}</p>
             <p>{{feedback1}}</p>
             <p>{{feedback2}}</p>
@@ -69,7 +70,7 @@
           <h6>Discount Applied</h6>
           <p>RM {{discountsApplied}}</p>
         </div>
-      </div>
+      </div> -->
     </div>
     <div>
       <div class="left-bottom-panel">
@@ -147,7 +148,7 @@
     </ng-template>
   </p-dialog>
 
-  <c-toaster [placement]="position" position="fixed">
+  <!-- <c-toaster [placement]="position" position="fixed">
     <c-toast [visible]="visible" class="toastStyle">
       <c-toast-header class="toastHeader">
         <toast-sample-icon></toast-sample-icon>
@@ -159,7 +160,28 @@
         <p>{{feedback2}}</p>
       </c-toast-body>
     </c-toast>
-  </c-toaster>
+  </c-toaster> -->
 
+
+
+  <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+      <div class="p-flex p-flex-column" style="flex: 1">
+        <div class="p-text-center">
+          <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+          <h4>{{message.summary}}</h4>
+          <p>{{message.detail}}</p>
+        </div>
+        <div class="p-grid p-fluid">
+          <div class="p-col-6">
+            <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+          </div>
+          <div class="p-col-6">
+            <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-toast>
 
 </section>

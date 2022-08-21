@@ -7,6 +7,12 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { first, of } from 'rxjs';
 import Stripe from 'stripe';
+import { MessageService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+import { userDetails } from 'src/app/domain/userDetails';
+import { AuthService } from 'src/app/shared/auth.service';
+import { User } from 'src/app/shared/user';
+import { address } from 'src/app/domain/address';
 
 @Component({
   selector: 'app-payment',
@@ -14,6 +20,21 @@ import Stripe from 'stripe';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
+  userName = "test";
+  userAccPage = "profile";
+  userImg = "";
+  userEmail = "";
+  userAddress = "";
+  userUser: any;
+  currentUser: any;
+  currentUserDetails: any;
+  phoneNumber = "";
+  allAddress: address[] = [];
+  selectedAddress: any;
+
+  invalidHP = true;
+
+  phoneNumberRegex: RegExp = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/g;
 
   paymentHandler: any = null;
 
@@ -47,10 +68,38 @@ export class PaymentComponent implements OnInit {
   successMsg = true;
   failMsg = true;
 
-  constructor(private checkout: CheckoutService, private firebasecrudservice: FirebaseCRUDService, private router: Router) { }
+  constructor(public authService: AuthService, private checkout: CheckoutService, private firebasecrudservice: FirebaseCRUDService, private router: Router, private messageService: MessageService, private primengConfig: PrimeNGConfig) {
+    this.currentUser = this.authService.getCurrentUserData();
+    console.log(this.currentUser.email);
+    // console.log(this.currentUser.userPassword);
+  }
 
   ngOnInit(): void {
     this.invokeStripe();
+
+
+
+    //* fetch user data from firebase
+    this.firebasecrudservice.getUserData().subscribe((userDetails: User[]) => {
+      this.userUser = userDetails;
+      // this.userAddress = this.userUser.address;
+
+      this.userUser.forEach((element: any) => {
+        if (element.id == this.currentUser.email) {
+          this.userName = element.displayName;
+        }
+      });
+    })
+
+    //* fetch user details from firebase (for address)
+    this.firebasecrudservice.getUserDetails(this.currentUser.email).subscribe((userDetails: userDetails[]) => {
+      userDetails.forEach((element: any) => {
+        if (element.id == this.currentUser.email) {
+          this.userAddress = element.address;
+        }
+      });
+    })
+
 
     this.firebasecrudservice.getCart().subscribe((product: Cart[]) => {
       this.items = product;
@@ -215,10 +264,11 @@ export class PaymentComponent implements OnInit {
         }
         this.step++;
       } else {
-        this.toastError = !this.toastError;
-        setTimeout(() => {
-          this.toastError = !this.toastError;
-        }, 5000);
+        // this.toastError = !this.toastError;
+        // setTimeout(() => {
+        //   this.toastError = !this.toastError;
+        // }, 5000);
+        this.showError();
       }
 
 
@@ -234,6 +284,10 @@ export class PaymentComponent implements OnInit {
     }
   }
 
+  showError() {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Payment method not selected. Please select one of the payment methods to proceed' });
+  }
+
   credit() {
     this.visibleCredit = !this.visibleCredit;
     this.visibleCD = true;
@@ -244,5 +298,52 @@ export class PaymentComponent implements OnInit {
     this.visibleCredit = true;
   }
 
+  changeAddress() {
+    this.firebasecrudservice.getUserAddress(this.currentUser.email).subscribe((address: address[]) => {
+      // console.log(address)
+      this.allAddress = address;
+      console.log(this.allAddress)
+    })
+  }
+
+  onRowSelect(event: any) {
+    this.messageService.add({ key: 'normal', severity: 'info', summary: 'Address Selected', detail: "address" + event.data.id + " is selected" });
+
+    this.allAddress.forEach(element => {
+      console.log(element)
+      let test: any;
+      test = element;
+      if (event.data.id == test.id) {
+        this.userAddress = test.address;
+      }
+    });
+  }
+
+  test(event: any) {
+
+  }
+
+  keyup(value: string) {
+    // let verifyNum = this.phoneNumberRegex.test(value.replace(/\s+/g, ''));
+    // console.log(value.replace(/\s+/g, ''), verifyNum)
+    // if (verifyNum == false) {
+    //   this.invalidHP = false;
+    // } else {
+    //   this.invalidHP = true;
+    // }
+  }
+
+  saveInfo() {
+    let verifyNum = this.phoneNumberRegex.test(this.phoneNumber);
+    if (verifyNum == false) {
+      this.invalidHP = false;
+    } else {
+      this.invalidHP = true;
+    }
+
+    if (this.userName == "" || this.phoneNumber == "" || this.userAddress == "") {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'One or more input fields are empty!' });
+    }
+  }
 
 }

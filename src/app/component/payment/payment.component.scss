@@ -374,3 +374,46 @@ $disa: hsl(226, 15%, 83%);
   color: whitesmoke;
 
 }
+
+.information-field {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.information-label {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.receiver-info {
+  p {
+    margin: 0;
+  }
+}
+
+.input {
+  margin-left: 5px !important;
+}
+
+.changeAddress {
+  cursor: pointer;
+  color: #005DE8;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.header {
+  font-size: larger;
+  font-weight: 550;
+}
+
+.sub-header {
+  font-size: smaller;
+  font-style: italic;
+}
+
+.error {
+  color: #EE4B2B;
+}

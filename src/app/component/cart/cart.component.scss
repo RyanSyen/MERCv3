@@ -311,9 +311,10 @@
 .stickBottom {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  bottom: 0;
-  width: 95%;
+  // position: fixed;
+  // bottom: 0;
+  margin-right: 0;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px 15px 1px 15px;

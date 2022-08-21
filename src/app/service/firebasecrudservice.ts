@@ -207,8 +207,8 @@ export class FirebaseCRUDService {
     }
 
     getUserDetails(id: string): Observable<userDetails[]> {
-        const userDetailsRef = doc(this.firestore, `userDetails/${id}`);
-        return docData(userDetailsRef, { idField: 'id' }) as Observable<userDetails[]>;
+        const userDetailsRef = collection(this.firestore, `userDetails`);
+        return collectionData(userDetailsRef, { idField: 'id' }) as Observable<userDetails[]>;
     }
 
     updateUserDetails(id: string, address: string) {
@@ -251,6 +251,10 @@ export class FirebaseCRUDService {
     deleteAddress(email: string, id: string) {
         const addressRef = doc(this.firestore, `${email}+_address/${id}`);
         return deleteDoc(addressRef);
+    }
+
+    getUserDataDetails(email: string) {
+
     }
 
 }

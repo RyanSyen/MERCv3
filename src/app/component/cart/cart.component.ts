@@ -7,13 +7,12 @@ import { ProductService } from 'src/app/service/productservice';
 import { PrimeNGConfig } from 'primeng/api';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 import { browserRefresh } from '../../app-routing.module';
-import { throttleTime } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Voucher } from './../../domain/voucher';
-// import { FormBuilder } from '@angular/forms';
 import { HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
+import { userDetails } from 'src/app/domain/userDetails';
 
 
 declare var $: any;
@@ -25,6 +24,9 @@ declare var $: any;
 })
 
 export class CartComponent implements OnInit, AfterViewInit {
+
+
+
   cartItems: Cart[] = [];
   items: Cart[] = [];
   totalPriceArr: Array<any> = [];
@@ -105,6 +107,7 @@ export class CartComponent implements OnInit, AfterViewInit {
     // this.productService.getCartItems().then(items => {
     //   this.cartItems = items;
     // });
+
 
 
     //* fetch from firebase (method 1)
@@ -231,9 +234,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   clearCart() {
     this.showConfirm();
 
-    for (let i = 0; i < Object.keys(this.items).length; i++) {
-      this.firebaseService.deleteCartItem(this.items[i].id);
-    }
+
 
   }
 
@@ -317,7 +318,9 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.displayModal = false;
 
     if (unchecked == true || unchecked1 == true || unchecked2 == true) {
-      this.toggleToast();
+      let feedback = [];
+      feedback.push(this.feedback, this.feedback1, this.feedback2)
+      this.toggleToast(feedback);
     }
 
     this.displayVouchersModal = false;
@@ -326,10 +329,17 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   }
 
-  toggleToast() {
-    console.log("toggle toast" + this.visible)
+  toggleToast(message: any) {
+    // console.log("toggle toast" + this.visible)
     // this.visible = !this.visible;
-    this.visible = true;
+    // this.visible = true;
+    // message.forEach(element => {
+
+    // });
+    let first = message[0];
+    let second = message[1];
+    let third = message[2];
+    this.messageService.add({ key: 'normal', severity: 'success', summary: 'Success', detail: first + second + third });
   }
 
   function() {
@@ -373,6 +383,21 @@ export class CartComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/login']);
     }
 
+  }
+
+  onConfirm() {
+    for (let i = 0; i < Object.keys(this.items).length; i++) {
+      this.firebaseService.deleteCartItem(this.items[i].id);
+    }
+    this.messageService.clear('c');
+  }
+
+  onReject() {
+    this.messageService.clear('c');
+  }
+
+  clear() {
+    this.messageService.clear();
   }
 
 }

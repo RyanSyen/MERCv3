@@ -89,12 +89,12 @@
               My Purchases
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a class="nav-link" (click)="slide('vouchers')">
               <img src="../../../../assets/img/account/price-tag.png" alt="vouchers">
               My vouchers
             </a>
-          </li>
+          </li> -->
           <!-- Calling SignOut() Api from AuthService -->
           <li class="nav-item">
             <a class="nav-link" (click)="authService.logout()">
@@ -609,7 +609,7 @@
           <div [hidden]="!hideVerifiedOldPW">
             <div>
               <p>Enter old password :</p>
-              <input #oldPassword class="oldPwd" type="text" id="oldPwd" name="oldPwd">
+              <input #oldPassword class="oldPwd" type="password" id="oldPwd" name="oldPwd">
             </div>
             <p [hidden]="hidePWError">Incorrect attempts (max 3) : {{errorCount}}</p>
             <div [hidden]="hideTimer">Time left = <span id="timer"></span></div>
@@ -634,7 +634,7 @@
         </div>
 
         <!-- sixth page: my vouchers page  -->
-        <div class="inner-adjust" *ngSwitchCase="'vouchers'">
+        <!-- <div class="inner-adjust" *ngSwitchCase="'vouchers'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">My Vouchers</h1>
           </div>
@@ -644,7 +644,7 @@
             <p *ngIf="v.freeShipping">{{v.freeShipping}}</p>
             <p>{{v.title}}</p>
           </div>
-        </div>
+        </div> -->
       </div>
 
     </main>

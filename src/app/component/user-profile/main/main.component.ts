@@ -151,17 +151,8 @@ export class MainComponent implements OnInit {
     })
 
     this.firebaseService.getUserDetails(this.currentUser.userEmail).subscribe((userDetails: userDetails[]) => {
-      console.log(userDetails)
       this.userUser = userDetails;
       this.userAddress = this.userUser.address;
-      console.log(userDetails)
-
-      // initialize default address
-      // this.initializeAddress(this.userAddress);
-
-      // for(let i = 1; i <= userDetails.length; i++){
-
-      // }
     })
 
 
@@ -173,6 +164,8 @@ export class MainComponent implements OnInit {
       // if (this.person.displayName) {
       //   this.name == true;
       // }
+
+      console.log(this.userImage)
     })
 
     this.firebaseService.getUserCard(this.currentUser.userEmail).subscribe((card) => {

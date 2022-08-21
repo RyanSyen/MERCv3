@@ -102,6 +102,7 @@ export class AuthService {
         });
         console.log(result.user)
         this.SetUserData(result.user, password);
+        this.setUserDetails(this.userCred);
       })
       .catch((error) => {
         window.alert(error.message);
@@ -138,6 +139,7 @@ export class AuthService {
         console.log(result.user)
         this.sendEmailForVerification();
         this.SetUserData(result.user);
+        this.setUserDetails(this.userCred);
       })
       .catch((error) => {
         console.log("error leh")
@@ -151,6 +153,7 @@ export class AuthService {
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert('Password reset email sent, please check your inbox.');
+        this.logout();
       })
       .catch((error) => {
         window.alert(error);
@@ -172,8 +175,11 @@ export class AuthService {
     let test = JSON.parse(localStorage.getItem('user')!);
     console.log(test)
 
+    let test1 = JSON.parse(localStorage.getItem('userCredentials')!);
+    console.log(test1)
+
     const user = JSON.parse(localStorage.getItem('user')!);
-    console.log("isloggedin " + user)
+
 
     if (user !== null && user.emailVerified == true) {
       console.log("return true")
@@ -226,6 +232,7 @@ export class AuthService {
           this.router.navigate(['/home/' + result.user?.uid]);
         });
         this.SetUserData(result.user);
+
       })
       .catch((error) => {
         window.alert(error);
@@ -247,6 +254,23 @@ export class AuthService {
       emailVerified: user.emailVerified,
     };
 
+    return userRef.set(userData, {
+      merge: true,
+    });
+  }
+
+  setUserDetails(user: any) {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `userData/${user.userEmail}`
+    );
+    const userData = {
+      // uid: user.uid,
+      email: user.userEmail,
+      password: user.userPassword,
+      // displayName: user.displayName,
+      // photoURL: user.photoURL,
+      // emailVerified: user.emailVerified,
+    };
     return userRef.set(userData, {
       merge: true,
     });
