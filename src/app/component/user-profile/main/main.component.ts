@@ -174,6 +174,7 @@ export class MainComponent implements OnInit {
       order.forEach(element => {
         this.currentOrderID = element['orderID'];
         this.items = element['item'];
+        // let test = element.item;
         console.log(this.items, this.currentOrderID)
         // this.paymentMethod = element['paymentMethod'];
         // this.receiverAddress = element['receiverAddress'];
