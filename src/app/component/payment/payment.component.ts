@@ -77,7 +77,8 @@ export class PaymentComponent implements OnInit {
   successMsg = true;
   failMsg = true;
 
-  userHP: any
+  userHP: any;
+  orderOrder: any;
 
   constructor(public authService: AuthService, private checkout: CheckoutService, private firebasecrudservice: FirebaseCRUDService, private router: Router, private messageService: MessageService, private primengConfig: PrimeNGConfig) {
     this.currentUser = this.authService.getCurrentUserData();
@@ -90,10 +91,26 @@ export class PaymentComponent implements OnInit {
 
     //* get user order
     this.firebasecrudservice.getUserOrder(this.currentUser.email).subscribe((order) => {
-
+      // this.orderOrder = order;
       order.forEach(element => {
+
         this.currentOrderID = element['orderID'];
+        console.log(this.currentOrderID)
       });
+    })
+
+    //* get cart
+    this.firebasecrudservice.getCart(this.currentUser.email).subscribe((product: Cart[]) => {
+      this.orderOrder = product;
+      //// calculate the total in cart
+      // this.total = 0;
+      // this.itemCount = 0;
+      // for (let i = 0; i < Object.keys(this.items).length; i++) {
+      //   this.total = this.total + this.items[i].totalPrice;
+      //   this.itemCount++;
+      // }
+
+
     })
 
     //* get uID
@@ -144,20 +161,19 @@ export class PaymentComponent implements OnInit {
         this.itemCount++;
       }
 
-
-
-      //* get user balance
-      this.firebasecrudservice.getBalance().subscribe((balance) => {
-        console.log(balance);
-        balance.forEach(element => {
-          console.log(element['balance'], this.total)
-          if (element['email'] == this.currentUser.email) {
-            console.log("true email")
-            this.userBal = element['balance'];
-          }
-        })
-      });
     })
+
+    //* get user balance
+    this.firebasecrudservice.getBalance().subscribe((balance) => {
+      console.log(balance);
+      balance.forEach(element => {
+        console.log(element['balance'], this.total)
+        if (element['email'] == this.currentUser.email) {
+          console.log("true email")
+          this.userBal = element['balance'];
+        }
+      })
+    });
 
     //* get selectedVoucher from firebase
     this.firebasecrudservice.getSelectedVouchers().subscribe((selectedVoucher: selectedVoucher[]) => {
@@ -341,6 +357,8 @@ export class PaymentComponent implements OnInit {
     } else if (this.step == 4) {
       // fourthCircle?.classList.remove("active");
 
+
+
       // save payment method to db
       this.firebasecrudservice.setUserPaymentMethod(this.currentUser.email, this.paymentMethod)
 
@@ -369,13 +387,27 @@ export class PaymentComponent implements OnInit {
 
 
       // this.firebasecrudservice.setUserOrder(this.currentUser.email, order);
+      this.orderOrder.forEach((element: { id: string; }) => {
+        console.log(element.id)
+        this.firebasecrudservice.deleteCartItem(this.currentUser.email, element.id);
+      });
 
-      this.firebasecrudservice.deleteCart(this.currentUser.email);
+
 
       fourthCircle?.classList.add("done");
       cancelBtn!.style.visibility = 'hidden';
       document.querySelector('#next')!.innerHTML = 'Home';
-      this.initializePayment(this.total);
+
+      // credit deduction
+      if (this.visibleCD == true) {
+        this.userBal = this.userBal - this.total;
+        console.log(this.userBal)
+      } else if (this.visibleCredit == true) {
+        this.initializePayment(this.total);
+      }
+
+
+
       this.step++;
     } else if (this.step == 5) {
       this.router.navigate(['/home/' + this.userID]);

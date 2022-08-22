@@ -167,7 +167,7 @@ export class CartComponent implements OnInit, AfterViewInit {
       subtotal = this.items[index].totalPrice;
 
       // update to firebase
-      this.firebaseService.updateCartPriceQuantity(id, q, subtotal).then(() => {
+      this.firebaseService.updateCartPriceQuantity(this.currentUser.email, id, q, subtotal).then(() => {
         console.log("Data updated successfully!");
         this.function();
       })
@@ -189,7 +189,7 @@ export class CartComponent implements OnInit, AfterViewInit {
 
 
       // update to firebase
-      this.firebaseService.updateCartPriceQuantity(id, q, subtotal).then(() => {
+      this.firebaseService.updateCartPriceQuantity(this.currentUser.email, id, q, subtotal).then(() => {
         console.log("Data updated successfully!");
         this.function();
       })

@@ -120,8 +120,8 @@ export class FirebaseCRUDService {
     }
 
     // update total price & quantity
-    updateCartPriceQuantity(id: string, quantity: number, subtotal: number) {
-        const cartsRef = doc(this.firestore, `cart/${id}`);
+    updateCartPriceQuantity(email: string, id: string, quantity: number, subtotal: number) {
+        const cartsRef = doc(this.firestore, `${email}_cart/${id}`);
         return updateDoc(cartsRef, { quantity: quantity, totalPrice: subtotal });
     }
 
@@ -161,10 +161,11 @@ export class FirebaseCRUDService {
         return deleteDoc(cartsRef);
     }
 
-    deleteCart(email: string) {
-        const cartsRef = doc(this.firestore, `${email}_cart`);
-        return deleteDoc(cartsRef);
-    }
+    // deleteCart(email: string, id: string) {
+    //     const cartsRef = collection(this.firestore, `${email}_cart`);
+    //     cartsRef.doc('id').delete();
+    //     return deleteDoc(cartsRef);
+    // }
 
     //* voucher
 

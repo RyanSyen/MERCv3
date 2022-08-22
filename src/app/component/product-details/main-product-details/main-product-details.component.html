@@ -174,9 +174,9 @@ height: 100vh;" *ngIf="loaderr">
         <div *ngSwitchCase="'1002'" class="container-size-container">
           <div class="size-container">
             <h5 class="sizes">Sizes: </h5>
-            <span (click)="changeSpecs()">128 GB | 8 GB</span>
-            <span>256 GB | 12 GB</span>
-            <span>512 GB | 12 GB</span>
+            <span id="spec1" (click)="changeSpecs(1)">128 GB | 8 GB</span>
+            <span id="spec2" (click)="changeSpecs(2)">256 GB | 12 GB</span>
+            <span id="spec3" (click)="changeSpecs(3)">512 GB | 12 GB</span>
           </div>
         </div>
 

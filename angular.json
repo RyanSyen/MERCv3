@@ -26,6 +26,10 @@
             "assets": [
               "src/favicon.ico",
               "src/ar.html",
+              "src/success.html",
+              "src/cancel.html",
+              "src/checkout.html",
+              "src/styles.css",
               "src/assets"
             ],
             "styles": [

@@ -222,3 +222,37 @@
 // );
 
 // app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
+
+
+// testing for checkout payment with stripe api
+// https://stripe.com/docs/checkout/quickstart?canceled=true#:~:text=Prebuilt%20Checkout%20page
+
+//* use live key not test key
+
+//* need to create product and grab the price key
+// https://dashboard.stripe.com/products?active=true
+
+const stripe = require('stripe')('rk_test_51KiEXBFN13hoDLbygSGLnm5FtBhDwPxNfn1jNHs5wkl1QpPdjsxXOk6gAdccwISmlp9FhcsEqtAVI5mWRPc0Ju2h00czb7OIcn');
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
+
+const YOUR_DOMAIN = 'http://localhost:4242';
+const PRICE_ID = 'price_1LZSnzFN13hoDLbydMcIOKoV';
+
+app.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    line_items: [{
+      // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+      price: 'price_1LRCkQFN13hoDLby3xbSipIA',
+      quantity: 1,
+    }, ],
+    mode: 'payment',
+    success_url: `${YOUR_DOMAIN}/success.html`,
+    cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+  });
+
+  res.redirect(303, session.url);
+});
+
+app.listen(4242, () => console.log('Running on port 4242'));

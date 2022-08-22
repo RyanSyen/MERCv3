@@ -131,13 +131,16 @@ export class MainComponent implements OnInit {
 
   orderStatus = false;
   currentOrderStatusID = 0;
+  topup = true;
+
+  userBal = 0;
 
   constructor(public authService: AuthService, private uploadService: FileUploadService, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private primengConfig: PrimeNGConfig, private modalService: NgbModal, private fb: FormBuilder) {
     this.currentUser = this.authService.getCurrentUserData();
     console.log(this.currentUser.email);
     console.log(this.currentUser.userPassword);
 
-    this.currentUserDetails = this.authService.getCurrentUserData();
+    this.currentUserDetails = this.authService.getCurrentUserCredentials();
 
 
   }
@@ -150,16 +153,28 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
+    //* get user balance
+    this.firebaseService.getBalance().subscribe((balance) => {
+      console.log(balance);
+      balance.forEach(element => {
+        console.log(element['balance'], this.total)
+        if (element['email'] == this.currentUser.email) {
+          console.log("true email")
+          this.userBal = element['balance'];
+        }
+      })
+    });
+
     //* get user order
     this.firebaseService.getUserOrder(this.currentUser.email).subscribe((order) => {
 
 
-
+      console.log(order);
       this.order = order;
       order.forEach(element => {
         this.currentOrderID = element['orderID'];
         this.items = element['item'];
-        // console.log(this.items)
+        console.log(this.items, this.currentOrderID)
         // this.paymentMethod = element['paymentMethod'];
         // this.receiverAddress = element['receiverAddress'];
         // this.receiverHP = element['receiverHP'];
@@ -696,6 +711,7 @@ export class MainComponent implements OnInit {
 
   checkOldPwd(pw: string) {
 
+    console.log(this.currentUserDetails)
     if (this.currentUser.userPassword == pw) {
       this.hideVerifiedOldPW = false;
 
@@ -801,5 +817,12 @@ export class MainComponent implements OnInit {
     // } else {
     //   el!.style.display = "none";
     // }
+  }
+
+  confirmTopUp(amt: string) {
+    this.userBal += parseInt(amt);
+
+    this.firebaseService.updateBalance(this.currentUser.email, this.userBal);
+    this.topup = !this.topup;
   }
 }

@@ -68,7 +68,7 @@
           <li>
             <a class="nav-link" (click)="slide('cards')">
               <img src="../../../../assets/img/account/credit-card.png" alt="cards">
-              Credit/Debit Cards
+              Credit
             </a>
           </li>
           <li>
@@ -77,12 +77,12 @@
               Addresses
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a class="nav-link" (click)="slide('password')">
               <img src="../../../../assets/img/account/password.png" alt="password">
               Change Password
             </a>
-          </li>
+          </li> -->
           <li>
             <a class="nav-link" (click)="slide('purchases')">
               <img src="../../../../assets/img/account/checklist.png" alt="purchases">
@@ -553,6 +553,30 @@
           </div>
         </div>
 
+        <div class="inner-adjust" *ngSwitchCase="'cards'">
+          <div class="pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Credit</h1>
+          </div>
+          <div [hidden]="!topup" class="creditBalance">
+            <div class="creditBalanceField">
+              <p>Credit Balance: {{userBal}}</p>
+            </div>
+            <div class="topUpBtn">
+              <button class="btn btn-outline-primary mb-2 me-2" (click)="topup = !topup">Top Up</button>
+            </div>
+          </div>
+          <div [hidden]="topup">
+            <div>
+              <p>Top up Amount:</p>
+              <input class="creditBalanceField" #topupamt type="number" name="topup">
+            </div>
+            <button class="btn btn-outline-primary mb-2 me-2" (click)="confirmTopUp(topupamt.value)">
+              Confirm
+            </button>
+          </div>
+
+        </div>
+
         <!-- third page: addresses page  -->
         <div class="inner-adjust" *ngSwitchCase="'address'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
@@ -607,22 +631,22 @@
             <h1 class="h2">Password</h1>
           </div>
           <div [hidden]="!hideVerifiedOldPW">
-            <div>
+            <!-- <div>
               <p>Enter old password :</p>
               <input #oldPassword class="oldPwd" type="password" id="oldPwd" name="oldPwd">
-            </div>
-            <p [hidden]="hidePWError">Incorrect attempts (max 3) : {{errorCount}}</p>
+            </div> -->
+            <!-- <p [hidden]="hidePWError">Incorrect attempts (max 3) : {{errorCount}}</p>
             <div [hidden]="hideTimer">Time left = <span id="timer"></span></div>
-            <button (click)="checkOldPwd(oldPassword.value)">OK</button>
+            <button (click)="checkOldPwd(oldPassword.value)">OK</button> -->
           </div>
           <div [hidden]="hideVerifiedOldPW">
             <div class="chgPwdContainer">
               <!-- <p>Change password: </p>
               <input #changePassword class="chgPwd" type="text" id="chgPassword" name="chgPwd" [(ngModel)]="currentUser.userPassword"> -->
-              <!-- <button (click)="authService.forgotPassword(currentUser.userEmail)">Click to change password</button> -->
+              <button (click)="authService.forgotPassword(currentUser.email)">Click to change password</button>
             </div>
             <!-- <button (click)="updatePassword(changePassword.value)">Update password</button> -->
-            <button (click)="authService.forgotPassword(currentUser.userEmail)">Click to change password</button>
+            <!-- <button (click)="authService.forgotPassword(currentUser.userEmail)">Click to change password</button> -->
           </div>
         </div>
 
@@ -654,6 +678,7 @@
                   <tbody *ngFor="let item of items; let i=index">
                     <tr class="product-row">
                       <th>
+                        {{item.id}}
                       </th>
                       <td class="item-product">
                         <div>

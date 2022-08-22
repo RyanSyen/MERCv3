@@ -395,3 +395,18 @@ li {
   color: #ccc;
   font-size: smaller;
 }
+
+.creditBalance {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+
+  &-Field {
+    margin-bottom: 25px;
+  }
+}
+
+.topUpBtn {
+  margin-left: 10px;
+}

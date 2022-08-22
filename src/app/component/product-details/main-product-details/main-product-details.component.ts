@@ -63,7 +63,7 @@ export class MainProductDetailsComponent implements OnInit {
   quantity = 1;
   subtotal = 0;
   colorOption = "";
-  size = 7;
+  size: any;
   cartItemId = 0;
   image: string = "";
 
@@ -110,11 +110,16 @@ export class MainProductDetailsComponent implements OnInit {
     // Called after the constructor and called  after the first ngOnChanges()
 
     //* get cart items
-    this.firebasecrudservice.getCart(this.currentUser.email).subscribe((cartItem) => {
-      let size = cartItem.length;
-      this.cartItemId = parseInt(cartItem[size - 1].id);
-      console.log(this.cartItemId)
-    })
+    // this.firebasecrudservice.getCart(this.currentUser.email).subscribe((cartItem) => {
+    //   if (cartItem != []) {
+    //     let size = cartItem.length;
+    //     console.log(cartItem)
+    //     this.cartItemId = parseInt(cartItem[size - 1].id);
+    //     console.log(this.cartItemId)
+    //   } else {
+    //     this.cartItemId = 0;
+    //   }
+    // })
 
 
 
@@ -264,8 +269,35 @@ export class MainProductDetailsComponent implements OnInit {
     }
   }
 
-  changeSpecs() {
-    alert('test')
+  changeSpecs(spec: number) {
+
+    if (spec == 1) {
+      this.size = "128 GB | 8 GB";
+    } else if (spec == 2) {
+      this.size = "256 GB | 12 GB";
+    } else if (spec == 3) {
+      this.size = "512 GB | 12 GB";
+    }
+
+    let t1 = document.getElementById('spec' + 1);
+    let t2 = document.getElementById('spec' + 2);
+    let t3 = document.getElementById('spec' + 3);
+
+
+
+    let el = document.getElementById('spec' + spec);
+    if (!el?.classList.contains('selectedSize')) {
+
+      // remove others
+      t1?.classList.remove('selectedSize');
+      t2?.classList.remove('selectedSize');
+      t3?.classList.remove('selectedSize');
+
+      el?.classList.add('selectedSize')
+    } else {
+      this.size = "";
+      el.classList.remove('selectedSize')
+    }
   }
 
   addItemToCart() {
@@ -294,7 +326,7 @@ export class MainProductDetailsComponent implements OnInit {
 
 
     if (this.productID = 1000) {
-      if (this.size == 0) {
+      if (this.size == "" || this.size == 0) {
         this.messageService.add({ key: 'normal', severity: 'error', summary: 'Error', detail: 'Size not selected' });
       } else {
         this.firebasecrudservice.setCart(this.currentUser.email, obj);
