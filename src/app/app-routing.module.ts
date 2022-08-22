@@ -50,8 +50,14 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesMainComponent },
   { path: 'test', component: TestComponent },
   { path: 'product_details/:id/:type', component: MainProductDetailsComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'payment', component: PaymentComponent },
+  {
+    path: 'cart', component: CartComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'payment', component: PaymentComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'test1', component: Test1Component },
   { path: 'user', component: MainComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },

@@ -188,7 +188,10 @@ export class PaymentComponent implements OnInit {
 
   initializePayment(amount: number) {
     const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: environment.stripeKey,
+      key:
+
+
+        'pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4',
       locale: 'auto',
       token: function (stripeToken: any) {
         console.log({ stripeToken })
@@ -228,7 +231,7 @@ export class PaymentComponent implements OnInit {
       script.src = "https://checkout.stripe.com/checkout.js";
       script.onload = () => {
         this.paymentHandler = (<any>window).StripeCheckout.configure({
-          key: environment.stripeKey,
+          key: 'pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4',
           locale: 'auto',
           token: function (stripeToken: any) {
             console.log(stripeToken)
