@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  stripeKey: "pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4",
   firebase: {
     projectId: 'fyp-my108-351404',
     appId: '1:978276168904:web:648966568a920626a3e1fd',
