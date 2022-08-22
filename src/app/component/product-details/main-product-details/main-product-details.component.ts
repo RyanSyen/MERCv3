@@ -10,6 +10,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Cart } from 'src/app/domain/cart';
 import { MessageService } from 'primeng/api';
 import { AlertModule } from '@coreui/angular';
+import { AuthService } from 'src/app/shared/auth.service';
 
 
 @Component({
@@ -62,20 +63,24 @@ export class MainProductDetailsComponent implements OnInit {
   quantity = 1;
   subtotal = 0;
   colorOption = "";
-  size = 0;
+  size = 7;
   cartItemId = 0;
-  image : string = "";
+  image: string = "";
 
   // toast
   visible = false;
   position = 'top-end';
   percentage = 0;
- name : string = "";
+  name: string = "";
+  currentUser: any;
+
+
+  productID: any;
 
   private tempObject: Cart[] = [];
 
-  constructor(private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal, private firebasecrudservice: FirebaseCRUDService, private renderer: Renderer2, private spinner: NgxSpinnerService, private e: ElementRef, private messageService: MessageService) {
-
+  constructor(public authService: AuthService, private _Activatedroute: ActivatedRoute, private productService: ProductService, private router: Router, private modalService: NgbModal, private firebasecrudservice: FirebaseCRUDService, private renderer: Renderer2, private spinner: NgxSpinnerService, private e: ElementRef, private messageService: MessageService) {
+    this.currentUser = this.authService.getCurrentUserData();
 
     this.productLogo = '';
     this.productDescription = '';
@@ -103,6 +108,13 @@ export class MainProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // Called after the constructor and called  after the first ngOnChanges()
+
+    //* get cart items
+    this.firebasecrudservice.getCart(this.currentUser.email).subscribe((cartItem) => {
+      let size = cartItem.length;
+      this.cartItemId = parseInt(cartItem[size - 1].id);
+      console.log(this.cartItemId)
+    })
 
 
 
@@ -156,8 +168,9 @@ export class MainProductDetailsComponent implements OnInit {
 
     // get products data based on id passed from firebase 
     this.firebasecrudservice.getProductByIDFromAllProducts(this.productId).subscribe(res => {
-      // console.log(res)
+      console.log(res)
       this.product = res;
+      this.productID = res.id;
       this.productLogo = res.logo;
       this.productName = res.name;
       this.productDescription = res.description;
@@ -257,6 +270,7 @@ export class MainProductDetailsComponent implements OnInit {
 
   addItemToCart() {
     this.cartItemId++;
+
     let image = "../../../../assets/img/" + this.image;
     if (this.colorOption == "") {
       this.colorOption = this.color0;
@@ -279,11 +293,18 @@ export class MainProductDetailsComponent implements OnInit {
     }
 
 
-    this.firebasecrudservice.setCart(obj);
+    if (this.productID = 1000) {
+      if (this.size == 0) {
+        this.messageService.add({ key: 'normal', severity: 'error', summary: 'Error', detail: 'Size not selected' });
+      } else {
+        this.firebasecrudservice.setCart(this.currentUser.email, obj);
+        this.toggleToast();
+      }
 
-    // if success then display success msg, else error msg
-    // this.showSuccess(this.productName);
-    this.toggleToast();
+    }
+
+
+
   }
 
   minus() {
@@ -308,6 +329,7 @@ export class MainProductDetailsComponent implements OnInit {
   toggleToast() {
     this.visible = !this.visible;
     this.name = this.productName;
+    this.messageService.add({ key: 'normal', severity: 'success', summary: 'Success', detail: this.name + ' has been added to your cart.' });
   }
 
   // onVisibleChange($event: boolean) {
@@ -319,7 +341,37 @@ export class MainProductDetailsComponent implements OnInit {
   //   this.percentage = $event * 25;
   // }
 
-  goToCart(){
+  goToCart() {
     this.router.navigate(['/cart']);
+  }
+
+  selectSize(size: number) {
+    this.size = size;
+    console.log(size)
+    let t1 = document.getElementById('size' + 7);
+    let t2 = document.getElementById('size' + 7.5);
+    let t3 = document.getElementById('size' + 8);
+    let t4 = document.getElementById('size' + 8.5);
+    let t5 = document.getElementById('size' + 9);
+    let t6 = document.getElementById('size' + 9.5);
+
+
+    let el = document.getElementById('size' + size);
+    if (!el?.classList.contains('selectedSize')) {
+
+      // remove others
+      t1?.classList.remove('selectedSize');
+      t2?.classList.remove('selectedSize');
+      t3?.classList.remove('selectedSize');
+      t4?.classList.remove('selectedSize');
+      t5?.classList.remove('selectedSize');
+      t6?.classList.remove('selectedSize');
+
+      el?.classList.add('selectedSize')
+    } else {
+      this.size = 0;
+      el.classList.remove('selectedSize')
+    }
+
   }
 }

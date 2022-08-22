@@ -100,7 +100,7 @@ export class AuthService {
 
           this.router.navigate(['./home/' + result.user?.uid]);
         });
-        console.log(result.user)
+        // console.log(result.user)
         this.SetUserData(result.user, password);
         this.setUserDetails(this.userCred);
       })
@@ -128,9 +128,11 @@ export class AuthService {
         }
 
 
-        this.firebaseService.addAddress(email, "0", this.address[0])
+        // this.firebaseService.addAddress(email, "0", this.address[0])
         this.firebaseService.storeUserCard(email, defaultCard);
         this.firebaseService.setUserDetails(email, this.userDetails[0])
+
+        this.firebaseService.setBalance(email, 0);
 
         this.userCred.userEmail = email;
         this.userCred.userPassword = password;

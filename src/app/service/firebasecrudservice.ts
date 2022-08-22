@@ -14,6 +14,7 @@ import { User } from '../shared/user';
 import { userDetails } from '../domain/userDetails';
 import { cardDetails } from '../domain/cardDetails';
 import { address } from '../domain/address';
+import { Order } from '../domain/order';
 
 @Injectable({
     providedIn: 'root'
@@ -107,14 +108,14 @@ export class FirebaseCRUDService {
     }
 
     // update cart items
-    setCart(cart: Cart) {
-        const cartsRef = doc(this.firestore, `cart/${cart.id}`);
+    setCart(email: string, cart: Cart) {
+        const cartsRef = doc(this.firestore, `${email}_cart/${cart.id}`);
         return setDoc(cartsRef, cart);
     }
 
     // get all products from cart
-    getCart(): Observable<Cart[]> {
-        const cartsRef = collection(this.firestore, `cart`);
+    getCart(email: string): Observable<Cart[]> {
+        const cartsRef = collection(this.firestore, `${email}_cart`);
         return collectionData(cartsRef, { idField: 'id' }) as Observable<Cart[]>;
     }
 
@@ -155,8 +156,13 @@ export class FirebaseCRUDService {
         );
     }
 
-    deleteCartItem(id: string) {
-        const cartsRef = doc(this.firestore, `cart/${id}`);
+    deleteCartItem(email: string, id: string) {
+        const cartsRef = doc(this.firestore, `${email}_cart/${id}`);
+        return deleteDoc(cartsRef);
+    }
+
+    deleteCart(email: string) {
+        const cartsRef = doc(this.firestore, `${email}_cart`);
         return deleteDoc(cartsRef);
     }
 
@@ -188,9 +194,16 @@ export class FirebaseCRUDService {
         return collectionData(userRef, { idField: 'id' }) as Observable<User[]>;
     }
 
-    getIndividualUser(id: string): Observable<User[]> {
-        const userRef = doc(this.firestore, `users/${id}`);
-        return docData(userRef, { idField: 'id' }) as Observable<User[]>;
+    // getIndividualUser(): Observable<User[]> {
+    //     // const userRef = doc(this.firestore, `users/${id}`);
+    //     // return docData(userRef, { idField: 'id' }) as Observable<User[]>;
+    //     const userRef = doc(this.firestore, `users`);
+    //     return docData(userRef, { idField: 'id' }) as Observable<User[]>;
+    // }
+    updateName(email: string, name: string) {
+        const userRef = doc(this.firestore, `users/${email}`);
+
+        return updateDoc(userRef, { displayName: name });
     }
 
 
@@ -253,8 +266,36 @@ export class FirebaseCRUDService {
         return deleteDoc(addressRef);
     }
 
-    getUserDataDetails(email: string) {
+    // userBalance
+    setBalance(email: string, amount: number) {
+        const balanceRef = doc(this.firestore, `balance/${email}`);
+        return setDoc(balanceRef, { balance: amount });
+    }
 
+    getBalance() {
+        const addressRef = collection(this.firestore, `balance`);
+        return collectionData(addressRef, { idField: 'email' });
+    }
+
+    updateBalance(email: string, amount: number) {
+        const addressRef = doc(this.firestore, `balance/${email}`);
+        return updateDoc(addressRef, { balance: amount });
+    }
+
+    //* payment method 
+    setUserPaymentMethod(email: string, paymentMethod: string) {
+        const paymentMethodRef = doc(this.firestore, `paymentMtd/${email}`);
+        return setDoc(paymentMethodRef, { paymentMtd: paymentMethod });
+    }
+
+    setUserOrder(email: string, order: Order, orderID: number) {
+        const orderRef = doc(this.firestore, `order_${email}/${orderID}`);
+        return setDoc(orderRef, order);
+    }
+
+    getUserOrder(email: string) {
+        const orderRef = collection(this.firestore, `order_${email}`);
+        return collectionData(orderRef, { idField: 'id' });
     }
 
 }

@@ -119,9 +119,22 @@ export class MainComponent implements OnInit {
   voucher1Min: number = 0;
   voucher2Min: number = 0;
 
+  currentOrderID = 0o00;
+  items: any;
+  total = 0;
+  paymentMethod = "";
+  receiverName = "";
+  receiverHP = "";
+  receiverAddress = "";
+  order: any;
+  orderID: any;
+
+  orderStatus = false;
+  currentOrderStatusID = 0;
+
   constructor(public authService: AuthService, private uploadService: FileUploadService, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private primengConfig: PrimeNGConfig, private modalService: NgbModal, private fb: FormBuilder) {
-    this.currentUser = this.authService.getCurrentUserCredentials();
-    console.log(this.currentUser.userEmail);
+    this.currentUser = this.authService.getCurrentUserData();
+    console.log(this.currentUser.email);
     console.log(this.currentUser.userPassword);
 
     this.currentUserDetails = this.authService.getCurrentUserData();
@@ -137,6 +150,27 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
+    //* get user order
+    this.firebaseService.getUserOrder(this.currentUser.email).subscribe((order) => {
+
+
+
+      this.order = order;
+      order.forEach(element => {
+        this.currentOrderID = element['orderID'];
+        this.items = element['item'];
+        // console.log(this.items)
+        // this.paymentMethod = element['paymentMethod'];
+        // this.receiverAddress = element['receiverAddress'];
+        // this.receiverHP = element['receiverHP'];
+        // this.receiverName = element['receiverName'];
+        // this.total = element['total'];
+
+      });
+    })
+
+
+
     //* fetch voucher from firebase
     // error and completion signal is not working, maybe observable is not emitted
     this.firebaseService.getVouchers().subscribe((voucher: Voucher[]) => {
@@ -150,25 +184,41 @@ export class MainComponent implements OnInit {
       // console.log(voucher)
     })
 
-    this.firebaseService.getUserDetails(this.currentUser.userEmail).subscribe((userDetails: userDetails[]) => {
+    this.firebaseService.getUserDetails(this.currentUser.email).subscribe((userDetails: any) => {
       this.userUser = userDetails;
-      this.userAddress = this.userUser.address;
+
+      console.log(this.userUser)
+      userDetails.forEach((element: { id: any; address: string; }) => {
+        console.log(element.id)
+        if (element.id == this.currentUser.email) {
+          this.userAddress = element.address;
+
+          console.log(element.address)
+        }
+      });
+      // console.log(userDetails)
+      // this.userAddress = this.userUser.address;
     })
 
 
-    this.firebaseService.getIndividualUser(this.currentUser.userEmail).subscribe((person: User[]) => {
-      this.person = person;
-      this.userImage = this.person.photoURL;
-      this.userName = this.person.displayName;
-      this.userEmail = this.person.email;
-      // if (this.person.displayName) {
-      //   this.name == true;
-      // }
+    this.firebaseService.getUserData().subscribe((person) => {
 
-      console.log(this.userImage)
+      person.forEach(element => {
+        console.log("element email = " + element.email, "current user email = " + this.currentUser.email, element.email == this.currentUser.email)
+        if (element.email == this.currentUser.email) {
+          console.log(element)
+          this.userImage = element.photoURL;
+          this.userName = element.displayName;
+          this.userEmail = element.email;
+          if (element.displayName) {
+            this.name == true;
+          }
+
+        }
+      });
     })
 
-    this.firebaseService.getUserCard(this.currentUser.userEmail).subscribe((card) => {
+    this.firebaseService.getUserCard(this.currentUser.email).subscribe((card) => {
       console.log(card)
       this.numOfCards = card.length;
       if (this.numOfCards == 1) {
@@ -314,7 +364,7 @@ export class MainComponent implements OnInit {
     })
 
     // get user address
-    this.firebaseService.getUserAddress(this.currentUser.userEmail).subscribe((address) => {
+    this.firebaseService.getUserAddress(this.currentUser.email).subscribe((address) => {
       this.allAddresses = address;
       this.address = address;
       console.log(this.allAddresses.length)
@@ -349,7 +399,7 @@ export class MainComponent implements OnInit {
       this.selectedFiles = undefined;
       if (file) {
         this.currentFileUpload = new FileUpload(file);
-        this.uploadService.pushFileToStorage(this.currentFileUpload, this.currentUser.userEmail).subscribe(
+        this.uploadService.pushFileToStorage(this.currentFileUpload, this.currentUser.email).subscribe(
           percentage => {
             this.percentage = Math.round(percentage ? percentage : 0);
           },
@@ -380,6 +430,7 @@ export class MainComponent implements OnInit {
     console.log(location + " and " + name)
     this.confirmState = "saveProfile";
     this.newName = name;
+    console.log(this.newName)
     this.newAddress = location;
     this.messageService.clear();
     this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
@@ -387,13 +438,24 @@ export class MainComponent implements OnInit {
 
   onConfirm() {
     if (this.confirmState == "saveProfile") {
+      console.log("set name to db")
       // save new values to user profile in firebase
-      this.firebaseService.updateUserDetails(this.currentUser.userEmail, this.newAddress);
+      this.firebaseService.updateUserDetails(this.currentUser.email, this.newAddress);
+      this.firebaseService.updateName(this.currentUser.email, this.newName);
+
+      this.address.push(
+        {
+          address: this.newAddress,
+        }
+      );
+      let size = this.address.length - 1;
+      this.firebaseService.addAddress(this.currentUser.email, size.toString(), this.address[size]);
+
     } else if (this.confirmState == "deleteCard") {
       // delete card
-      this.firebaseService.deleteCard(this.currentUser.userEmail, this.idDelete);
+      this.firebaseService.deleteCard(this.currentUser.email, this.idDelete);
     } else if (this.confirmState == "deleteAddress") {
-      this.firebaseService.deleteAddress(this.currentUser.userEmail, this.deleteAddressIndex.toString());
+      this.firebaseService.deleteAddress(this.currentUser.email, this.deleteAddressIndex.toString());
 
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address deleted successfully' });
     }
@@ -450,7 +512,7 @@ export class MainComponent implements OnInit {
         CVV: this.cardCVV
       }
 
-      this.firebaseService.storeUserCard(this.currentUser.userEmail, this.firstCard);
+      this.firebaseService.storeUserCard(this.currentUser.email, this.firstCard);
     } else if (this.numOfCards === 2) {
       console.log(this.cardNum1)
       this.secondCard =
@@ -462,7 +524,7 @@ export class MainComponent implements OnInit {
         CVV: this.cardCVV
       }
 
-      this.firebaseService.storeUserCard(this.currentUser.userEmail, this.secondCard);
+      this.firebaseService.storeUserCard(this.currentUser.email, this.secondCard);
     } else if (this.numOfCards === 3) {
       this.thirdCard =
       {
@@ -473,7 +535,7 @@ export class MainComponent implements OnInit {
         CVV: this.cardCVV
       }
 
-      this.firebaseService.storeUserCard(this.currentUser.userEmail, this.thirdCard);
+      this.firebaseService.storeUserCard(this.currentUser.email, this.thirdCard);
     }
 
 
@@ -558,7 +620,7 @@ export class MainComponent implements OnInit {
 
   testVisaCard(card: string) {
     let visaCard = this.visa.test(card);
-    console.log(visaCard, card)
+    // console.log(visaCard, card)
     return visaCard;
   }
 
@@ -573,7 +635,7 @@ export class MainComponent implements OnInit {
   initializeAddress(address: string) {
     this.address[0].address = address;
     this.address.forEach(element => {
-      this.firebaseService.addAddress(this.currentUser.userEmail, '0', element);
+      this.firebaseService.addAddress(this.currentUser.email, '0', element);
     });
     // this.address[0].address1 = address;
     // console.log(this.address1!.address1);
@@ -593,7 +655,7 @@ export class MainComponent implements OnInit {
       }
     );
     let size = this.address.length - 1;
-    this.firebaseService.addAddress(this.currentUser.userEmail, size.toString(), this.address[size]);
+    this.firebaseService.addAddress(this.currentUser.email, size.toString(), this.address[size]);
     const textarea = document.getElementById('textAreaAddress') as HTMLTextAreaElement;
     textarea!.value = '';
     // console.log(this.address)
@@ -618,7 +680,7 @@ export class MainComponent implements OnInit {
 
   updateAddress(address: any) {
     console.log(address)
-    this.firebaseService.updateAddress(this.currentUser.userEmail, this.selectedAddressIndex.toString(), address);
+    this.firebaseService.updateAddress(this.currentUser.email, this.selectedAddressIndex.toString(), address);
 
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address updated successfully' });
 
@@ -726,5 +788,18 @@ export class MainComponent implements OnInit {
 
   updatePassword(password: string) {
 
+  }
+
+  selectOrder(id: number) {
+    // this.currentOrderStatusID = id;
+    // let ID = id.toString();
+    // console.log(id)
+    // let el = document.getElementById(ID);
+
+    // if (el!.style.display == "none") {
+    //   el!.style.display = "block";
+    // } else {
+    //   el!.style.display = "none";
+    // }
   }
 }

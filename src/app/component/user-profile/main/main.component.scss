@@ -379,3 +379,19 @@ li {
     -moz-box-shadow: 0px 0px 5px 5px rgba(204, 204, 204, 0.75);
   }
 }
+
+.confirmation-header {
+  cursor: pointer;
+}
+
+.orderContainer {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #005DE8;
+}
+
+
+.old-price {
+  text-decoration: line-through;
+  color: #ccc;
+  font-size: smaller;
+}

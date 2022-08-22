@@ -1,6 +1,6 @@
 <div class="displayTable">
   <div class="displayTableCell">
-    <div class="authBlock">
+    <div class="authBlock header">
       <h3>Thank You for Registering</h3>
       <div class="formGroup" *ngIf="authService.userData as user">
         <p class="text-center">We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
@@ -16,12 +16,7 @@
       </div>
     </div>
     <div class="redirectToLogin">
-      <span>Go back to?
-        <button (click)="goToSignIn()">
-          <span class="redirect">Sign in</span>
-        </button>
-
-      </span>
+      <button type="button" class="btn btn-primary" (click)="goToSignIn()">Sign in</button>
     </div>
   </div>
 </div>

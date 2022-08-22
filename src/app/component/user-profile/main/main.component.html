@@ -171,7 +171,7 @@
         </div>
 
         <!-- second page: credit/debit cards page  -->
-        <div class="inner-adjust" *ngSwitchCase="'cards'">
+        <div class="inner-adjust" [hidden]="true" *ngSwitchCase="'cards'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Credit Debit Cards</h1>
           </div>
@@ -630,6 +630,97 @@
         <div class="inner-adjust" *ngSwitchCase="'purchases'">
           <div class="pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">My Purchases</h1>
+          </div>
+          <div class="orderContainer" *ngFor="let o of order; let itemIndex = index">
+            <div class="confirmation-header" (click)="selectOrder(itemIndex)">
+              <h4>Order {{o.orderID}}</h4>
+              <h5>Order placed at {{o.receiveDate}} {{o.receiveTime}}</h5>
+            </div>
+
+            <div [hidden]="orderStatus" id={{currentOrderStatusID}}>
+              <!-- products ordered  -->
+              <div class="products-ordered-table">
+                <table class="table">
+                  <thead class="table-header">
+                    <tr>
+                      <th>
+                      </th>
+                      <th class="product-header">Product</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let item of items; let i=index">
+                    <tr class="product-row">
+                      <th>
+                      </th>
+                      <td class="item-product">
+                        <div>
+                          <img class="cart-img" src="{{item.placeholderImg}}" alt="">
+                          {{item.title}} -
+                          {{item.variations}}
+                        </div>
+
+                      </td>
+                      <td>RM {{item.discountedPrice}} <span class="old-price">{{item.oldPrice}}</span></td>
+                      <td>
+                        <div class="quantity">
+                          <span>{{item.quantity}}</span>
+                        </div>
+                      </td>
+                      <td class="total-price">RM {{item.totalPrice}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <hr>
+
+              <!-- receiver's info  -->
+              <div>
+                <div>
+                  <p>Receiver's name: {{o.receiverName}}</p>
+                </div>
+                <div>
+                  <p>Receiver's phone number: 0{{o.receiverHP}}</p>
+                </div>
+                <div>
+                  <p>Receiver's address: {{o.receiverAddress}}</p>
+                </div>
+              </div>
+
+              <hr>
+
+              <!-- payment method, vouchers, total  -->
+              <div>
+                <div>
+                  <p>Payment method: {{o.paymentMethod}}</p>
+                </div>
+
+                <!-- <div class="voucher-cart-container">
+                <div class="select-voucher">
+                  <h6>Vouchers Selected</h6>
+                  <p>No Vouchers Selected</p>
+                </div>
+      
+                <div class="selectedVouchers">
+                </div>
+              </div> -->
+
+                <div class="delivery">
+                  <p>Delivery fee: <strong>RM 5</strong></p>
+                </div>
+
+                <div class="total">
+                  <!-- <p>Total ({{itemCount}} items) : </p> -->
+                  <p class="totalText"> &nbsp; RM {{o.total}}</p>
+                </div>
+
+              </div>
+            </div>
+
+
           </div>
         </div>
 

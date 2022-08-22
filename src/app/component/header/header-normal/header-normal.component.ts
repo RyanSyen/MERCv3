@@ -30,6 +30,9 @@ declare var $: any;
 })
 export class HeaderNormalComponent implements OnInit {
 
+  userID = "";
+  currentUser: any;
+
   items!: Cart[];
   checkLoggedIn: boolean = false;
   selectedProduct?: Cart;
@@ -46,6 +49,9 @@ export class HeaderNormalComponent implements OnInit {
 
 
   constructor(public auth: AuthService, private http: HttpClient, private router: Router, private productService: ProductService, private messageService: MessageService, private modalService: NgbModal, private firebaseService: FirebaseCRUDService) {
+
+    this.currentUser = this.auth.getCurrentUserData();
+
     if (this.auth.isLoggedIn) {
       this.checkLoggedIn = true;
     } else {
@@ -57,6 +63,11 @@ export class HeaderNormalComponent implements OnInit {
 
   ngOnInit(): void {
 
+    //* get uID
+    let testing = JSON.parse(window.localStorage.getItem('user')!);
+    this.userID = testing.uid;
+    console.log(testing.uid)
+
     // from json
     // this.productService.getCartItems().then(items => {
     //   this.items = items;
@@ -65,7 +76,7 @@ export class HeaderNormalComponent implements OnInit {
     // });
 
     // from firebase
-    this.firebaseService.getCart().subscribe(items => {
+    this.firebaseService.getCart(this.currentUser.email).subscribe(items => {
       this.items = items;
     })
   }
@@ -79,7 +90,7 @@ export class HeaderNormalComponent implements OnInit {
   }
 
   goToHome() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home/' + this.userID]);
   }
 
   onRowSelect(event: any) {

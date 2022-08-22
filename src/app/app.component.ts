@@ -6,7 +6,7 @@ import { ProductService } from './service/productservice';
 import { TweenMax } from "gsap";
 import { Voucher } from './domain/voucher';
 import { selectedVoucher } from './domain/selectedVoucher';
-
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,9 @@ export class AppComponent {
   items: any;
   count !: number;
 
-  constructor(private primengConfig: PrimeNGConfig, private firebasecrudservice: FirebaseCRUDService, private productService: ProductService) { }
+  currentUser: any;
+
+  constructor(public authService: AuthService, private primengConfig: PrimeNGConfig, private firebasecrudservice: FirebaseCRUDService, private productService: ProductService) { }
 
   voucher: Voucher[] = [
     {
@@ -74,6 +76,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+
+    // get current user email
+    this.currentUser = this.authService.getCurrentUserData();
 
     // * set cart 
     this.productService.getCartItems().then(items => {
@@ -147,6 +152,9 @@ export class AppComponent {
     // this.selectedVoucher.forEach(element => {
     //   this.firebasecrudservice.setSelectedVouchers(element);
     // })
+
+    //* set balance (need to set after registration [done])
+    // this.firebasecrudservice.setBalance(this.currentUser.email, 0);
 
   }
 }

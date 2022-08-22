@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../service/productservice';
 import { Product } from '../../../domain/product';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-discounted-products',
@@ -83,7 +83,7 @@ export class DiscountedProductsComponent implements OnInit {
       this.productColor1 = this.discountedProducts.find(x => x.id === id)!.color1;
       this.productColor2 = this.discountedProducts.find(x => x.id === id)!.color2;
       if (color == this.productColor0) {
-         // change active color
+        // change active color
         this.product1MainColor = ['circle', 'blue', 'active'];
         this.product1SubColor0 = ['circle', 'pink'];
         this.product1SubColor1 = ['circle', 'yellow'];
@@ -161,16 +161,16 @@ export class DiscountedProductsComponent implements OnInit {
     }
   }
 
-  navigateToProductDetails(id : string, type : any){
+  navigateToProductDetails(id: string, type: any) {
     // Method 1 -> provide both path and the route parameter (as second element)
-    this.router.navigate(['/product_details/',id, type]);
+    this.router.navigate(['/product_details/', id, type]);
 
     // Method 2 -> using query parameters (not sure why not working)
     // this.router.navigate(['/product_details]', {queryParams: {id: id, type: type}}]);
   }
 
-  addToCart(id:string){
-    this.router.navigate(['/cart/',id]);
+  addToCart(id: string) {
+    // this.router.navigate(['/cart/',id]);
   }
 
 }

@@ -13,6 +13,7 @@ import { userDetails } from 'src/app/domain/userDetails';
 import { AuthService } from 'src/app/shared/auth.service';
 import { User } from 'src/app/shared/user';
 import { address } from 'src/app/domain/address';
+import { Order } from 'src/app/domain/order';
 
 @Component({
   selector: 'app-payment',
@@ -20,6 +21,10 @@ import { address } from 'src/app/domain/address';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
+
+  userID: any;
+  currentOrderID: number = 0o000;
+
   userName = "test";
   userAccPage = "profile";
   userImg = "";
@@ -28,9 +33,12 @@ export class PaymentComponent implements OnInit {
   userUser: any;
   currentUser: any;
   currentUserDetails: any;
-  phoneNumber = "";
+  phoneNumber: any;
   allAddress: address[] = [];
   selectedAddress: any;
+
+
+  userBal = 0;
 
   invalidHP = true;
 
@@ -41,6 +49,7 @@ export class PaymentComponent implements OnInit {
   success: boolean = false
 
   failure: boolean = false
+
 
   // products from cart
   items: any;
@@ -68,6 +77,8 @@ export class PaymentComponent implements OnInit {
   successMsg = true;
   failMsg = true;
 
+  userHP: any
+
   constructor(public authService: AuthService, private checkout: CheckoutService, private firebasecrudservice: FirebaseCRUDService, private router: Router, private messageService: MessageService, private primengConfig: PrimeNGConfig) {
     this.currentUser = this.authService.getCurrentUserData();
     console.log(this.currentUser.email);
@@ -77,13 +88,35 @@ export class PaymentComponent implements OnInit {
   ngOnInit(): void {
     this.invokeStripe();
 
+    //* get user order
+    this.firebasecrudservice.getUserOrder(this.currentUser.email).subscribe((order) => {
 
+      order.forEach(element => {
+        this.currentOrderID = element['orderID'];
+      });
+    })
+
+    //* get uID
+    let testing = JSON.parse(window.localStorage.getItem('user')!);
+    this.userID = testing.uid;
+
+
+    //* get phone number
+    // this.phoneNumber = JSON.parse(window.localStorage.getItem('userHP'));
+    console.log(window.localStorage.getItem('userHP'));
+    let phoneNumberExist = window.localStorage.getItem('userHP');
+
+    if (phoneNumberExist) {
+      this.phoneNumber = "0" + phoneNumberExist;
+    } else {
+      this.phoneNumber = "";
+    }
 
     //* fetch user data from firebase
     this.firebasecrudservice.getUserData().subscribe((userDetails: User[]) => {
       this.userUser = userDetails;
       // this.userAddress = this.userUser.address;
-
+      console.log(userDetails)
       this.userUser.forEach((element: any) => {
         if (element.id == this.currentUser.email) {
           this.userName = element.displayName;
@@ -100,8 +133,8 @@ export class PaymentComponent implements OnInit {
       });
     })
 
-
-    this.firebasecrudservice.getCart().subscribe((product: Cart[]) => {
+    //* get items in cart from db
+    this.firebasecrudservice.getCart(this.currentUser.email).subscribe((product: Cart[]) => {
       this.items = product;
       // calculate the total in cart
       this.total = 5;
@@ -112,9 +145,21 @@ export class PaymentComponent implements OnInit {
       }
 
 
+
+      //* get user balance
+      this.firebasecrudservice.getBalance().subscribe((balance) => {
+        console.log(balance);
+        balance.forEach(element => {
+          console.log(element['balance'], this.total)
+          if (element['email'] == this.currentUser.email) {
+            console.log("true email")
+            this.userBal = element['balance'];
+          }
+        })
+      });
     })
 
-    //get selectedVoucher from firebase
+    //* get selectedVoucher from firebase
     this.firebasecrudservice.getSelectedVouchers().subscribe((selectedVoucher: selectedVoucher[]) => {
       this.selectedVoucher = selectedVoucher;
     });
@@ -193,7 +238,7 @@ export class PaymentComponent implements OnInit {
 
     if (this.step == 1) {
       // cancel checkout go back home page
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/' + this.userID]);
     } else if (this.step == 2) {
       secondCircle?.classList.remove("active");
       secondCircleCaption?.classList.remove("active");
@@ -243,10 +288,31 @@ export class PaymentComponent implements OnInit {
     } else if (this.step == 2) {
       // secondCircle?.classList.remove("active");
       // secondCircleCaption?.classList.remove("active");
-      secondCircle?.classList.add("done");
-      thirdCircle?.classList.add("active");
-      thirdCircleCaption?.classList.add("active");
-      this.step++;
+
+
+      let verifyNum = this.phoneNumberRegex.test(this.phoneNumber);
+      if (verifyNum == false) {
+        this.invalidHP = false;
+      } else {
+        // hide err msg
+        this.invalidHP = true;
+        this.phoneNumber = parseInt(this.phoneNumber);
+        // store phone number to local storage
+        window.localStorage.setItem('userHP', JSON.stringify(this.phoneNumber))
+
+        if (this.userName == "" || this.phoneNumber == "" || this.userAddress == "") {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'One or more input fields are empty!' });
+        } else {
+
+          secondCircle?.classList.add("done");
+          thirdCircle?.classList.add("active");
+          thirdCircleCaption?.classList.add("active");
+
+          this.step++;
+        }
+      }
+
+
     } else if (this.step == 3) {
       // thirdCircle?.classList.remove("active");
       // thirdCircleCaption?.classList.remove("active");
@@ -274,13 +340,45 @@ export class PaymentComponent implements OnInit {
 
     } else if (this.step == 4) {
       // fourthCircle?.classList.remove("active");
+
+      // save payment method to db
+      this.firebasecrudservice.setUserPaymentMethod(this.currentUser.email, this.paymentMethod)
+
+      let today = new Date();
+      let date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+      let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      console.log(date + "and" + time)
+
+      // save the order
+      this.currentOrderID++;
+      let order: Order =
+      {
+        email: this.currentUser.email,
+        orderID: this.currentOrderID,
+        item: this.items,
+        receiverName: this.userName,
+        receiverHP: this.phoneNumber,
+        receiverAddress: this.userAddress,
+        paymentMethod: this.paymentMethod,
+        total: this.total,
+        receiveDate: date,
+        receiveTime: time
+      }
+
+      this.firebasecrudservice.setUserOrder(this.currentUser.email, order, this.currentOrderID)
+
+
+      // this.firebasecrudservice.setUserOrder(this.currentUser.email, order);
+
+      this.firebasecrudservice.deleteCart(this.currentUser.email);
+
       fourthCircle?.classList.add("done");
       cancelBtn!.style.visibility = 'hidden';
       document.querySelector('#next')!.innerHTML = 'Home';
       this.initializePayment(this.total);
       this.step++;
     } else if (this.step == 5) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/' + this.userID]);
     }
   }
 
@@ -289,8 +387,16 @@ export class PaymentComponent implements OnInit {
   }
 
   credit() {
-    this.visibleCredit = !this.visibleCredit;
-    this.visibleCD = true;
+
+    if (this.userBal < this.total) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Insufficent Credit! Please top up.' });
+    } else {
+      this.visibleCredit = !this.visibleCredit;
+      this.visibleCD = true;
+    }
+
+
+
   }
 
   creditDebit() {
@@ -338,6 +444,7 @@ export class PaymentComponent implements OnInit {
     if (verifyNum == false) {
       this.invalidHP = false;
     } else {
+      // hide err msg
       this.invalidHP = true;
     }
 

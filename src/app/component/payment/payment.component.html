@@ -151,8 +151,9 @@
 
               <div class="information-field">
                 <p class="header">Receiver's address *: </p>
-                <input class="input userAddress" type="text" id="" name="userAddress" [(ngModel)]="userAddress"
-                  required>
+                <!-- <input class="input userAddress" type="text" id="" name="userAddress" [(ngModel)]="userAddress" required> -->
+                <textarea #address class="locationTextArea" name="location" rows="5" cols="25" wrap="soft"
+                  maxlength="100" style="overflow:hidden; resize:none;" [(ngModel)]="userAddress" required></textarea>
                 <!-- <p class="input">{{userAddress}}</p> -->
               </div>
 
@@ -163,7 +164,7 @@
             </div>
           </div>
         </div>
-        <button (click)="saveInfo()">Save Information</button>
+        <!-- <button (click)="saveInfo()">Save Information</button> -->
       </div>
     </div>
   </main>
@@ -201,7 +202,7 @@
         <div class="select-payment-method">
           <div class="merc-credit" (click)="credit()">
             <h4>MERC Credit</h4>
-            <p>Bal: RM 31.54</p>
+            <p>Bal: RM {{userBal}}</p>
             <img src="../../../assets/img/tick.png" alt="tick" class="selectedPaymentMethod" [hidden]="visibleCredit">
           </div>
           <div>
@@ -264,16 +265,13 @@
       <!-- receiver's info  -->
       <div>
         <div>
-          <p>Receiver's name: </p>
+          <p>Receiver's name: {{userName}}</p>
         </div>
         <div>
-          <p>Receiver's phone number: </p>
+          <p>Receiver's phone number: 0{{phoneNumber}}</p>
         </div>
         <div>
-          <p>Receiver's address: </p>
-        </div>
-        <div>
-          <p>Emergency contact (optional):</p>
+          <p>Receiver's address: {{userAddress}}</p>
         </div>
       </div>
 

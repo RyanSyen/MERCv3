@@ -58,8 +58,9 @@ height: 100vh;" *ngIf="loaderr">
 </div> -->
 
 <!-- <p-toast (click)="goToCart()"></p-toast> -->
+<p-toast key="normal"></p-toast>
 
-<c-toaster [placement]="position" position="fixed" (click)="goToCart()">
+<!-- <c-toaster [placement]="position" position="fixed" (click)="goToCart()">
   <c-toast [visible]="visible" class="toastStyle">
     <c-toast-header class="toastHeader">
       <toast-sample-icon></toast-sample-icon>
@@ -67,10 +68,9 @@ height: 100vh;" *ngIf="loaderr">
     </c-toast-header>
     <c-toast-body>
       <p>Added {{name}} to cart</p>
-      <!-- <a routerLink="/cart">Click here to your shopping cart</a> -->
     </c-toast-body>
   </c-toast>
-</c-toaster>
+</c-toaster> -->
 
 <div class="container product-details-container" *ngIf="!loaderr">
   <div class="row-container">
@@ -158,12 +158,12 @@ height: 100vh;" *ngIf="loaderr">
         <div *ngSwitchCase="'1000'" class="container-size-container">
           <div class="size-container">
             <h5 class="sizes">Sizes: </h5>
-            <span (click)="size=7">UK 7</span>
-            <span (click)="size=7.5">UK 7.5</span>
-            <span (click)="size=8">UK 8</span>
-            <span (click)="size=8.5">UK 8.5</span>
-            <span (click)="size=9">UK 9</span>
-            <span (click)="size=9.5">UK 9.5</span>
+            <span id="size7" (click)="selectSize(7)">UK 7</span>
+            <span id="size7.5" (click)="selectSize(7.5)">UK 7.5</span>
+            <span id="size8" (click)="selectSize(8)">UK 8</span>
+            <span id="size8.5" (click)="selectSize(8.5)">UK 8.5</span>
+            <span id="size9" (click)="selectSize(9)">UK 9</span>
+            <span id="size9.5" (click)="selectSize(9.5)">UK 9.5</span>
           </div>
           <a (click)="openBackDropCustomClass(content)" class="size-chart-link">Size chart</a>
         </div>

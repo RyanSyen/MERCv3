@@ -66,6 +66,8 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   displayVouchersModal = true;
 
+  currentUser: any;
+
   private firestore: FirebaseTSFirestore;
 
   public browserRefresh: boolean = false;
@@ -83,7 +85,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private productService: ProductService, private primengConfig: PrimeNGConfig, private firebaseService: FirebaseCRUDService, private messageService: MessageService, private router: Router, public authService: AuthService) {
-
+    this.currentUser = this.authService.getCurrentUserData();
     this.firestore = new FirebaseTSFirestore();
 
 
@@ -111,7 +113,7 @@ export class CartComponent implements OnInit, AfterViewInit {
 
 
     //* fetch from firebase (method 1)
-    this.firebaseService.getCart().subscribe((product: Cart[]) => {
+    this.firebaseService.getCart(this.currentUser.email).subscribe((product: Cart[]) => {
       this.items = product;
       // calculate the total in cart
       this.total = 0;
@@ -228,7 +230,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   // }
 
   removeItem(id: string) {
-    this.firebaseService.deleteCartItem(id);
+    this.firebaseService.deleteCartItem(this.currentUser.email, id);
   }
 
   clearCart() {
@@ -249,7 +251,7 @@ export class CartComponent implements OnInit, AfterViewInit {
       this.count = items.length;
 
       for (let i = 0; i < this.count; i++) {
-        this.firebaseService.setCart(this.items[i]);
+        this.firebaseService.setCart(this.currentUser.email, this.items[i]);
         // this.firebaseService.populateWithFirebaseTSFirestore(this.items[i]);
       }
     });
@@ -387,7 +389,7 @@ export class CartComponent implements OnInit, AfterViewInit {
 
   onConfirm() {
     for (let i = 0; i < Object.keys(this.items).length; i++) {
-      this.firebaseService.deleteCartItem(this.items[i].id);
+      this.firebaseService.deleteCartItem(this.currentUser.email, this.items[i].id);
     }
     this.messageService.clear('c');
   }
