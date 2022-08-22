@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { User } from 'src/app/shared/user';
 import { address } from 'src/app/domain/address';
 import { Order } from 'src/app/domain/order';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-payment',
@@ -187,7 +188,11 @@ export class PaymentComponent implements OnInit {
 
   initializePayment(amount: number) {
     const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4',
+      key:
+
+
+        'pk_test_51KiEXBFN13hoDLby9WPZJAKOf7i92hVpeKw9EnnyStV7ZEgQqytzf8k6r7rAb0rIYuDkHyWFgO1zrN3nhQLVhi9i00rhHxNUR4'
+      ,
       locale: 'auto',
       token: function (stripeToken: any) {
         console.log({ stripeToken })
