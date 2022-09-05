@@ -2,6 +2,20 @@
 
 Hosted and deployed on Netlify: https://whimsical-griffin-afdd14.netlify.app
 
+FYP Report : https://docs.google.com/document/d/1Gdr2mqehoLyEz70Dr8wmNjqLZpnafxHs_4S9oPCDz1o/edit?usp=sharing
+
+To test payment with Stripe, navigate to the server folder and run the local server. 
+Run `nodemon index.js`
+
+### Technologies / Services / API used
+- A Frame & Mind-ar-js (AR Virtual Fitting Feature)
+👤 - Credits to [HiuKim](https://github.com/hiukim)
+📃 - https://hiukim.github.io/mind-ar-js-doc/
+- Stripe (Payment Checkout) 
+📃 - https://stripe.com/docs
+- Smtp.js (Email service)
+📃 - https://smtpjs.com/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.1.
 
 ## Development server
