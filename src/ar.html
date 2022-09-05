@@ -2,8 +2,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-face.prod.js"></script>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-face.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-face-aframe.prod.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -129,10 +129,10 @@
       <img id="headphone" style="display: none; background-color: #fff;"
         src="assets/img/models/headphone/headphone.png" />
       <img id="necklace" style="display: none; background-color: #fff;" src="assets/img/models/necklace/necklace.png" />
-
     </div>
     <a-scene mindar-face embedded color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <!-- Asset management system. -->
       <a-assets>
         <a-asset-item id="headModel"
           src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/examples/face-tracking/assets/sparkar/headOccluder.glb">
