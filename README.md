@@ -1,4 +1,6 @@
-# MERCv3
+# MERC-Augmented-Reality-Based-Ecommerce-Platform
+
+MERC is a augmented reality based ecommerce app to bridge the gaps between AR and Ecommerce. This is a simple app to showcase how AR can help improve the user experience when shopping online.
 
 Hosted and deployed on Netlify: https://whimsical-griffin-afdd14.netlify.app
 
